@@ -1,0 +1,2795 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0d0a0b;
+  --ink-2: #1b1214;
+  --sindoor: #d90429;
+  --alta: #8d0019;
+  --marigold: #ffb703;
+  --haldi: #ffd60a;
+  --tota: #2b9348;
+  --tota-dark: #0f3d23;
+  --lime: #d4ff3a;
+  --rani: #ff2e88;
+  --peacock: #0a7ea4;
+  --cream: #fff3dc;
+  --cut: 22px;
+  --angled: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+}
+
+@theme inline {
+  --font-sans: var(--font-body);
+}
+
+/* ---------- base ---------- */
+
+html {
+  background: var(--ink);
+}
+html.is-loading {
+  overflow: hidden;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+::selection {
+  background: var(--rani);
+  color: var(--ink);
+}
+
+.truck {
+  font-family: var(--font-truck), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.truck-inline {
+  font-family: var(--font-lotus), var(--font-truck), sans-serif;
+  text-transform: uppercase;
+}
+.hi {
+  font-family: var(--font-hindi), serif;
+}
+.bn {
+  font-family: var(--font-bangla), serif;
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 5px;
+  z-index: 80;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--marigold) 0 24px,
+    var(--rani) 24px 48px,
+    var(--lime) 48px 72px,
+    var(--tota) 72px 96px
+  );
+}
+
+.spark {
+  position: fixed;
+  z-index: 300;
+  width: 11px;
+  height: 7px;
+  margin: -3px 0 0 -5px;
+  border-radius: 60% 0;
+  pointer-events: none;
+}
+
+.btn-truck {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 11px 20px;
+  background: var(--lime);
+  color: var(--ink);
+  font-family: var(--font-truck);
+  text-transform: uppercase;
+  text-decoration: none;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  transition: background 0.2s;
+}
+.btn-truck:hover {
+  background: var(--haldi);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  isolation: isolate;
+}
+.hero-rays {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 250vmax;
+  height: 250vmax;
+  margin: -125vmax 0 0 -125vmax;
+  z-index: -3;
+  background: repeating-conic-gradient(from 0deg, #22171a 0deg 6deg, var(--ink) 6deg 12deg);
+}
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 50% 52%, rgba(217, 4, 41, 0.5), transparent 58%);
+}
+.hero-alpona {
+  position: absolute;
+  width: min(98vmin, 1000px);
+  aspect-ratio: 1;
+  z-index: -1;
+}
+.hero-alpona img {
+  width: 100%;
+  height: auto;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 16px rgba(255, 46, 136, 0.7));
+}
+
+.hero-side {
+  position: absolute;
+  z-index: 1;
+  width: clamp(120px, 18vw, 290px);
+}
+.hero-side-in {
+  width: 100%;
+}
+.hero-side-l {
+  left: 4vw;
+  top: 17vh;
+}
+.hero-side-r {
+  right: 4vw;
+  top: 22vh;
+}
+.sticker {
+  position: relative;
+  margin: 0;
+  padding: 10px;
+  clip-path: var(--angled);
+}
+.sticker img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4.4;
+  object-fit: cover;
+  clip-path: var(--angled);
+}
+.sticker figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 22px;
+  padding: 5px 14px;
+  font-size: clamp(11px, 1vw, 15px);
+  background: var(--ink);
+  transform: rotate(-4deg);
+}
+.sticker-green {
+  background: linear-gradient(135deg, var(--lime), var(--tota));
+}
+.sticker-green figcaption {
+  color: var(--lime);
+}
+.sticker-red {
+  background: linear-gradient(135deg, var(--marigold), var(--sindoor));
+}
+.sticker-red figcaption {
+  color: var(--marigold);
+  left: auto;
+  right: 0;
+  transform: rotate(4deg);
+}
+
+.hero-petals {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.geo-petal {
+  position: absolute;
+  top: 0;
+  perspective: 300px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+}
+.geo-petal svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.hero-toran {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(56px, 8.5vw, 125px);
+  z-index: 3;
+  background: url("/art/geo-toran.svg") top center / auto 100% repeat-x;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.55));
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  justify-items: center;
+  gap: clamp(8px, 1.3vw, 16px);
+  padding: 0 16px;
+  text-align: center;
+}
+.hero-copy p {
+  margin: 0;
+}
+.hero-mantra {
+  font-size: clamp(16px, 2vw, 24px);
+  color: var(--haldi);
+}
+.hero-kicker {
+  padding: 6px 16px;
+  font-size: clamp(11px, 1.25vw, 16px);
+  background: var(--sindoor);
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.hero-kicker span {
+  color: var(--haldi);
+}
+.hero-names {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  line-height: 0.88;
+  perspective: 900px;
+}
+.hero-name {
+  display: block;
+  font-size: clamp(52px, 12.5vw, 205px);
+}
+.hero-name .ch {
+  will-change: transform;
+}
+.hero-name-wrap:first-child .hero-name {
+  color: var(--marigold);
+  text-shadow: 0.04em 0.04em 0 var(--alta), 0.08em 0.08em 0 var(--peacock);
+}
+.hero-name-wrap:last-child .hero-name {
+  color: var(--lime);
+  text-shadow: 0.04em 0.04em 0 var(--tota-dark), 0.08em 0.08em 0 var(--sindoor);
+}
+.hero-amp {
+  position: relative;
+  z-index: 2;
+  margin: 0.12em 0 0.22em;
+  font-family: var(--font-bangla), serif;
+  font-size: clamp(30px, 4.5vw, 72px);
+  line-height: 1;
+  color: var(--rani);
+  transform: rotate(-6deg);
+}
+.hero-native {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(22px, 3vw, 40px);
+}
+.hero-native i {
+  font-style: normal;
+  color: var(--rani);
+}
+.hero-date {
+  padding: 8px 22px;
+  font-size: clamp(14px, 1.7vw, 22px);
+  color: var(--ink);
+  background: var(--lime);
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+}
+.hero-date span {
+  color: var(--sindoor);
+}
+
+.hero-badge {
+  position: absolute;
+  left: 50%;
+  margin-left: calc(clamp(90px, 10vw, 140px) / -2);
+  bottom: -2vh;
+  z-index: 5;
+  width: clamp(90px, 10vw, 140px);
+  scale: 0.8;
+  aspect-ratio: 1;
+  display: none;
+  place-items: center;
+}
+.hero-badge svg {
+  position: absolute;
+  inset: 0;
+  fill: var(--haldi);
+  font-family: var(--font-truck);
+  font-size: 15px;
+  letter-spacing: 1.6px;
+}
+.hero-badge-arrow {
+  font-size: 30px;
+  color: var(--lime);
+}
+.hero-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  background: var(--sindoor);
+  clip-path: circle(0% at 50% 50%);
+  pointer-events: none;
+}
+
+/* ---------- marquee ---------- */
+
+.marquee {
+  position: relative;
+  display: grid;
+  padding: clamp(70px, 11vw, 150px) 0;
+  overflow: hidden;
+  background: var(--sindoor);
+}
+.band {
+  grid-area: 1 / 1;
+  align-self: center;
+  /* bands are tens of thousands of px wide: pivot on the viewport centre, not the band's */
+  transform-origin: 50vw 50%;
+  padding: clamp(10px, 1.4vw, 20px) 0;
+  white-space: nowrap;
+  box-shadow: 0 12px 0 rgba(0, 0, 0, 0.25);
+}
+.band-a {
+  z-index: 2;
+  rotate: -4deg;
+  color: var(--ink);
+  background: var(--lime);
+}
+.band-b {
+  rotate: 3.5deg;
+  color: var(--marigold);
+  background: var(--ink);
+}
+.band-track,
+.band-set {
+  display: flex;
+  width: max-content;
+}
+.band-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding-right: 0.5em;
+  font-size: clamp(28px, 5vw, 72px);
+  line-height: 1.2;
+}
+.band-star {
+  font-style: normal;
+  color: var(--sindoor);
+}
+.band-b .band-star {
+  color: var(--rani);
+}
+
+/* ---------- two worlds ---------- */
+
+.tw {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+.tw-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 54%;
+  overflow: hidden;
+}
+.tw-bihar {
+  left: 0;
+  background: var(--tota-dark);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+}
+.tw-bengal {
+  right: 0;
+  color: #3a0a0f;
+  background:
+    linear-gradient(var(--sindoor), var(--sindoor)) top / 100% 18px no-repeat,
+    linear-gradient(var(--sindoor), var(--sindoor)) bottom / 100% 18px no-repeat,
+    linear-gradient(#c9a227, #c9a227) 0 22px / 100% 2px no-repeat,
+    linear-gradient(#c9a227, #c9a227) 0 calc(100% - 22px) / 100% 2px no-repeat,
+    #f6efe3;
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+}
+.tw-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  mix-blend-mode: luminosity;
+}
+.tw-roundel {
+  position: absolute;
+  right: -10vw;
+  bottom: -12vw;
+  width: min(40vw, 540px);
+  aspect-ratio: 1;
+}
+.tw-roundel img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px var(--lime), 0 0 0 20px var(--tota-dark), 0 0 0 26px var(--marigold);
+}
+.tw-alpona {
+  position: absolute;
+  left: -20%;
+  bottom: -35%;
+  width: min(80vw, 900px);
+  aspect-ratio: 1;
+  opacity: 0.18;
+  background: var(--sindoor);
+  -webkit-mask: url("/art/alpona-star.webp") center / contain no-repeat;
+  mask: url("/art/alpona-star.webp") center / contain no-repeat;
+}
+.tw-copy {
+  position: absolute;
+  top: 15%;
+  left: 7%;
+  z-index: 2;
+  width: min(78%, 430px);
+}
+.tw-bengal .tw-copy {
+  left: auto;
+  right: 7%;
+  text-align: right;
+}
+.tw-kicker {
+  margin: 0;
+  font-size: clamp(11px, 1.05vw, 14px);
+  color: var(--lime);
+}
+.tw-bengal .tw-kicker {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--sindoor);
+}
+.tw-mask {
+  overflow: hidden;
+}
+.tw-title {
+  margin: 0;
+  font-size: clamp(64px, 11.5vw, 190px);
+  line-height: 1.15;
+  color: var(--haldi);
+  text-shadow: 0.05em 0.05em 0 var(--ink);
+}
+.tw-bengal .tw-title {
+  color: var(--sindoor);
+  text-shadow: none;
+}
+.tw-bengal .tw-sub {
+  color: #3a0a0f;
+}
+.tw-sub {
+  margin: 4px 0 0;
+  font-size: clamp(14px, 1.25vw, 18px);
+  line-height: 1.55;
+}
+.tw-card {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  padding: 8px;
+  background: var(--cream);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
+}
+.tw-card img {
+  width: 100%;
+  height: auto;
+}
+.tw-card figcaption {
+  padding-top: 6px;
+  font-family: var(--font-truck);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.tw-card-a {
+  left: 9%;
+  bottom: 9%;
+  width: clamp(170px, 23vw, 370px);
+  rotate: -5deg;
+}
+.tw-card-b {
+  right: 8%;
+  bottom: 13%;
+  width: clamp(170px, 23vw, 370px);
+  rotate: 3deg;
+  background: #fff;
+  outline: 2px solid var(--sindoor);
+  outline-offset: -5px;
+}
+.tw-card-c {
+  right: 42%;
+  bottom: 5%;
+  width: clamp(100px, 12vw, 200px);
+  rotate: -4deg;
+  background: #fff;
+  outline: 2px solid var(--sindoor);
+  outline-offset: -5px;
+}
+.tw-center {
+  --size: min(78vmin, 640px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  width: var(--size);
+  aspect-ratio: 1;
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+}
+.tw-center::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13, 10, 11, 0.94) 55%, rgba(13, 10, 11, 0) 71%);
+}
+.tw-mandala,
+.tw-mandala > div {
+  position: absolute;
+  inset: 0;
+}
+.tw-center-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+.tw-center-copy > * {
+  display: block;
+}
+.tw-center-copy .hi,
+.tw-center-copy .bn {
+  font-size: clamp(34px, 6.5vmin, 66px);
+  line-height: 1.25;
+}
+.tw-center-copy .hi {
+  color: var(--haldi);
+}
+.tw-center-copy .truck {
+  margin-top: 6px;
+  font-size: clamp(11px, 1.7vmin, 15px);
+  color: var(--lime);
+}
+
+/* ---------- events ---------- */
+
+.ev {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: repeating-linear-gradient(-45deg, #140e10 0 34px, var(--ink) 34px 68px);
+}
+.ev-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  width: max-content;
+  height: 100%;
+  padding: 0 8vw;
+}
+.ev-intro {
+  flex: none;
+  width: min(80vw, 520px);
+}
+.ev-intro-line {
+  overflow: hidden;
+}
+.ev-intro h2 {
+  margin: 0;
+  font-size: clamp(64px, 10.5vw, 165px);
+  line-height: 0.95;
+  color: var(--marigold);
+}
+.ev-intro-line:nth-child(2) h2 {
+  color: var(--rani);
+}
+.ev-intro p {
+  margin: 14px 0;
+  font-size: clamp(22px, 3vw, 36px);
+}
+.ev-intro .ev-intro-note {
+  font-size: 14px;
+  color: var(--lime);
+}
+.ev-card {
+  --c: var(--lime);
+  flex: none;
+  width: clamp(280px, 33vw, 470px);
+  perspective: 1000px;
+}
+.ev-green {
+  --c: var(--lime);
+}
+.ev-yellow {
+  --c: var(--haldi);
+}
+.ev-pink {
+  --c: var(--rani);
+}
+.ev-orange {
+  --c: var(--marigold);
+}
+.ev-red {
+  --c: var(--sindoor);
+}
+.ev-maroon {
+  --c: #7a0019;
+}
+.ev-teal {
+  --c: #00b3a4;
+}
+.ev-tilt {
+  position: relative;
+  padding: 14px;
+  color: var(--ink);
+  background: var(--c);
+  clip-path: var(--angled);
+  transform-style: preserve-3d;
+}
+.ev-red .ev-tilt,
+.ev-maroon .ev-tilt {
+  color: var(--cream);
+}
+.ev-num {
+  position: absolute;
+  top: 2px;
+  right: 14px;
+  z-index: 2;
+  font-size: clamp(48px, 5.5vw, 86px);
+  line-height: 1;
+  color: var(--c);
+  text-shadow: 3px 3px 0 var(--ink);
+}
+.ev-art {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--cream);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+.ev-art-inner {
+  position: absolute;
+  inset: 0 -12%;
+}
+.ev-art-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ev-art-contain {
+  inset: 0;
+  background: #f5a524;
+}
+.ev-art-contain img {
+  object-fit: contain;
+}
+.ev-art-lottie {
+  position: absolute;
+  inset: 0;
+}
+.ev-tag {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--lime);
+  background: var(--ink);
+  transform: rotate(-3deg);
+}
+.ev-body {
+  padding: 12px 6px 6px;
+}
+.ev-body h3 {
+  margin: 0;
+  font-size: clamp(32px, 3.4vw, 50px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.ev-body h4 {
+  margin: 2px 0 12px;
+  font-size: clamp(14px, 1.35vw, 19px);
+  font-weight: 400;
+}
+.ev-body dl {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.ev-body dl div {
+  display: flex;
+  gap: 8px;
+}
+.ev-body dt {
+  min-width: 50px;
+  padding-top: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.ev-body dd {
+  margin: 0;
+}
+.ev-body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ev-end {
+  flex: none;
+  width: min(60vw, 420px);
+  aspect-ratio: 1;
+  margin-right: 4vw;
+}
+.ev-progress {
+  position: absolute;
+  left: 8vw;
+  right: 8vw;
+  bottom: 4vh;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.ev-progress-fill {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: repeating-linear-gradient(90deg, var(--marigold) 0 20px, var(--rani) 20px 40px);
+}
+
+/* ---------- journey ---------- */
+
+.jr {
+  --meter-w: clamp(130px, 15vw, 210px);
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+.jr-bg {
+  position: absolute;
+  inset: 0;
+}
+.jr-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.jr-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 10, 11, 0.75),
+    rgba(13, 10, 11, 0.05) 42%,
+    rgba(13, 10, 11, 0.25) 70%,
+    rgba(13, 10, 11, 0.9)
+  );
+}
+/* header stops short of the heart meter on the right */
+.jr-head {
+  position: absolute;
+  top: 7vh;
+  left: 6vw;
+  right: calc(5vw + var(--meter-w) + 16px);
+  z-index: 5;
+}
+.jr-kicker {
+  margin: 0;
+  font-size: 14px;
+  color: var(--lime);
+}
+/* headlines stack in one grid cell so the box is as tall as the biggest act; font size is
+   capped so the longest one (~8.6em) fits beside the meter; top padding keeps Devanagari
+   matras inside the overflow clip */
+.jr-head-swap {
+  display: grid;
+  padding-top: 0.12em;
+  font-size: min(clamp(40px, 7.2vw, 120px), calc((89vw - var(--meter-w) - 16px) / 8.6));
+  overflow: hidden;
+}
+.jr-head-swap h2 {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--haldi);
+  text-shadow: 4px 4px 0 var(--sindoor);
+  white-space: nowrap;
+}
+.jr-head-swap em {
+  font-style: normal;
+  font-size: 0.4em;
+  color: var(--cream);
+}
+.jr-head-to {
+  color: #fff !important;
+  text-shadow: 4px 4px 0 var(--peacock) !important;
+}
+.jr-notes {
+  position: absolute;
+  left: 6vw;
+  top: 36vh;
+  z-index: 5;
+  width: min(84vw, 380px);
+}
+.jr-note {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: grid;
+  gap: 4px;
+  padding: 14px 20px;
+  color: var(--ink);
+  background: var(--cream);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 3% 100%);
+  visibility: hidden;
+}
+.jr-note b {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--sindoor);
+}
+.jr-note span {
+  font-size: 15px;
+  line-height: 1.4;
+}
+.jr-road {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  height: 15vh;
+  overflow: hidden;
+  border-top: 6px solid var(--lime);
+}
+.jr-road-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+}
+.jr-road-track img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+.jr-line {
+  position: absolute;
+  left: 6vw;
+  right: 6vw;
+  bottom: calc(15vh + 22px);
+  z-index: 3;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.jr-line-fill {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: var(--lime);
+  box-shadow: 0 0 12px var(--lime);
+}
+.jr-line i {
+  position: absolute;
+  top: -22px;
+  font-size: 12px;
+  font-style: normal;
+}
+.jr-line i:nth-of-type(1) {
+  left: 0;
+}
+.jr-line i:nth-of-type(2) {
+  right: 0;
+}
+
+/* ---------- countdown ---------- */
+
+.cd {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(90px, 13vw, 180px) 6vw;
+  text-align: center;
+  background: var(--ink);
+  isolation: isolate;
+}
+.cd-bg {
+  position: absolute;
+  inset: -12%;
+  z-index: -2;
+  opacity: 0.45;
+}
+.cd-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cd::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 40%, transparent 20%, rgba(13, 10, 11, 0.85) 75%);
+}
+.cd-title {
+  position: relative;
+  margin: 0 0 50px;
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  font-weight: 400;
+}
+.cd-title > * {
+  display: block;
+}
+.cd-title .truck-inline {
+  font-size: clamp(56px, 11vw, 170px);
+  line-height: 0.95;
+  color: var(--haldi);
+  text-shadow: 0.05em 0.05em 0 var(--sindoor);
+}
+.cd-title-sub {
+  margin-top: 8px;
+  font-size: clamp(20px, 2.6vw, 32px);
+}
+.cd-plates {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 28px);
+  max-width: 1100px;
+  margin: 0 auto;
+  perspective: 900px;
+}
+.plate {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 26px 8px 14px;
+  color: var(--ink);
+  background: #f7f3e8;
+  border: 4px solid var(--ink);
+  outline: 3px solid #f7f3e8;
+  border-radius: 10px;
+  box-shadow: 0 16px 0 rgba(0, 0, 0, 0.4);
+}
+.plate:nth-child(even) {
+  background: var(--haldi);
+  outline-color: var(--haldi);
+}
+.plate-code {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 11px;
+  opacity: 0.6;
+}
+.plate-num {
+  display: inline-block;
+  font-size: clamp(44px, 8vw, 110px);
+  line-height: 1;
+}
+.plate-label {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+/* ---------- rsvp ---------- */
+
+.rs {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(110px, 13vw, 170px) 5vw clamp(80px, 10vw, 140px);
+  background: var(--tota-dark);
+  isolation: isolate;
+}
+.rs-alpona {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: 130vmin;
+  margin: -65vmin 0 0 -65vmin;
+  opacity: 0.12;
+}
+.rs-alpona img {
+  width: 100%;
+  height: auto;
+}
+.rs-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  pointer-events: none;
+  visibility: hidden;
+}
+.rs-fx .heart-burst {
+  --h: clamp(28px, 5vmin, 56px);
+}
+.rs-fx.on {
+  visibility: visible;
+}
+.rs-truck {
+  position: relative;
+  width: min(100%, 860px);
+  padding: clamp(28px, 5vw, 60px) clamp(20px, 5vw, 60px) 0;
+  color: var(--ink);
+  background: var(--haldi);
+  border: 6px solid var(--ink);
+  box-shadow: 14px 14px 0 var(--sindoor), 28px 28px 0 var(--ink);
+}
+.rs-crown {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  top: -40px;
+  height: 40px;
+  background: conic-gradient(from -45deg at 50% 100%, var(--sindoor) 90deg, transparent 0) 0 0 / 40px 100% repeat-x;
+}
+.rs-title {
+  margin: 0;
+  white-space: nowrap;
+  font-size: clamp(26px, 6.4vw, 78px);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+.rs-title .ch {
+  display: inline-block;
+}
+.rs-title .ch-hi {
+  color: var(--sindoor);
+}
+.rs-sub {
+  margin: 10px 0 26px;
+  font-size: clamp(20px, 2.4vw, 28px);
+  text-align: center;
+}
+.rs-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+.rs-form label > span,
+.rs-form legend {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rs-form input,
+.rs-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: #fffbea;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+.rs-form input:focus,
+.rs-form textarea:focus {
+  box-shadow: 5px 5px 0 var(--rani);
+}
+.rs-form fieldset {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.rs-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.rs-side legend {
+  width: 100%;
+}
+.rs-side button {
+  flex: 1 1 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font: 600 15px var(--font-body);
+  color: var(--ink);
+  background: transparent;
+  border: 3px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.rs-side button .hi,
+.rs-side button .bn {
+  font-size: 20px;
+  font-weight: 400;
+}
+.rs-side button.on {
+  color: var(--haldi);
+  background: var(--ink);
+}
+.rs-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.rs-events legend {
+  width: 100%;
+}
+.rs-events label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+}
+.rs-form .rs-events input {
+  width: auto;
+  accent-color: var(--sindoor);
+}
+.rs-form .rs-events label > span {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.rs-note {
+  grid-column: 1 / -1;
+}
+.rs-submit {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 6px;
+  padding: 18px 34px;
+  font-size: clamp(16px, 2vw, 22px);
+  color: var(--cream);
+  background: var(--sindoor);
+  border: 0;
+  cursor: pointer;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+.rs-hazard {
+  height: 34px;
+  margin: 30px calc(clamp(20px, 5vw, 60px) * -1) 0;
+  background: repeating-linear-gradient(-45deg, var(--sindoor) 0 22px, #fff 22px 44px);
+}
+.rs-dipper {
+  margin: 0 calc(clamp(20px, 5vw, 60px) * -1);
+  padding: 10px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--lime);
+  background: var(--ink);
+}
+
+/* ---------- footer ---------- */
+
+.ft {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(130px, 14vw, 200px) 6vw 50px;
+  text-align: center;
+  background: var(--ink);
+  isolation: isolate;
+}
+.ft-toran {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(50px, 7vw, 100px);
+  background: url("/art/geo-toran.svg") top center / auto 100% repeat-x;
+}
+.ft-fireworks {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+}
+.ft-fireworks > div {
+  width: 100%;
+  height: 100%;
+}
+.ft-nimbu {
+  position: absolute;
+  left: 7vw;
+  top: clamp(30px, 5vw, 70px);
+  width: clamp(60px, 7vw, 110px);
+  transform-origin: 50% 0;
+}
+.ft-nimbu img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.6));
+}
+.ft-nazar {
+  margin: 0;
+  font-size: clamp(40px, 7.5vw, 116px);
+  line-height: 1.25;
+  color: var(--lime);
+  text-shadow: 0.04em 0.04em 0 var(--sindoor);
+}
+.ft-nazar .w {
+  display: inline-block;
+}
+.ft-nazar-en {
+  font-size: clamp(14px, 1.6vw, 20px);
+  color: var(--marigold);
+}
+.ft-sign {
+  max-width: 640px;
+  margin: 40px auto 6px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+.ft-hash {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 34px);
+  color: var(--rani);
+}
+.ft-credits {
+  max-width: 920px;
+  margin: 46px auto 0;
+  font-size: 12.5px;
+  text-align: left;
+  opacity: 0.7;
+}
+.ft-credits summary {
+  font-family: var(--font-truck);
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.ft-credits ul {
+  columns: 2;
+  padding-left: 18px;
+}
+.ft-credits li {
+  margin-bottom: 6px;
+  break-inside: avoid;
+}
+.ft-credits a {
+  color: var(--marigold);
+}
+
+/* ---------- shared: gloss (native + english) ---------- */
+
+.gloss {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+}
+.gloss-en {
+  margin-top: 0.15em;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(11px, 0.22em, 18px);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: none;
+  opacity: 0.8;
+}
+.btn-pink {
+  background: var(--rani);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
+.btn-pink:hover {
+  background: var(--marigold);
+  color: var(--ink);
+}
+
+/* ---------- hero additions ---------- */
+
+.hero-mantra .gloss-en {
+  font-size: 10px;
+  color: var(--cream);
+}
+.hero-native .gloss-en {
+  font-size: 10px;
+}
+.band-en {
+  font-family: var(--font-body);
+  font-size: 0.38em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- narrator ---------- */
+
+.nr {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: clamp(80px, 12vw, 160px) 7vw;
+  text-align: center;
+  background: var(--ink);
+}
+.nr-ivory {
+  color: #3a0a0f;
+  background: #f6efe3;
+}
+.nr-haldi {
+  color: var(--ink);
+  background: var(--haldi);
+}
+.nr-mic {
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--lime);
+  transform: rotate(-3deg);
+}
+.nr-ivory .nr-mic {
+  color: #fff;
+  background: var(--sindoor);
+}
+.nr-haldi .nr-mic {
+  color: var(--haldi);
+  background: var(--ink);
+}
+.nr-line {
+  max-width: 1100px;
+  margin: 0;
+  font-family: var(--font-truck);
+  font-size: clamp(28px, 4.6vw, 70px);
+  line-height: 1.12;
+  text-transform: uppercase;
+}
+.nr-ivory .nr-line {
+  font-family: var(--font-bangla), serif;
+  text-transform: none;
+  color: var(--sindoor);
+}
+.nr-w {
+  display: inline-block;
+}
+.nr-aside {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 20px);
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* ---------- swagatam ---------- */
+
+.sw {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  gap: clamp(30px, 5vw, 60px);
+  padding: clamp(130px, 14vw, 190px) 5vw clamp(80px, 10vw, 130px);
+  color: var(--ink);
+  background: #f3e3c3;
+  isolation: isolate;
+}
+.sw-toran {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(56px, 8vw, 120px);
+  background: url("/art/geo-toran.svg") top center / auto 100% repeat-x;
+}
+.sw-petals,
+.sw-petals > div {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.sw-greet {
+  display: grid;
+  min-height: clamp(130px, 17vw, 230px);
+  perspective: 900px;
+}
+.sw-greet-item {
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+  font-size: clamp(64px, 11vw, 170px);
+  color: var(--sindoor);
+  text-shadow: 0.04em 0.04em 0 var(--marigold);
+}
+.sw-greet-item .gloss-en {
+  color: var(--ink);
+  font-size: clamp(11px, 1.1vw, 15px);
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+.sw-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 420px));
+  gap: clamp(20px, 4vw, 60px);
+}
+.sw-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 34px 28px 30px;
+  text-align: center;
+}
+.sw-card h3 {
+  margin: 0;
+  font-size: clamp(26px, 2.6vw, 36px);
+}
+.sw-card p {
+  margin: 0;
+  line-height: 1.5;
+}
+.sw-card-art {
+  width: 150px;
+  aspect-ratio: 1;
+  margin-top: -90px;
+}
+.sw-card-art img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.sw-card-greet {
+  font-size: clamp(28px, 3vw, 40px);
+}
+.sw-card-greet .gloss-en {
+  font-size: 11px;
+}
+/* Mithila: loud, multi-band Madhubani-style borders */
+.sw-card-mithila {
+  background: #fff8e8;
+  border: 10px solid transparent;
+  border-image: repeating-linear-gradient(45deg, var(--sindoor) 0 10px, var(--haldi) 10px 20px, var(--tota) 20px 30px, var(--rani) 30px 40px) 10;
+  box-shadow: 0 0 0 8px var(--ink), 14px 14px 0 8px var(--marigold);
+  transform: rotate(-2deg);
+}
+.sw-card-mithila .sw-card-art img {
+  box-shadow: 0 0 0 6px var(--lime), 0 0 0 12px var(--ink);
+}
+.sw-card-kicker {
+  font-size: 12px;
+  color: var(--sindoor);
+}
+/* Bengal: ivory, thin red & gold — laal paar elegance */
+.sw-card-bengal {
+  color: #3a0a0f;
+  background: #fbf6ec;
+  border-top: 14px solid var(--sindoor);
+  border-bottom: 14px solid var(--sindoor);
+  outline: 1px solid #c9a227;
+  outline-offset: -22px;
+  transform: rotate(1.5deg);
+}
+.sw-card-bengal .sw-card-kicker {
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.sw-card-bengal h3 {
+  font-family: var(--font-bangla), serif;
+  font-weight: 400;
+  color: var(--sindoor);
+}
+.sw-alpona {
+  position: absolute;
+  inset: 0;
+  background: var(--sindoor);
+  border-radius: 50%;
+  -webkit-mask: url("/art/alpona-round.webp") center / contain no-repeat;
+  mask: url("/art/alpona-round.webp") center / contain no-repeat;
+}
+.sw-card-bengal .sw-card-art {
+  z-index: 1;
+  background: #fff;
+  box-shadow: 0 0 0 5px #c9a227, 0 0 0 10px var(--sindoor);
+  border-radius: 50%;
+}
+.sw-note {
+  max-width: 640px;
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 20px);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ---------- two worlds additions ---------- */
+
+.tw-title .gloss-en {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+}
+.tw-couplet {
+  margin: 4px 0 10px;
+  font-size: clamp(20px, 2vw, 30px);
+  color: var(--lime);
+}
+.tw-couplet .gloss {
+  align-items: flex-start;
+}
+.tw-bengal .tw-couplet {
+  color: var(--sindoor);
+}
+.tw-bengal .tw-couplet .gloss,
+.tw-bengal .tw-title .gloss {
+  align-items: flex-end;
+}
+.tw-bihar .tw-title .gloss {
+  align-items: flex-start;
+}
+.tw-couplet .gloss-en {
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- journey additions ---------- */
+
+.jr-bg-mithila,
+.jr-bg-mumbai {
+  visibility: hidden;
+}
+.jr-head-swap h2 {
+  display: grid;
+}
+.jr-head-swap h2 small {
+  font-family: var(--font-body);
+  font-size: max(11px, 0.17em);
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: none;
+  color: var(--cream);
+}
+/* ---------- countdown additions ---------- */
+
+.cd-en {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ---------- mumbai planner ---------- */
+
+.mp {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  padding: clamp(90px, 11vw, 150px) 4vw;
+  color: var(--ink);
+  background: #fff3dc;
+}
+.mp-strip {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+.mp-strip img {
+  width: clamp(110px, 18vw, 240px);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  padding: 6px 6px 22px;
+  background: #fff;
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.25);
+}
+.mp-strip img:nth-child(1) {
+  rotate: -5deg;
+}
+.mp-strip img:nth-child(3) {
+  rotate: 5deg;
+}
+.mp-title {
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+}
+.mp-title > * {
+  display: block;
+}
+.mp-title .truck-inline {
+  font-size: clamp(50px, 9vw, 140px);
+  line-height: 0.95;
+  color: var(--sindoor);
+  text-shadow: 0.04em 0.04em 0 var(--marigold);
+}
+.mp-sub {
+  max-width: 640px;
+  margin-top: 10px;
+  font-size: clamp(16px, 1.7vw, 21px);
+  font-weight: 400;
+}
+.mp-picker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.mp-picker button {
+  display: grid;
+  justify-items: center;
+  min-width: 110px;
+  padding: 10px 16px;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 3px solid var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.mp-picker button:hover {
+  transform: translateY(-3px) rotate(-2deg);
+}
+.mp-picker button b {
+  font-size: 34px;
+  line-height: 1;
+}
+.mp-picker button span {
+  font-weight: 700;
+}
+.mp-picker button small {
+  font-size: 11px;
+  opacity: 0.7;
+}
+.mp-picker button.on {
+  color: var(--haldi);
+  background: var(--ink);
+  box-shadow: 6px 6px 0 var(--sindoor);
+}
+.mp-poster {
+  width: min(100%, 1200px);
+  padding: 16px;
+  background: #fff3dc;
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--marigold);
+}
+.mp-poster-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  padding-bottom: 12px;
+  font-size: 13px;
+}
+.mp-poster-head .truck {
+  font-size: 22px;
+  color: var(--sindoor);
+}
+.mp-body {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.mp-map-wrap {
+  position: sticky;
+  top: 20px;
+  border: 3px solid var(--ink);
+}
+.mp-map {
+  width: 100%;
+  height: min(70vh, 620px);
+  background: #e8e2d4;
+}
+.mp-map-loading {
+  display: grid;
+  place-items: center;
+}
+.mp-days {
+  display: grid;
+  gap: 14px;
+}
+.mp-day {
+  padding: 12px 14px;
+  background: #fff;
+  border-left: 8px solid var(--c);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+.mp-day header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin-bottom: 6px;
+}
+.mp-day header b {
+  font-size: 18px;
+  color: var(--c);
+}
+.mp-day header span {
+  font-weight: 700;
+}
+.mp-route {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c);
+}
+.mp-day ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mp-stop {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+.mp-stop a {
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.mp-stop a:hover {
+  text-decoration: underline;
+}
+.mp-stop small {
+  display: block;
+  font-size: 12.5px;
+  opacity: 0.7;
+}
+.mp-n {
+  flex: none;
+  width: 34px;
+  font-family: var(--font-truck);
+  font-size: 12px;
+  color: var(--c);
+}
+.mp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.mp-actions .btn-truck {
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+.mp-help {
+  max-width: 640px;
+  margin: 0;
+  font-size: 13.5px;
+  text-align: center;
+  opacity: 0.8;
+}
+.mp-help a {
+  color: var(--sindoor);
+}
+.pin {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font: 700 10px var(--font-body), sans-serif;
+  color: #fff;
+  background: var(--c);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+}
+.pin-eat {
+  border-radius: 6px;
+  transform: rotate(45deg);
+}
+.pin-eat {
+  font-size: 0;
+}
+.pin-eat::after {
+  content: "🍛";
+  font-size: 13px;
+  transform: rotate(-45deg);
+}
+.pin-venue {
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+  background: var(--haldi);
+  border: 3px solid var(--sindoor);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 12px rgba(217, 4, 41, 0.25);
+  }
+}
+.rs-en {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* ---------- hero: pre-hide until entrance runs (no flash) ---------- */
+
+.js .hero-copy,
+.js .hero-side,
+.js .hero-alpona,
+.js .hero-toran {
+  visibility: hidden;
+}
+.hero-name-wrap {
+  position: relative;
+  display: block;
+  font-size: clamp(46px, 10.4vw, 170px);
+}
+.hero-name-wrap .hero-name {
+  font-size: 1em;
+}
+.crown {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.6));
+}
+.crown img {
+  width: 100%;
+  height: auto;
+}
+/* Shola mukut on the A of APURVA */
+.crown-bride {
+  left: 0.04em;
+  top: -0.8em;
+  width: 0.62em;
+  transform-origin: 50% 100%;
+}
+/* Tinsel-gold Bihari mukut on the M of MANMOHAN */
+.crown-groom {
+  left: -0.04em;
+  top: -0.42em;
+  width: 0.92em;
+  transform-origin: 50% 100%;
+}
+
+/* ---------- connected transitions ---------- */
+
+[data-wipe] {
+  position: relative;
+  z-index: 2;
+  margin-top: -14vh;
+  padding-top: calc(14vh + clamp(60px, 9vw, 120px)) !important;
+}
+.courier {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform;
+}
+.courier img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Bengal alpona: round red motif on the welcome card → faint star alpona behind the Bangla panel */
+.courier-alpona {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: calc(1 - 0.82 * var(--p, 0));
+}
+.courier-alpona::before,
+.courier-alpona::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--sindoor);
+}
+.courier-alpona::before {
+  border-radius: 50%;
+  opacity: calc(1 - var(--p, 0));
+  -webkit-mask: url("/art/alpona-round.webp") center / contain no-repeat;
+  mask: url("/art/alpona-round.webp") center / contain no-repeat;
+}
+.courier-alpona::after {
+  opacity: var(--p, 0);
+  -webkit-mask: url("/art/alpona-star.webp") center / contain no-repeat;
+  mask: url("/art/alpona-star.webp") center / contain no-repeat;
+}
+/* Madhubani roundel: card's lime/ink ring grows into the panel's lime/green/marigold rings */
+.courier-roundel-img {
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 calc(6px + 4px * var(--p, 0)) var(--lime),
+    0 0 0 calc(6px + 14px * var(--p, 0)) var(--tota-dark),
+    0 0 0 calc(12px - 6px * var(--p, 0)) var(--ink),
+    0 0 0 calc(12px + 14px * var(--p, 0)) var(--marigold);
+}
+.courier-heart {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+}
+.tw-heart {
+  display: block;
+  width: clamp(56px, 10vmin, 96px);
+  height: auto;
+  margin-inline: auto;
+}
+.plate-heart {
+  display: inline-block;
+  width: 1.5em;
+  height: auto;
+  vertical-align: -0.35em;
+}
+.heart-burst {
+  --h: clamp(18px, 3vmin, 34px);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.heart-burst-h {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--h);
+  height: auto;
+  margin: calc(var(--h) * -0.455) 0 0 calc(var(--h) * -0.5);
+  visibility: hidden;
+}
+
+/* ---------- narrator props ---------- */
+
+.nr {
+  overflow: hidden;
+}
+.nr-sindoor {
+  color: #fff;
+  background: var(--sindoor);
+}
+.nr-sindoor .nr-mic {
+  color: var(--sindoor);
+  background: var(--haldi);
+}
+.nr-sindoor .nr-line {
+  color: var(--haldi);
+  text-shadow: 0.05em 0.05em 0 var(--alta);
+}
+.nr-prop {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.nr-prop img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45));
+}
+.nr-fly {
+  top: 50%;
+  width: clamp(130px, 18vw, 260px);
+  margin-top: calc(clamp(130px, 18vw, 260px) / -2);
+}
+.nr-fly.nr-left {
+  left: 3vw;
+}
+.nr-fly.nr-right {
+  right: 3vw;
+}
+.nr-rain {
+  top: 0;
+}
+.nr-line,
+.nr-aside,
+.nr-mic {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- swagatam extras ---------- */
+
+.sw-card-art {
+  position: relative;
+}
+.sw-paag {
+  position: absolute;
+  left: 50%;
+  top: -46px;
+  width: 92px;
+  margin-left: -46px;
+  transform-origin: 50% 100%;
+}
+.sw-paag img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+/* White shola mukut perched on the Bengal alpona emblem */
+.sw-mukut {
+  position: absolute;
+  left: 50%;
+  top: -78px;
+  z-index: 2;
+  width: 72px;
+  margin-left: -36px;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 6px 8px rgba(58, 10, 15, 0.28));
+}
+.sw-mukut img {
+  width: 100%;
+  height: auto;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ---------- venue scene ---------- */
+
+.vn {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  gap: clamp(48px, 7vw, 96px);
+  grid-template-columns: minmax(0, 1fr);
+  padding: clamp(90px, 11vw, 150px) 5vw clamp(70px, 8vw, 110px);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 183, 3, 0.12), transparent 60%),
+    #111;
+  isolation: isolate;
+}
+.vn-head {
+  text-align: center;
+}
+.vn-kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--lime);
+}
+.vn-announce {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(44px, 7vw, 110px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--haldi);
+  text-shadow: 0.05em 0.05em 0 var(--sindoor);
+}
+.vn-announce .ch {
+  display: inline-block;
+  margin: 0 0.12em;
+}
+.vn-announce small {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: none;
+  opacity: 0.75;
+}
+.vn-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  width: min(100%, 980px);
+  padding: clamp(14px, 1.6vw, 20px);
+  background: var(--cream);
+  color: var(--ink);
+  border: 4px solid var(--ink);
+  box-shadow: 12px 12px 0 var(--haldi);
+}
+.vn-map {
+  aspect-ratio: 4 / 3;
+  border: 3px solid var(--ink);
+}
+.vn-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.vn-address {
+  padding-right: clamp(0px, 1.5vw, 16px);
+}
+.vn-when {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: var(--cream);
+  background: var(--sindoor);
+}
+.vn-address h3 {
+  margin: 0;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.1;
+}
+.vn-floor {
+  margin: 8px 0 12px;
+  font-weight: 700;
+  color: var(--sindoor);
+}
+.vn-address p {
+  font-size: 15px;
+  line-height: 1.55;
+}
+.vn-address > p:not(.vn-when) {
+  margin: 0 0 6px;
+}
+.vn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.vn-actions .btn-truck {
+  margin-top: 0;
+  font-size: 13px;
+}
+
+/* "How far is it?" — Indian highway milestones: coloured dome, whitewashed post, black-yellow kerb */
+.vn-reach {
+  display: grid;
+  justify-items: center;
+  gap: clamp(28px, 4vw, 48px);
+  width: min(100%, 1040px);
+}
+.vn-reach-head {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: clamp(30px, 3.6vw, 48px);
+  font-weight: 400;
+  color: var(--cream);
+  text-align: center;
+}
+.vn-reach-head .gloss-en {
+  font-size: 11px;
+}
+.vn-reach-head small {
+  font-family: var(--font-body);
+  font-size: 14px;
+  opacity: 0.7;
+}
+.vn-stones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 44px);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vn-stone {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  justify-items: center;
+  text-align: center;
+}
+.vn-stone-post {
+  position: relative;
+  display: grid;
+  width: min(100%, 190px);
+  color: var(--ink);
+  grid-template-rows: auto 1fr;
+  background: #f6f1e7;
+  border-radius: 999px 999px 0 0;
+  box-shadow: inset -10px 0 0 rgba(0, 0, 0, 0.08), 0 16px 24px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+/* clip so posts rise out of the kerb */
+.vn-stone {
+  overflow: hidden;
+  padding-top: 4px;
+}
+.vn-stone-cap {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  font-size: clamp(18px, 2vw, 26px);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--top);
+  border-bottom: 4px solid var(--ink);
+}
+.vn-stone-body {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 14px 10px 18px;
+}
+.vn-stone-body b {
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.vn-stone-en {
+  min-height: 2.6em;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.vn-stone-body strong {
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 400;
+  line-height: 1;
+}
+.vn-stone-body strong small {
+  margin-left: 4px;
+  font-size: 0.35em;
+}
+/* kerb the stones stand on */
+.vn-stone::after {
+  content: "";
+  order: 1;
+  width: 100%;
+  height: 16px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 22px, var(--haldi) 22px 44px);
+  border-top: 3px solid #333;
+}
+.vn-stone-how {
+  order: 2;
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--cream);
+  opacity: 0.85;
+}
+
+/* ---------- journey: Operation Dil Chori ---------- */
+
+.jr-bg-news {
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0 2px, transparent 2px 11px),
+    repeating-linear-gradient(90deg, transparent 0 calc(20% - 2px), rgba(0, 0, 0, 0.25) calc(20% - 2px) 20%),
+    #ece4d0;
+}
+.jr-paper {
+  position: absolute;
+  left: 50%;
+  top: 30vh;
+  z-index: 2;
+  width: min(86vw, 900px);
+  padding: 10px 18px 14px;
+  color: #1c1816;
+  text-align: center;
+  background: #f3ecdb;
+  border-top: 4px double #1c1816;
+  border-bottom: 4px double #1c1816;
+  transform: translateX(-50%) rotate(-1.5deg);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+.jr-masthead {
+  margin: 0 0 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.08em;
+}
+.jr-paper-head {
+  margin: 0;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4.6vw, 64px);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.jr-paper-head span {
+  display: inline-block;
+}
+.jr-paper-sub {
+  margin: 8px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+}
+.jr-meter {
+  position: absolute;
+  right: 5vw;
+  top: 7vh;
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  width: var(--meter-w);
+}
+.jr-heart {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+}
+.jr-meter-num {
+  margin-top: -4px;
+  font-size: clamp(34px, 4vw, 56px);
+  line-height: 1;
+  color: var(--lime);
+  text-shadow: 3px 3px 0 var(--ink);
+}
+.jr-meter small {
+  font-size: 11px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--ink);
+}
+.jr-hearts {
+  position: absolute;
+  inset: -60%;
+  pointer-events: none;
+}
+.jr-hearts > div {
+  width: 100%;
+  height: 100%;
+}
+.jr-taxi {
+  position: absolute;
+  left: 0;
+  bottom: calc(15vh + 4px);
+  z-index: 4;
+  width: clamp(320px, 46vw, 700px);
+}
+.jr-taxi-b {
+  bottom: calc(15vh + 4px);
+}
+.jr-taxi-body {
+  position: relative;
+}
+.jr-taxi-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 14px rgba(0, 0, 0, 0.55));
+}
+.jr-taxi-flip {
+  transform: scaleX(-1);
+}
+/* return trip: mirror the whole crew so it faces west (`scale` composes with GSAP's transform) */
+.jr-taxi-b .jr-taxi-body {
+  scale: -1 1;
+}
+/* the doli rides alone on the return roof — no aunty in front of the bride */
+.jr-taxi-b .rd-roof-2 {
+  display: none;
+}
+.jr-news-print {
+  filter: grayscale(1) contrast(1.6) sepia(0.25) drop-shadow(0 0 0 #f3ecdb) drop-shadow(3px 3px 0 #f3ecdb) drop-shadow(0 14px 12px rgba(0, 0, 0, 0.45));
+}
+.rd {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  transform-origin: 50% 100%;
+}
+.rd img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 6px rgba(0, 0, 0, 0.4));
+}
+.rd-roof-1 {
+  left: 10%;
+  bottom: 74%;
+  width: 26%;
+}
+.rd-roof-2 {
+  left: 34%;
+  bottom: 76%;
+  width: 21%;
+}
+.rd-roof-3 {
+  left: 54%;
+  bottom: 74%;
+  width: 10%;
+}
+.rd-win-1 {
+  z-index: 2;
+  left: 26%;
+  bottom: 38%;
+  width: 13%;
+  rotate: -18deg;
+}
+.rd-win-2 {
+  z-index: 2;
+  left: 47%;
+  bottom: 40%;
+  width: 10%;
+  rotate: 16deg;
+}
+.rd-paag {
+  left: 62%;
+  bottom: 78%;
+  width: 12%;
+}
+.jr-bubble {
+  position: absolute;
+  z-index: 3;
+  padding: 6px 12px;
+  font-size: clamp(12px, 1.2vw, 16px);
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+}
+.jr-bubble-a {
+  left: 0;
+  bottom: 135%;
+}
+.jr-bubble-b {
+  right: -6%;
+  bottom: 110%;
+  background: var(--haldi);
+}
+.jr-doli-roof {
+  position: absolute;
+  z-index: 0;
+  left: 22%;
+  bottom: 104%;
+  width: 36%;
+  padding: 5px;
+  background: var(--haldi);
+  transform: rotate(-2deg);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}
+.jr-doli-roof img {
+  width: 100%;
+  height: auto;
+}
+.jr-doli-roof::before,
+.jr-doli-roof::after {
+  content: "";
+  position: absolute;
+  bottom: -14%;
+  width: 3px;
+  height: 30%;
+  background: #6b3f1d;
+}
+.jr-doli-roof::before {
+  left: 18%;
+}
+.jr-doli-roof::after {
+  right: 18%;
+}
+/* "Just married" — full truck-art tin board hung off the rear bumper */
+.jr-jm {
+  position: absolute;
+  z-index: 3;
+  right: -34%;
+  bottom: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 18px 10px;
+  background:
+    linear-gradient(135deg, var(--sindoor) 0 14px, transparent 14px) top left,
+    linear-gradient(225deg, var(--sindoor) 0 14px, transparent 14px) top right,
+    linear-gradient(45deg, var(--marigold) 0 14px, transparent 14px) bottom left,
+    linear-gradient(315deg, var(--marigold) 0 14px, transparent 14px) bottom right,
+    radial-gradient(circle at 50% 40%, #19b3b0, #0a7e86);
+  background-repeat: no-repeat;
+  border: 5px solid var(--haldi);
+  outline: 3px solid var(--ink);
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 6px var(--rani), 0 14px 18px rgba(0, 0, 0, 0.5);
+  transform: rotate(4deg);
+  transform-origin: 0 50%;
+}
+/* rope tying the board to the taxi */
+.jr-jm::before {
+  content: "";
+  position: absolute;
+  left: -16%;
+  top: 30%;
+  width: 17%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #6b3f1d 0 6px, var(--haldi) 6px 10px);
+}
+.jr-jm-row {
+  display: flex;
+  gap: 0.02em;
+  font-family: var(--font-truck), sans-serif;
+  font-size: clamp(22px, 3vw, 46px);
+  line-height: 1;
+}
+.jr-jm-row-2 {
+  font-size: clamp(18px, 2.4vw, 36px);
+}
+/* each letter: own colour, ink outline, stacked 3D extrusion, little arch */
+.jr-jm b {
+  --c: #fff;
+  --x: var(--sindoor);
+  display: inline-block;
+  font-weight: 400;
+  color: var(--c);
+  -webkit-text-stroke: 1.5px var(--ink);
+  paint-order: stroke fill;
+  text-shadow:
+    1px 1px 0 var(--x),
+    2px 2px 0 var(--x),
+    3px 3px 0 var(--x),
+    4px 4px 0 var(--x),
+    5px 5px 0 var(--ink),
+    6px 7px 4px rgba(0, 0, 0, 0.35);
+  transform: translateY(calc(sin((var(--i) - 1.5) * 0.9rad) * -3px)) rotate(calc((var(--i) - 5) * 1.2deg));
+}
+.jr-jm b:nth-child(5n + 2) {
+  --c: var(--haldi);
+  --x: var(--alta);
+}
+.jr-jm b:nth-child(5n + 3) {
+  --c: var(--rani);
+  --x: #4a0028;
+}
+.jr-jm b:nth-child(5n + 4) {
+  --c: var(--lime);
+  --x: var(--tota-dark);
+}
+.jr-jm b:nth-child(5n) {
+  --c: var(--marigold);
+  --x: var(--sindoor);
+}
+.jr-jm-tag {
+  margin-top: 6px;
+  padding: 2px 10px;
+  font-size: clamp(8px, 0.75vw, 11px);
+  color: var(--ink);
+  background: var(--haldi);
+  border: 2px solid var(--ink);
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%);
+}
+/* पटाका — die-cut sticker slapped next to the bride's doli */
+.jr-pataka {
+  position: absolute;
+  z-index: 3;
+  left: 74%;
+  bottom: 150%;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.1;
+  color: var(--rani);
+  -webkit-text-stroke: 2px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 3px 3px 0 var(--haldi), 5px 5px 0 var(--ink);
+  filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+    drop-shadow(0 8px 8px rgba(0, 0, 0, 0.45));
+  transform: rotate(8deg);
+}
+.jr-pataka::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  bottom: 10%;
+  width: 0.9em;
+  height: 0.5em;
+  background: var(--haldi);
+  -webkit-text-stroke: 0;
+  clip-path: polygon(0 50%, 45% 0, 45% 30%, 100% 30%, 100% 70%, 45% 70%, 45% 100%);
+}
+/* ---------- footer: Chhota Pandit ---------- */
+
+.ft-pandit {
+  position: absolute;
+  right: 4vw;
+  bottom: 30px;
+  z-index: 1;
+  width: clamp(140px, 16vw, 230px);
+}
+.ft-pandit img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.6));
+}
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 768px) {
+  :root {
+    --cut: 14px;
+  }
+  .hero-side {
+    width: 30vw;
+  }
+  .hero-side-l {
+    top: auto;
+    bottom: 5vh;
+    left: 3vw;
+  }
+  .hero-side-r {
+    top: auto;
+    bottom: 7vh;
+    right: 3vw;
+  }
+  .hero-copy {
+    margin-top: -14vh;
+  }
+  .hero-badge {
+    display: none;
+  }
+
+  .tw-panel {
+    width: 100%;
+    height: 54%;
+  }
+  .tw-bihar {
+    top: 0;
+    bottom: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  }
+  .tw-bengal {
+    top: auto;
+    bottom: 0;
+    clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+  }
+  .tw-copy {
+    top: 9%;
+    width: 60%;
+  }
+  .tw-bengal .tw-copy {
+    top: 22%;
+  }
+  .tw-sub {
+    display: none;
+  }
+  .tw-card-a {
+    left: auto;
+    right: 5%;
+    bottom: 20%;
+    width: 36vw;
+  }
+  .tw-card-b {
+    right: auto;
+    left: 5%;
+    bottom: 8%;
+    width: 36vw;
+  }
+  .tw-card-c {
+    display: none;
+  }
+
+  .ev-card {
+    width: 82vw;
+  }
+
+  .jr-notes {
+    top: calc(7vh + 120px);
+    width: calc(89vw - var(--meter-w) - 16px);
+  }
+  /* board hangs off the bumper on desktop; pull it in so it stays on screen */
+  .jr-jm {
+    right: -2%;
+    bottom: -4%;
+    scale: 0.8;
+    transform-origin: 100% 100%;
+  }
+  .jr-taxi {
+    width: 88vw;
+  }
+  .jr {
+    --meter-w: 88px;
+  }
+  .jr-paper {
+    top: 26vh;
+  }
+  .ft-pandit {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin: 30px auto 0;
+  }
+
+  .cd-plates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rs-form {
+    grid-template-columns: 1fr;
+  }
+  .rs-truck {
+    box-shadow: 8px 8px 0 var(--sindoor), 16px 16px 0 var(--ink);
+  }
+  .ft-credits ul {
+    columns: 1;
+  }
+  .sw-cards,
+  .mp-body {
+    grid-template-columns: 1fr;
+  }
+  .sw-card-art {
+    margin-top: -70px;
+    width: 120px;
+  }
+  .sw-mukut {
+    top: -64px;
+    width: 58px;
+    margin-left: -29px;
+  }
+  .vn-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vn-stones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 40px;
+  }
+  .nr-prop.nr-fly {
+    width: 110px;
+    opacity: 0.9;
+  }
+  .mp-map-wrap {
+    position: relative;
+    top: 0;
+  }
+  .mp-map {
+    height: 55vh;
+  }
+}
