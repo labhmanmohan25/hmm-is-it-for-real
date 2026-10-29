@@ -98,7 +98,7 @@ export default function Marquee() {
         rotation: (i) => (i ? 30 : -30),
         autoAlpha: 0,
         ease: "power2.out",
-        scrollTrigger: { trigger: root.current, start: "top 85%", end: "top top", scrub: 0.3 },
+        scrollTrigger: { trigger: root.current, start: "top bottom", end: "center 60%", scrub: 0.3 },
       });
 
       return () => {

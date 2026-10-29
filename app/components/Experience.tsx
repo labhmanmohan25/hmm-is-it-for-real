@@ -69,7 +69,9 @@ export default function Experience() {
     gsap.utils.toArray<HTMLElement>("[data-wipe]").forEach((el) => {
       gsap.fromTo(
         el,
-        { clipPath: "polygon(0% 22%, 100% 0%, 100% 100%, 0% 100%)" },
+        // Cut depth matches the 14vh the section overlaps its predecessor ([data-wipe] in globals.css),
+        // so the uncut corner always shows the previous section, never the page behind it.
+        { clipPath: "polygon(0% 14vh, 100% 0%, 100% 100%, 0% 100%)" },
         {
           clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
           ease: "none",

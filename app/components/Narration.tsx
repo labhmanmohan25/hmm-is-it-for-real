@@ -26,7 +26,7 @@ export default function Narration({
     () => {
       const split = SplitText.create(".nr-line", { type: "words", wordsClass: "nr-w" });
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root.current, start: "top 85%", end: "bottom 30%", scrub: 0.6 },
+        scrollTrigger: { trigger: root.current, start: "top 85%", end: "center 55%", scrub: 0.6 },
       });
       tl.fromTo(split.words, { opacity: 0.1, y: 18, rotate: () => gsap.utils.random(-6, 6) }, { opacity: 1, y: 0, rotate: 0, stagger: 0.08, ease: "none" }, 0);
 

@@ -352,6 +352,8 @@ body {
   position: relative;
   display: grid;
   padding: clamp(70px, 11vw, 150px) 0;
+  /* the next section wipes up over our last 14vh; keep the tapes clear of it */
+  padding-bottom: calc(clamp(70px, 11vw, 150px) + 14vh);
   overflow: hidden;
   background: var(--sindoor);
 }
@@ -2733,6 +2735,12 @@ body {
 
   .ev-card {
     width: 82vw;
+  }
+
+  /* give each narrator card a full screen so the words finish lighting up before it scrolls away */
+  .nr {
+    min-height: 100svh;
+    align-content: center;
   }
 
   .jr-notes {
