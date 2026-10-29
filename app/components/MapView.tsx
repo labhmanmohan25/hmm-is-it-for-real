@@ -73,7 +73,9 @@ export default function MapView({ days }: { days: Day[] }) {
       )}
       <Marker position={[v.lat, v.lng]} icon={venueIcon}>
         <Tooltip direction="top" offset={[0, -20]} permanent>
-          <b>The wedding!</b> CIDCO Auditorium, Vashi
+          <b>The wedding!</b>
+          <br />
+          CIDCO, Vashi
         </Tooltip>
       </Marker>
       <FitTo points={points} />

@@ -59,7 +59,7 @@ export default function Journey() {
 
       // Act 1 — newspaper baraat drives east (left → right)
       tl.fromTo(taxiA, { x: () => -taxiA.offsetWidth }, { x: () => innerWidth + 40, duration: 0.3 }, 0)
-        .from(".jr-paper-head > *", { yPercent: 120, stagger: 0.02, duration: 0.06, ease: "back.out(2)" }, 0.01)
+        .from(".jr-paper-head > *", { yPercent: 120, autoAlpha: 0, stagger: 0.02, duration: 0.06, ease: "back.out(2)" }, 0.01)
         .to(".jr-paper", { autoAlpha: 0, y: -80, rotate: -6, duration: 0.05, ease: "power2.in" }, 0.13)
         .to(".jr-bg-news", { autoAlpha: 0, duration: 0.05 }, 0.29)
         .fromTo(".jr-bg-kolkata", { autoAlpha: 0, scale: 1.25 }, { autoAlpha: 1, scale: 1, duration: 0.2 }, 0.29)

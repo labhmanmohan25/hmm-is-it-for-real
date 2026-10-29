@@ -131,7 +131,7 @@ export default function Events() {
           </article>
         ))}
         <div className="ev-end" aria-hidden>
-          <Lottie src="/lottie/flower-mandala.json" />
+          <Lottie src="/lottie/golden-mandala.json" />
         </div>
       </div>
       <div className="ev-progress" aria-hidden>
