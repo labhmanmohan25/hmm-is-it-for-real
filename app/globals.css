@@ -350,32 +350,409 @@ body {
 
 .marquee {
   position: relative;
+  --bw: 200vw;
+  --ang: 30deg;
   display: grid;
-  padding: clamp(70px, 11vw, 150px) 0;
-  /* the next section wipes up over our last 14vh; keep the tapes clear of it */
-  padding-bottom: calc(clamp(70px, 11vw, 150px) + 14vh);
+  place-items: center;
+  height: 100svh;
   overflow: hidden;
-  background: var(--sindoor);
+  /* dark study-room teal with a warm reading-lamp pool where the book lands */
+  background:
+    radial-gradient(ellipse 55% 60% at 50% 66%, rgba(255, 196, 110, 0.32), transparent 70%),
+    radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.5), transparent 60%),
+    var(--room);
+}
+@property --room {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0e2f33;
+}
+.ch-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* two tapes in a V under the book (angle and length set from the viewport in Marquee.tsx) */
+.bands {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 .band {
-  grid-area: 1 / 1;
-  align-self: center;
-  /* bands are tens of thousands of px wide: pivot on the viewport centre, not the band's */
-  transform-origin: 50vw 50%;
-  padding: clamp(10px, 1.4vw, 20px) 0;
+  position: absolute;
+  top: 75%;
+  width: var(--bw);
+  translate: 0 -50%;
+  padding: clamp(6px, 0.8vw, 12px) 0;
+  overflow: hidden;
   white-space: nowrap;
-  box-shadow: 0 12px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3);
 }
 .band-a {
   z-index: 2;
-  rotate: -4deg;
+  left: calc(25% - var(--bw) / 2);
+  rotate: var(--ang);
   color: var(--ink);
   background: var(--lime);
 }
 .band-b {
-  rotate: 3.5deg;
+  left: calc(75% - var(--bw) / 2);
+  rotate: calc(-1 * var(--ang));
   color: var(--marigold);
   background: var(--ink);
+  border-block: 2px solid var(--marigold);
+}
+
+/* ---------- the ISM pop-up book: real photos of a tooled-leather cover and an old blank page ---------- */
+.bk {
+  position: relative;
+  z-index: 1;
+  /* each page is 700×1084, so the open spread is 1.29 : 1; nearly full screen */
+  width: min(96vw, 122vh);
+  perspective: 2200px;
+}
+/* an open book lying on a table, seen from a little above: top edge recedes */
+.bk-tilt {
+  transform: rotateX(24deg);
+  transform-origin: 50% 60%;
+  transform-style: preserve-3d;
+}
+.bk-spread {
+  position: relative;
+  aspect-ratio: 1400 / 1084;
+  transform-style: preserve-3d;
+}
+.bk-page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 9% 8% 8% 11%;
+  color: #2d1c0e;
+  font-family: var(--font-hand), cursive;
+  font-size: clamp(11px, min(1.65vw, 2.2vh), 24px);
+  line-height: 1.35;
+  background: url("/art/book-page.webp") center / 100% 100%;
+  perspective: 700px;
+}
+.bk-page p,
+.bk-page h3 {
+  margin: 0;
+}
+.bk-r {
+  right: 0;
+  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.5);
+}
+.bk-front-page {
+  width: auto;
+}
+/* gutter shadows */
+.bk-r::after,
+.bk-front-page::after,
+.bk-back::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 14%;
+  pointer-events: none;
+}
+.bk-r::after,
+.bk-front-page::after {
+  left: 0;
+  background: linear-gradient(90deg, rgba(60, 35, 10, 0.35), transparent);
+}
+.bk-back::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(60, 35, 10, 0.35), transparent);
+}
+.bk-leaf {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+}
+.bk-l0 {
+  z-index: 40;
+}
+.bk-l1 {
+  z-index: 30;
+}
+.bk-l2 {
+  z-index: 20;
+}
+.bk-l3 {
+  z-index: 10;
+}
+.bk-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.bk-front {
+  background: url("/art/book-cover.webp") center / 100% 100%;
+  border-radius: 2px 6px 6px 2px;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.55), inset 0 0 18px rgba(0, 0, 0, 0.35);
+}
+/* gold-foil title sitting in the cover's blank cartouche */
+.bk-foil {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  top: 43.5%;
+  height: 14%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(7px, min(1.1vw, 1.5vh), 15px);
+  line-height: 1.15;
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e6c46a;
+  text-shadow: 0 1px 0 rgba(60, 30, 5, 0.9), 0 -1px 0 rgba(255, 236, 170, 0.35);
+}
+.bk-foil b {
+  font-size: 1.7em;
+  letter-spacing: 0.04em;
+}
+.bk-back {
+  width: auto;
+  padding: 9% 11% 8% 8%;
+  transform: rotateY(180deg);
+  background: none;
+  isolation: isolate;
+}
+/* the left pages are the same page photo, mirrored so the gutter faces the spine */
+.bk-back::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("/art/book-page.webp") center / 100% 100%;
+  transform: scaleX(-1);
+}
+.bk-h {
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #7a1a12;
+  border-bottom: 1px solid rgba(122, 26, 18, 0.35);
+  padding-bottom: 0.3em;
+}
+.bk-big {
+  font-size: 1.7em;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #5a1208;
+}
+.bk-date {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+.bk-hl {
+  --hl: 0;
+  position: relative;
+  z-index: 0;
+  font-weight: 700;
+}
+/* highlighter-pen swipe */
+.bk-hl::before {
+  content: "";
+  position: absolute;
+  left: -0.15em;
+  right: -0.15em;
+  top: 0.45em;
+  bottom: 0;
+  z-index: -1;
+  background: rgba(255, 214, 10, 0.6);
+  border-radius: 0.2em 0.4em 0.3em 0.5em;
+  transform: scaleX(var(--hl)) skewX(-10deg);
+  transform-origin: 0 50%;
+  mix-blend-mode: multiply;
+}
+.bk-hl-pink::before {
+  background: rgba(255, 46, 136, 0.35);
+}
+.bk-heart {
+  display: inline-block;
+  width: 1.1em;
+  height: auto;
+  vertical-align: -0.15em;
+}
+/* pop-ups stand up off the paper from their bottom edge */
+.pop {
+  transform-origin: 50% 100%;
+}
+.bk-polaroid {
+  margin: 0;
+  padding: 0.35em 0.35em 1.5em;
+  background: #f7f1e3;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+.bk-polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(0.2) contrast(1.05);
+}
+.bk-polaroid figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.15em;
+  font-size: 0.85em;
+  text-align: center;
+}
+.bk-ism {
+  margin-top: 12%;
+  rotate: -3deg;
+}
+.bk-stamp {
+  position: absolute;
+  padding: 0.15em 0.5em;
+  font-size: 1.3em;
+  white-space: nowrap;
+  border: 0.14em solid currentColor;
+  border-radius: 0.2em;
+  mix-blend-mode: multiply;
+  visibility: hidden;
+}
+.bk-stamp-1 {
+  right: 10%;
+  bottom: 14%;
+  color: #c1121f;
+}
+.bk-stamp-4 {
+  right: 10%;
+  bottom: 12%;
+  color: #1f7a3a;
+}
+.bk-gang {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2%;
+  height: 34%;
+  margin-top: 6%;
+}
+.bk-gang .pop {
+  display: block;
+  height: 100%;
+}
+.bk-gang .pop:nth-child(even) {
+  height: 86%;
+}
+.bk-gang img {
+  width: auto;
+  height: 100%;
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.35));
+}
+.bk-count b {
+  display: inline-block;
+  min-width: 1.4em;
+  font-size: 1.6em;
+  color: #c1121f;
+}
+.bk-nm {
+  align-self: center;
+  margin-top: auto !important;
+  padding: 0.4em 0.7em;
+  font-size: 0.85em;
+  text-align: center;
+  color: var(--ink);
+  background: #ffd60a;
+  border: 3px solid var(--ink);
+  transform: scale(0);
+}
+.bk-diya {
+  width: 62%;
+  align-self: center;
+  margin-top: 4%;
+}
+.bk-diya img,
+.bk-board img,
+.bk-train img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.4));
+}
+.bk-s3 .bk-polaroid {
+  position: absolute;
+  right: 10%;
+  bottom: 9%;
+  width: 40%;
+  rotate: 6deg;
+}
+.bk-meter {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  margin-top: 8%;
+}
+.bk-meter-heart {
+  width: 70%;
+  height: auto;
+}
+.bk-meter-num {
+  position: absolute;
+  top: 28%;
+  font-size: 2.2em;
+  color: #fff;
+  text-shadow: 0 2px 0 #000;
+}
+.bk-meter small {
+  margin-top: 0.4em;
+  font-size: 0.75em;
+}
+.bk-hearts {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+}
+.bk-hearts > div {
+  width: 100%;
+  height: 100%;
+}
+.bk-board {
+  width: 82%;
+  align-self: center;
+  margin-top: 6%;
+}
+.bk-s4.bk-back {
+  overflow: hidden;
+}
+.bk-train {
+  position: absolute;
+  left: 0;
+  bottom: 6%;
+  width: 90%;
+  overflow: visible;
+  pointer-events: none;
+}
+.bk-s4 .bk-big {
+  margin-top: 10%;
+  font-size: 2.1em;
+}
+.bk-ever {
+  margin-top: 0.4em !important;
+  font-size: 1.15em;
 }
 .band-track,
 .band-set {
@@ -398,223 +775,222 @@ body {
   color: var(--rani);
 }
 
-/* ---------- two worlds ---------- */
+/* ---------- marathon: zero-sleep scoreboard ---------- */
 
-.tw {
+.mr {
   position: relative;
-  height: 100vh;
   height: 100svh;
   overflow: hidden;
+  color: var(--cream);
   background: var(--ink);
+  isolation: isolate;
 }
-.tw-panel {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 54%;
-  overflow: hidden;
-}
-.tw-bihar {
-  left: 0;
-  background: var(--tota-dark);
-  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-}
-.tw-bengal {
-  right: 0;
-  color: #3a0a0f;
-  background:
-    linear-gradient(var(--sindoor), var(--sindoor)) top / 100% 18px no-repeat,
-    linear-gradient(var(--sindoor), var(--sindoor)) bottom / 100% 18px no-repeat,
-    linear-gradient(#c9a227, #c9a227) 0 22px / 100% 2px no-repeat,
-    linear-gradient(#c9a227, #c9a227) 0 calc(100% - 22px) / 100% 2px no-repeat,
-    #f6efe3;
-  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
-}
-.tw-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.3;
-  mix-blend-mode: luminosity;
-}
-.tw-roundel {
-  position: absolute;
-  right: -10vw;
-  bottom: -12vw;
-  width: min(40vw, 540px);
-  aspect-ratio: 1;
-}
-.tw-roundel img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-  box-shadow: 0 0 0 10px var(--lime), 0 0 0 20px var(--tota-dark), 0 0 0 26px var(--marigold);
-}
-.tw-alpona {
-  position: absolute;
-  left: -20%;
-  bottom: -35%;
-  width: min(80vw, 900px);
-  aspect-ratio: 1;
-  opacity: 0.18;
-  background: var(--sindoor);
-  -webkit-mask: url("/art/alpona-star.webp") center / contain no-repeat;
-  mask: url("/art/alpona-star.webp") center / contain no-repeat;
-}
-.tw-copy {
-  position: absolute;
-  top: 15%;
-  left: 7%;
-  z-index: 2;
-  /* Wide enough for मिथिला at the title's largest size. 430px clipped the final ला. */
-  width: min(88%, 720px);
-}
-.tw-bengal .tw-copy {
-  left: auto;
-  right: 7%;
-  text-align: right;
-}
-.tw-kicker {
-  margin: 0;
-  font-size: clamp(11px, 1.05vw, 14px);
-  color: var(--lime);
-}
-.tw-bengal .tw-kicker {
-  font-family: var(--font-body);
-  font-weight: 600;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--sindoor);
-}
-.tw-mask {
-  overflow: hidden;
-  font-size: clamp(64px, 11.5vw, 190px);
-  /* Yatra One paints outside the em box; keep the matra inside the reveal clip. */
-  padding-block: 0.2em;
-  margin-block: -0.2em;
-}
-.tw-title {
-  margin: 0;
-  font-size: 1em;
-  line-height: 1.35;
-  white-space: nowrap;
-  color: var(--haldi);
-  text-shadow: 0.05em 0.05em 0 var(--ink);
-}
-.tw-couplet,
-.tw-sub {
-  max-width: 430px; /* keep the old column measure; only the title needed the extra width */
-}
-.tw-bengal .tw-couplet,
-.tw-bengal .tw-sub {
-  margin-left: auto;
-}
-.tw-bengal .tw-title {
-  color: var(--sindoor);
-  text-shadow: none;
-}
-.tw-bengal .tw-sub {
-  color: #3a0a0f;
-}
-.tw-sub {
-  margin: 4px 0 0;
-  font-size: clamp(14px, 1.25vw, 18px);
-  line-height: 1.55;
-}
-.tw-card {
-  position: absolute;
-  z-index: 1;
-  margin: 0;
-  padding: 8px;
-  background: var(--cream);
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.5);
-}
-.tw-card img {
-  width: 100%;
-  height: auto;
-}
-.tw-card figcaption {
-  padding-top: 6px;
-  font-family: var(--font-truck);
-  font-size: 11px;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-.tw-card-a {
-  left: 9%;
-  bottom: 9%;
-  width: clamp(170px, 23vw, 370px);
-  rotate: -5deg;
-}
-.tw-card-b {
-  right: 8%;
-  bottom: 13%;
-  width: clamp(170px, 23vw, 370px);
-  rotate: 3deg;
-  background: #fff;
-  outline: 2px solid var(--sindoor);
-  outline-offset: -5px;
-}
-.tw-card-c {
-  right: 42%;
-  bottom: 5%;
-  width: clamp(100px, 12vw, 200px);
-  rotate: -4deg;
-  background: #fff;
-  outline: 2px solid var(--sindoor);
-  outline-offset: -5px;
-}
-.tw-center {
-  --size: min(78vmin, 640px);
+.mr-rays {
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 5;
-  width: var(--size);
-  aspect-ratio: 1;
-  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
-  display: grid;
-  place-items: center;
-  visibility: hidden;
+  z-index: -2;
+  width: 220vmax;
+  height: 220vmax;
+  margin: -110vmax 0 0 -110vmax;
+  background: repeating-conic-gradient(from 0deg, #1b1214 0 6deg, #241619 6deg 12deg);
 }
-.tw-center::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  inset: 22%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(13, 10, 11, 0.94) 55%, rgba(13, 10, 11, 0) 71%);
-}
-.tw-mandala,
-.tw-mandala > div {
+.mr-disco {
+  --hue: 0;
   position: absolute;
   inset: 0;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  background:
+    radial-gradient(circle at 20% 30%, hsl(calc(var(--hue) * 1deg) 100% 60% / 0.55), transparent 40%),
+    radial-gradient(circle at 80% 25%, hsl(calc((var(--hue) + 120) * 1deg) 100% 60% / 0.55), transparent 40%),
+    radial-gradient(circle at 50% 85%, hsl(calc((var(--hue) + 240) * 1deg) 100% 60% / 0.5), transparent 45%),
+    repeating-conic-gradient(from calc(var(--hue) * 1deg), #ff2e88 0 10deg, #7b2cbf 10deg 20deg);
 }
-.tw-center-copy {
-  position: relative;
-  z-index: 2;
+.mr-fireworks {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  opacity: 0.85;
+}
+.mr-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.mr-stage > * {
+  grid-area: 1 / 1;
+}
+/* kicker, scoreboard and "…marathon" stack as one centred column so they can never overlap */
+.mr-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(14px, 3vh, 34px);
+  max-height: 100svh;
+}
+.mr-kicker {
   display: grid;
   justify-items: center;
+  gap: 10px;
+  margin: 0;
   overflow: hidden;
-  text-align: center;
-}
-.tw-center-copy > * {
-  display: block;
-}
-.tw-center-copy .hi,
-.tw-center-copy .bn {
-  font-size: clamp(34px, 6.5vmin, 66px);
-  line-height: 1.25;
-}
-.tw-center-copy .hi {
+  font-family: var(--font-truck);
+  font-size: clamp(22px, 3.4vw, 46px);
+  text-transform: uppercase;
   color: var(--haldi);
 }
-.tw-center-copy .truck {
-  margin-top: 6px;
-  font-size: clamp(11px, 1.7vmin, 15px);
+.mr-mic {
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--lime);
+  transform: rotate(-3deg);
+}
+.mr-board {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  gap: clamp(12px, 3vw, 44px);
+}
+.mr-tile {
+  --glow: 0;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: clamp(10px, 1.6vw, 20px) clamp(14px, 2.4vw, 32px) clamp(12px, 1.6vw, 18px);
+  color: var(--ink);
+  background: var(--haldi);
+  border: 5px solid var(--ink);
+  box-shadow: 0 0 0 5px var(--sindoor), 12px 12px 0 5px var(--rani);
+}
+.mr-tile:nth-child(2) {
+  background: var(--lime);
+}
+.mr-tile-2 {
+  background: var(--sindoor);
+  color: var(--cream);
+  box-shadow: 0 0 0 5px var(--haldi), 12px 12px 0 5px var(--ink), 0 0 calc(var(--glow) * 60px) calc(var(--glow) * 20px) var(--sindoor);
+}
+.mr-reel {
+  height: 1em;
+  overflow: hidden;
+  font-family: var(--font-truck);
+  font-size: clamp(70px, min(13vw, 24vh), 200px);
+  line-height: 1;
+  background: var(--ink);
+  color: var(--haldi);
+  padding: 0 0.12em;
+  box-shadow: inset 0 0.18em 0.12em -0.08em rgba(0, 0, 0, 0.9), inset 0 -0.18em 0.12em -0.08em rgba(0, 0, 0, 0.9);
+}
+.mr-strip {
+  display: grid;
+}
+.mr-strip span {
+  display: block;
+  height: 1em;
+  text-align: center;
+}
+.mr-tile b {
+  font-size: clamp(16px, 2.2vw, 30px);
+}
+.mr-tile small {
+  font-size: clamp(16px, 1.8vw, 24px);
+}
+.mr-board-sub {
+  margin: 0;
+  font-size: clamp(22px, 3.4vw, 46px);
+  color: var(--haldi);
+}
+.mr-sleep,
+.mr-dance {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  visibility: hidden;
+}
+.mr-sleep-word,
+.mr-dance-word {
+  font-size: clamp(70px, 17vw, 280px);
+  line-height: 0.9;
   color: var(--lime);
+  text-shadow: 0.04em 0.04em 0 var(--sindoor), 0.08em 0.08em 0 var(--ink);
+}
+.mr-dance-word {
+  display: flex;
+  font-size: clamp(56px, 12.5vw, 220px);
+  color: var(--haldi);
+}
+.mr-dance-word .ch {
+  display: inline-block;
+}
+.mr-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  padding: 0.1em 0.4em;
+  font-size: clamp(36px, 8vw, 120px);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border: 0.09em solid currentColor;
+  border-radius: 0.12em;
+  outline: 0.04em solid currentColor;
+  outline-offset: 0.07em;
+  /* worn rubber-stamp ink */
+  -webkit-mask: repeating-radial-gradient(circle at 30% 40%, #000 0 3px, rgba(0, 0, 0, 0.75) 3px 5px);
+  mask: repeating-radial-gradient(circle at 30% 40%, #000 0 3px, rgba(0, 0, 0, 0.75) 3px 5px);
+  visibility: hidden;
+}
+.mr-stamp-x {
+  color: #ff1f3d;
+  background: rgba(255, 31, 61, 0.12);
+}
+.mr-stamp-ok {
+  top: 66%;
+  color: #2bff88;
+  background: rgba(13, 10, 11, 0.25);
+}
+.mr-dance {
+  z-index: 2;
+}
+.mr-tagline {
+  position: relative;
+  z-index: 3;
+  margin: clamp(90px, 13vw, 200px) 0 0;
+  padding: 6px 14px;
+  font-size: clamp(15px, 1.6vw, 21px);
+  font-style: italic;
+  color: var(--ink);
+  background: var(--haldi);
+}
+.mr-dancers {
+  align-self: end;
+  justify-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2vw;
+  pointer-events: none;
+}
+.mr-dancer {
+  display: block;
+  height: clamp(120px, 24vh, 260px);
+}
+.mr-dancer img {
+  width: auto;
+  height: 100%;
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.5));
+}
+.mr-d2,
+.mr-d4 {
+  height: clamp(100px, 19vh, 210px);
+}
+.mr-d3 {
+  height: clamp(130px, 27vh, 290px);
 }
 
 /* ---------- events ---------- */
@@ -885,6 +1261,9 @@ body {
   z-index: 5;
   width: min(84vw, 380px);
 }
+.jr-note span {
+  white-space: pre-line;
+}
 .jr-note {
   position: absolute;
   inset: 0 0 auto 0;
@@ -1061,6 +1440,7 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
+  top: 64%;
   z-index: -1;
   width: 130vmin;
   margin: -65vmin 0 0 -65vmin;
@@ -1189,6 +1569,40 @@ body {
   color: var(--haldi);
   background: var(--ink);
 }
+.rs-form .rs-food {
+  grid-column: auto;
+}
+.rs-food button {
+  flex-basis: 110px;
+}
+/* Indian food-label marks: green dot in a square for veg, brown triangle for non-veg */
+.rs-dot {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--c);
+  background: #fff;
+}
+.rs-dot::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--c);
+}
+.rs-dot-veg {
+  --c: #1f8a3a;
+}
+.rs-dot-veg::after {
+  border-radius: 50%;
+}
+.rs-dot-nonveg {
+  --c: #8b3a1a;
+}
+.rs-dot-nonveg::after {
+  inset: 2px 1px 3px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
 .rs-events {
   display: flex;
   flex-wrap: wrap;
@@ -1250,7 +1664,7 @@ body {
 .ft {
   position: relative;
   overflow: hidden;
-  padding: clamp(130px, 14vw, 200px) 6vw 50px;
+  padding: clamp(90px, 10vw, 140px) 6vw 40px;
   text-align: center;
   background: var(--ink);
   isolation: isolate;
@@ -1271,42 +1685,29 @@ body {
   width: 100%;
   height: 100%;
 }
-.ft-nimbu {
-  position: absolute;
-  left: 7vw;
-  top: clamp(30px, 5vw, 70px);
-  width: clamp(60px, 7vw, 110px);
-  transform-origin: 50% 0;
+.ft-baraat {
+  width: 100vw;
+  margin: 10px calc(50% - 50vw) 24px;
+  overflow: hidden;
+  border-bottom: 6px solid var(--marigold);
 }
-.ft-nimbu img {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.6));
+.ft-baraat-track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  padding: 70px 2vw 0;
 }
-.ft-nazar {
-  margin: 0;
-  font-size: clamp(40px, 7.5vw, 116px);
-  line-height: 1.25;
-  color: var(--lime);
-  text-shadow: 0.04em 0.04em 0 var(--sindoor);
+.ft-puppet {
+  display: block;
+  flex: none;
+  height: calc(clamp(90px, 13vw, 190px) * var(--s, 1));
+  transform-origin: 50% 100%;
 }
-.ft-nazar .w {
-  display: inline-block;
-}
-.ft-nazar-en {
-  font-size: clamp(14px, 1.6vw, 20px);
-  color: var(--marigold);
-}
-.ft-sign {
-  max-width: 640px;
-  margin: 40px auto 6px;
-  line-height: 1.6;
-  opacity: 0.85;
-}
-.ft-hash {
-  margin: 0;
-  font-size: clamp(22px, 3vw, 34px);
-  color: var(--rani);
+.ft-puppet img {
+  width: auto;
+  height: 100%;
+  transform: scaleX(var(--flip, 1));
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.45));
 }
 .ft-credits {
   max-width: 920px;
@@ -1434,6 +1835,46 @@ body {
   font-size: clamp(15px, 1.6vw, 20px);
   font-style: italic;
   opacity: 0.75;
+}
+
+/* narrator show-cards: spinning rays, stopwatch and stamp */
+.nr-show {
+  min-height: 100svh;
+  align-content: center;
+  isolation: isolate;
+}
+/* four-point twinkle built from two crossed glints */
+.nr-spark {
+  position: absolute;
+  z-index: 0;
+  width: var(--sz);
+  height: var(--sz);
+  background:
+    radial-gradient(closest-side, #fff 0, rgba(255, 255, 255, 0) 70%),
+    conic-gradient(from 45deg, transparent 0 10deg, #fff6b0 10deg 20deg, transparent 20deg 100deg, #fff6b0 100deg 110deg, transparent 110deg 190deg, #fff6b0 190deg 200deg, transparent 200deg 280deg, #fff6b0 280deg 290deg, transparent 290deg);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px rgba(255, 236, 140, 0.9));
+  pointer-events: none;
+}
+.nr-ivory .nr-spark {
+  filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.9));
+}
+.nr-show .nr-line {
+  font-size: clamp(24px, min(3.8vw, 6vh), 58px);
+}
+.nr-rays {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: 220vmax;
+  height: 220vmax;
+  margin: -110vmax 0 0 -110vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 214, 10, 0.16) 0 7deg, transparent 7deg 14deg);
+  pointer-events: none;
+}
+.nr-ivory .nr-rays {
+  background: repeating-conic-gradient(from 0deg, rgba(217, 4, 41, 0.07) 0 7deg, transparent 7deg 14deg);
 }
 
 /* ---------- swagatam ---------- */
@@ -1575,36 +2016,6 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- two worlds additions ---------- */
-
-.tw-title .gloss-en {
-  font-size: 13px;
-  letter-spacing: 0.3em;
-}
-.tw-couplet {
-  margin: 4px 0 10px;
-  font-size: clamp(20px, 2vw, 30px);
-  color: var(--lime);
-}
-.tw-couplet .gloss {
-  align-items: flex-start;
-}
-.tw-bengal .tw-couplet {
-  color: var(--sindoor);
-}
-.tw-bengal .tw-couplet .gloss,
-.tw-bengal .tw-title .gloss {
-  align-items: flex-end;
-}
-.tw-bihar .tw-title .gloss {
-  align-items: flex-start;
-}
-.tw-couplet .gloss-en {
-  font-size: 11px;
-  text-transform: none;
-  letter-spacing: 0.02em;
-}
-
 /* ---------- journey additions ---------- */
 
 .jr-bg-mithila,
@@ -1725,34 +2136,85 @@ body {
   box-shadow: 6px 6px 0 var(--sindoor);
 }
 .mp-poster {
+  position: relative;
   width: min(100%, 1200px);
-  padding: 16px;
-  background: #fff3dc;
+  padding: clamp(12px, 1.6vw, 22px);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255, 183, 3, 0.18), transparent 40%),
+    #fff3dc;
   border: 4px solid var(--ink);
-  box-shadow: 10px 10px 0 var(--marigold);
+  box-shadow: 10px 10px 0 var(--marigold), 20px 20px 0 var(--ink);
 }
+/* header = a yellow Indian Railways station board */
 .mp-poster-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 6px;
-  padding-bottom: 12px;
-  font-size: 13px;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding-bottom: 18px;
 }
-.mp-poster-head .truck {
-  font-size: 22px;
+.mp-board {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 28px);
+  width: min(100%, 720px);
+  padding: 10px 24px 12px;
+  color: var(--ink);
+  background: #ffd60a;
+  border: 5px solid var(--ink);
+  box-shadow: inset 0 0 0 3px #ffd60a, inset 0 0 0 5px var(--ink);
+}
+.mp-board .hi {
+  font-size: clamp(22px, 3vw, 40px);
+}
+.mp-board b {
+  font-size: clamp(26px, 3.6vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.mp-board-days {
+  font-size: clamp(14px, 1.6vw, 20px);
   color: var(--sindoor);
+}
+.mp-poster-note {
+  font-size: 13px;
+  opacity: 0.8;
 }
 .mp-body {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
-  gap: 16px;
+  gap: clamp(14px, 2vw, 26px);
   align-items: start;
 }
+/* map taped onto the poster */
 .mp-map-wrap {
   position: sticky;
   top: 20px;
   border: 3px solid var(--ink);
+  rotate: -0.6deg;
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.2);
+}
+.mp-map-wrap::before,
+.mp-map-wrap::after {
+  content: "";
+  position: absolute;
+  z-index: 500;
+  width: 90px;
+  height: 26px;
+  background: rgba(255, 245, 200, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+}
+.mp-map-wrap::before {
+  left: -24px;
+  top: 10px;
+  rotate: -38deg;
+}
+.mp-map-wrap::after {
+  right: -24px;
+  bottom: 10px;
+  rotate: -38deg;
 }
 .mp-map {
   width: 100%;
@@ -1765,27 +2227,31 @@ body {
 }
 .mp-days {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
+/* each day is a local-train line: coloured rail, stations as dots */
 .mp-day {
-  padding: 12px 14px;
+  padding: 12px 14px 14px;
   background: #fff;
-  border-left: 8px solid var(--c);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--c);
 }
 .mp-day header {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 4px 10px;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 .mp-day header b {
-  font-size: 18px;
-  color: var(--c);
+  padding: 2px 10px;
+  font-size: 15px;
+  color: #fff;
+  background: var(--c);
+  border-radius: 999px;
 }
 .mp-day header span {
-  font-weight: 700;
+  font-weight: 800;
 }
 .mp-route {
   margin-left: auto;
@@ -1793,16 +2259,33 @@ body {
   font-weight: 700;
   color: var(--c);
 }
-.mp-day ol {
+.mp-line {
+  --rail: 1;
+  position: relative;
   display: grid;
-  gap: 6px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+.mp-line::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  bottom: 8px;
+  width: 6px;
+  margin-left: -3px;
+  background: var(--c);
+  border-radius: 3px;
+  transform: scaleY(var(--rail));
+  transform-origin: 50% 0;
+}
 .mp-stop {
+  position: relative;
   display: flex;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
   font-size: 14px;
 }
 .mp-stop a {
@@ -1819,11 +2302,28 @@ body {
   opacity: 0.7;
 }
 .mp-n {
+  position: relative;
+  z-index: 1;
   flex: none;
-  width: 34px;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
   font-family: var(--font-truck);
-  font-size: 12px;
-  color: var(--c);
+  font-size: 9px;
+  color: var(--ink);
+  background: #fff;
+  border: 3px solid var(--c);
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.mp-eat .mp-n {
+  border-radius: 5px;
+}
+.mp-stop:hover .mp-n {
+  color: #fff;
+  background: var(--c);
+  transform: scale(1.25);
 }
 .mp-actions {
   display: flex;
@@ -1892,6 +2392,269 @@ body {
   opacity: 0.7;
 }
 
+
+/* ---------- section intros: narrator line living inside the next section ---------- */
+
+.si {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 86svh;
+  padding: 0 4vw;
+  text-align: center;
+}
+.si-mic {
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--lime);
+  transform: rotate(-3deg);
+}
+.si-line {
+  max-width: 1100px;
+  margin: 0;
+  font-family: var(--font-truck);
+  font-size: clamp(30px, 5vw, 76px);
+  line-height: 1.12;
+  text-transform: uppercase;
+}
+.si-w {
+  display: inline-block;
+}
+.si-aside {
+  margin: 0;
+  padding: 4px 14px;
+  font-size: clamp(15px, 1.7vw, 22px);
+  font-style: italic;
+}
+
+/* Mumbai: scrolling through the intro is a night-to-sunrise over the Sea Link. Nothing animates,
+   the sky is one long gradient and the photo is pinned to the viewport, so the scroll does it. */
+.mp {
+  background: linear-gradient(
+    180deg,
+    #111 0,
+    #10002b 18vh,
+    #3c096c 38vh,
+    #9d0208 60vh,
+    #ff2e88 78vh,
+    #ff7b00 98vh,
+    #ffd60a 118vh,
+    #fff3dc 150vh,
+    #fff3dc 100%
+  );
+}
+.mp-intro {
+  color: var(--cream);
+  isolation: isolate;
+}
+.mp-intro::before {
+  content: "";
+  position: absolute;
+  inset: -14vh calc(50% - 50vw) -20vh;
+  z-index: -1;
+  background: url("/art/sea-link.webp") center / cover fixed;
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+  -webkit-mask: linear-gradient(180deg, transparent 0, #000 25%, #000 65%, transparent 100%);
+  mask: linear-gradient(180deg, transparent 0, #000 25%, #000 65%, transparent 100%);
+}
+.mp-intro .si-line {
+  color: var(--haldi);
+  text-shadow: 0.05em 0.05em 0 var(--sindoor), 0.1em 0.1em 0 var(--ink);
+}
+.mp-intro .si-aside {
+  color: var(--ink);
+  background: var(--haldi);
+  transform: rotate(2deg);
+}
+
+/* RSVP: haldi turns into mehendi as you scroll down into the form */
+.rs {
+  background: linear-gradient(
+    180deg,
+    #fff3dc 0,
+    #ffd60a 28vh,
+    #ffb703 52vh,
+    #e9c46a 70vh,
+    #80b918 92vh,
+    #2b9348 112vh,
+    var(--tota-dark) 140vh,
+    var(--tota-dark) 100%
+  );
+}
+.rs-intro {
+  color: var(--ink);
+  isolation: isolate;
+}
+.rs-intro::before {
+  content: "";
+  position: absolute;
+  inset: -14vh calc(50% - 50vw) -10vh;
+  z-index: -1;
+  background: url("/art/marigold-painting.webp") center / 46vmin auto repeat fixed;
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  -webkit-mask: linear-gradient(180deg, transparent 0, #000 25%, #000 60%, transparent 100%);
+  mask: linear-gradient(180deg, transparent 0, #000 25%, #000 60%, transparent 100%);
+}
+.rs-intro .si-line {
+  color: var(--sindoor);
+  text-shadow: 0.05em 0.05em 0 var(--cream);
+}
+.rs-intro .si-mic {
+  color: var(--haldi);
+  background: var(--ink);
+}
+.rs-intro .si-aside {
+  color: var(--cream);
+  background: var(--tota-dark);
+  transform: rotate(-2deg);
+}
+
+/* ---------- Mumbai local train tickets (day picker) ---------- */
+
+.mp-picker {
+  gap: clamp(10px, 1.6vw, 20px);
+  perspective: 900px;
+}
+.mp-picker .tk {
+  --tk: #ffd1e3;
+  --tk-ink: #8d0047;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 2px;
+  width: clamp(140px, 15vw, 180px);
+  min-width: 0;
+  padding: 12px 12px 14px;
+  font: inherit;
+  color: var(--tk-ink);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 9px),
+    var(--tk);
+  border: 0;
+  /* perforated ticket edges */
+  -webkit-mask:
+    radial-gradient(circle 6px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle 6px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  filter: drop-shadow(0 6px 0 var(--ink));
+  cursor: pointer;
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.25s, filter 0.25s;
+}
+.mp-picker .tk:nth-child(odd) {
+  --r: -2.5deg;
+}
+.mp-picker .tk:nth-child(even) {
+  --r: 2deg;
+}
+.mp-picker .tk:hover {
+  transform: translateY(-8px) rotate(calc(var(--r) * -1.5));
+}
+.tk-green {
+  --tk: #c7f9cc !important;
+  --tk-ink: #0f5132 !important;
+}
+.tk-yellow {
+  --tk: #fff3a3 !important;
+  --tk-ink: #6b4f00 !important;
+}
+.tk-blue {
+  --tk: #cde7ff !important;
+  --tk-ink: #003a75 !important;
+}
+.tk-ours {
+  --tk: var(--ink) !important;
+  --tk-ink: var(--haldi) !important;
+}
+.tk-head {
+  width: 100%;
+  padding-bottom: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1.5px dashed currentColor;
+}
+.mp-picker .tk b {
+  margin-top: 4px;
+  font-size: clamp(40px, 4vw, 54px);
+  line-height: 1;
+}
+.mp-picker .tk .tk-word {
+  font-size: 17px;
+  font-weight: 800;
+}
+.mp-picker .tk .tk-line {
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.85;
+}
+.tk-route {
+  margin-top: 6px;
+  padding-top: 4px;
+  width: 100%;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-top: 1.5px dashed currentColor;
+}
+.tk-punch {
+  position: absolute;
+  right: 14px;
+  top: 30px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.6);
+  transform: scale(0);
+}
+.tk-ours .tk-punch {
+  background: var(--cream);
+}
+.tk-stamp {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  translate: -50% -50%;
+  padding: 2px 8px;
+  font-size: 18px;
+  color: var(--sindoor);
+  border: 3px solid currentColor;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.tk-ours .tk-stamp {
+  color: var(--lime);
+  mix-blend-mode: normal;
+}
+.mp-picker .tk.on {
+  color: var(--tk-ink);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 9px),
+    var(--tk);
+  box-shadow: none;
+  filter: drop-shadow(0 6px 0 var(--ink)) drop-shadow(6px 10px 0 var(--sindoor));
+}
+.mp-picker .tk.on .tk-punch {
+  transform: scale(1);
+}
+.mp-picker .tk.on .tk-stamp {
+  opacity: 1;
+}
+
 /* ---------- hero: pre-hide until entrance runs (no flash) ---------- */
 
 .js .hero-copy,
@@ -1933,74 +2696,6 @@ body {
   transform-origin: 50% 100%;
 }
 
-/* ---------- connected transitions ---------- */
-
-[data-wipe] {
-  position: relative;
-  z-index: 2;
-  margin-top: -14vh;
-  padding-top: calc(14vh + clamp(60px, 9vw, 120px)) !important;
-}
-.courier {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 60;
-  visibility: hidden;
-  pointer-events: none;
-  will-change: transform;
-}
-.courier img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-/* Bengal alpona: round red motif on the welcome card → faint star alpona behind the Bangla panel */
-.courier-alpona {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  opacity: calc(1 - 0.82 * var(--p, 0));
-}
-.courier-alpona::before,
-.courier-alpona::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--sindoor);
-}
-.courier-alpona::before {
-  border-radius: 50%;
-  opacity: calc(1 - var(--p, 0));
-  -webkit-mask: url("/art/alpona-round.webp") center / contain no-repeat;
-  mask: url("/art/alpona-round.webp") center / contain no-repeat;
-}
-.courier-alpona::after {
-  opacity: var(--p, 0);
-  -webkit-mask: url("/art/alpona-star.webp") center / contain no-repeat;
-  mask: url("/art/alpona-star.webp") center / contain no-repeat;
-}
-/* Madhubani roundel: card's lime/ink ring grows into the panel's lime/green/marigold rings */
-.courier-roundel-img {
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 calc(6px + 4px * var(--p, 0)) var(--lime),
-    0 0 0 calc(6px + 14px * var(--p, 0)) var(--tota-dark),
-    0 0 0 calc(12px - 6px * var(--p, 0)) var(--ink),
-    0 0 0 calc(12px + 14px * var(--p, 0)) var(--marigold);
-}
-.courier-heart {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
-}
-.tw-heart {
-  display: block;
-  width: clamp(56px, 10vmin, 96px);
-  height: auto;
-  margin-inline: auto;
-}
 .plate-heart {
   display: inline-block;
   width: 1.5em;
@@ -2052,15 +2747,23 @@ body {
   filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45));
 }
 .nr-fly {
-  top: 50%;
-  width: clamp(130px, 18vw, 260px);
-  margin-top: calc(clamp(130px, 18vw, 260px) / -2);
+  top: var(--top, 50%);
+  width: min(var(--w, 240px), 19vw);
+  translate: 0 -50%;
 }
 .nr-fly.nr-left {
-  left: 3vw;
+  left: var(--off, 3vw);
 }
 .nr-fly.nr-right {
-  right: 3vw;
+  right: var(--off, 3vw);
+}
+.nr-round img {
+  border-radius: 50%;
+}
+/* narrator cards with props get the whole screen */
+.nr:has(.nr-prop) {
+  min-height: 100svh;
+  align-content: center;
 }
 .nr-rain {
   top: 0;
@@ -2072,7 +2775,139 @@ body {
   z-index: 1;
 }
 
-/* ---------- swagatam extras ---------- */
+/* ---------- swagatam: garlands, kalash, finale ---------- */
+
+.sw {
+  overflow: clip;
+}
+.sw-garland {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  width: clamp(90px, 13vw, 210px);
+  pointer-events: none;
+}
+.sw-garland img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 14px rgba(58, 10, 15, 0.3));
+}
+.sw-garland-l {
+  left: 1vw;
+}
+.sw-garland-r {
+  right: 1vw;
+  transform: scaleX(-1);
+}
+.sw-hello {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 3vw, 40px);
+}
+.sw-kalash {
+  flex: none;
+  width: clamp(54px, 7vw, 110px);
+}
+.sw-kalash img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 12px rgba(58, 10, 15, 0.3));
+}
+
+/* one heart: blooms in the middle of the cards once the emblems collide */
+.sw-cards {
+  position: relative;
+}
+.sw-cards .sw-card {
+  z-index: 1;
+}
+.sw-card-art {
+  z-index: 3;
+}
+.sw-one-flash {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  width: 30vmin;
+  height: 30vmin;
+  margin: -15vmin 0 0 -15vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0, var(--haldi) 35%, rgba(255, 183, 3, 0) 70%);
+  opacity: 0;
+  pointer-events: none;
+}
+.sw-one-center {
+  --size: clamp(250px, 27vw, 380px);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  aspect-ratio: 1;
+  visibility: hidden;
+}
+.sw-one-center::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(13, 10, 11, 0.94) 55%, rgba(13, 10, 11, 0) 71%);
+}
+.sw-one-mandala,
+.sw-one-mandala > div {
+  position: absolute;
+  inset: 0;
+}
+.sw-one-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+.sw-one-copy > * {
+  display: block;
+}
+.sw-one-copy .hi,
+.sw-one-copy .bn {
+  font-size: clamp(24px, 2.6vw, 38px);
+  line-height: 1.25;
+}
+.sw-one-copy .hi {
+  color: var(--haldi);
+}
+.sw-one-copy .bn {
+  color: #fff;
+}
+.sw-one-copy .truck {
+  margin-top: 4px;
+  font-size: clamp(9px, 0.9vw, 12px);
+  color: var(--lime);
+}
+.sw-one-heart {
+  display: block;
+  width: clamp(38px, 4vw, 58px);
+  height: auto;
+  margin-inline: auto;
+}
+.sw-one-hearts {
+  position: absolute;
+  inset: -20%;
+  z-index: 3;
+  pointer-events: none;
+}
+.sw-one-hearts > div {
+  width: 100%;
+  height: 100%;
+}
+
 
 .sw-card-art {
   position: relative;
@@ -2123,7 +2958,75 @@ body {
   isolation: isolate;
 }
 .vn-head {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: 0 0 70px;
+  overflow: hidden;
   text-align: center;
+}
+/* platform at night: real local-train photo pinned to the viewport, darkened */
+.vn {
+  background:
+    linear-gradient(180deg, rgba(10, 8, 9, 0.55) 0, rgba(10, 8, 9, 0.82) 45vh, #111 110vh),
+    url("/art/local-train.webp") center top / cover fixed,
+    #111 !important;
+}
+.vn-led {
+  width: min(92vw, 1100px);
+  padding: 14px 0;
+  overflow: hidden;
+  background: #0b0b0b;
+  border: 6px solid #2a2a2a;
+  border-radius: 10px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9), 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+.vn-led-track {
+  display: flex;
+  width: max-content;
+}
+.vn-led-track span {
+  font-family: var(--font-truck), var(--font-hindi), sans-serif;
+  font-size: clamp(26px, 4.6vw, 64px);
+  line-height: 1.1;
+  white-space: nowrap;
+  color: #ffae00;
+  text-shadow: 0 0 6px #ff8c00, 0 0 18px rgba(255, 140, 0, 0.6);
+  /* dot-matrix: show the glyphs only through a grid of round LEDs */
+  -webkit-mask: radial-gradient(circle, #000 52%, transparent 56%) 0 0 / 5px 5px;
+  mask: radial-gradient(circle, #000 52%, transparent 56%) 0 0 / 5px 5px;
+}
+.vn-doors {
+  margin: 0;
+  font-size: 13px;
+  color: var(--lime);
+}
+.vn-train {
+  position: absolute;
+  left: 0;
+  bottom: 22px;
+  z-index: -1;
+  width: 160vw;
+  opacity: 0.9;
+  filter: blur(1.5px) brightness(0.85);
+  pointer-events: none;
+}
+.vn-train img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.vn-platform {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22px;
+  background: repeating-linear-gradient(90deg, #ffd60a 0 26px, #111 26px 52px);
+  border-top: 4px solid #ffd60a;
 }
 .vn-kicker {
   margin: 0 0 8px;
@@ -2154,6 +3057,102 @@ body {
   color: #fff;
   text-shadow: none;
   opacity: 0.75;
+}
+.vn-places {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 32px);
+  width: min(100%, 1240px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vn-place {
+  --c: var(--haldi);
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+  background: var(--cream);
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--c);
+}
+.vn-place-peacock {
+  --c: var(--peacock);
+}
+.vn-place-sindoor {
+  --c: var(--sindoor);
+}
+.vn-place-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-bottom: 4px solid var(--ink);
+  background: #e9e1cf;
+}
+.vn-place-media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* a real photo, when given, covers the top half; the map stays below it */
+.vn-place-media:has(.vn-place-photo) {
+  aspect-ratio: 4 / 5;
+}
+.vn-place-media:has(.vn-place-photo) iframe {
+  position: absolute;
+  inset: 50% 0 0;
+  height: 50%;
+}
+.vn-place-photo {
+  object-fit: cover;
+  height: 50% !important;
+}
+.vn-place-label {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  bottom: -17px;
+  padding: 5px 12px;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--c);
+  border: 3px solid var(--ink);
+  pointer-events: none;
+}
+.vn-place-sindoor .vn-place-label,
+.vn-place-peacock .vn-place-label {
+  color: var(--cream);
+}
+.vn-place-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 30px 20px 22px;
+}
+.vn-place h3 {
+  margin: 0;
+  font-size: clamp(21px, 2vw, 28px);
+  line-height: 1.12;
+}
+.vn-place p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.vn-place .vn-place-when {
+  align-self: flex-start;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: var(--cream);
+  background: var(--sindoor);
+}
+.vn-place .vn-place-addr {
+  font-weight: 700;
+  color: var(--sindoor);
+}
+.vn-place .vn-actions {
+  margin-top: auto;
+  padding-top: 10px;
 }
 .vn-card {
   display: grid;
@@ -2268,7 +3267,8 @@ body {
 }
 /* clip so posts rise out of the kerb */
 .vn-stone {
-  overflow: hidden;
+  /* clip only below the kerb: the back.out overshoot can poke above the box without being cut */
+  clip-path: inset(-120px -60px 0 -60px);
   padding-top: 4px;
 }
 .vn-stone-cap {
@@ -2654,18 +3654,6 @@ body {
 }
 /* ---------- footer: Chhota Pandit ---------- */
 
-.ft-pandit {
-  position: absolute;
-  right: 4vw;
-  bottom: 30px;
-  z-index: 1;
-  width: clamp(140px, 16vw, 230px);
-}
-.ft-pandit img {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.6));
-}
 
 /* ---------- small screens ---------- */
 
@@ -2693,48 +3681,25 @@ body {
     display: none;
   }
 
-  .tw-panel {
-    width: 100%;
-    height: 54%;
-  }
-  .tw-bihar {
-    top: 0;
-    bottom: auto;
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-  }
-  .tw-bengal {
-    top: auto;
-    bottom: 0;
-    clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
-  }
-  .tw-copy {
-    top: 9%;
-    width: 60%;
-  }
-  .tw-bengal .tw-copy {
-    top: 22%;
-  }
-  .tw-sub {
-    display: none;
-  }
-  .tw-card-a {
-    left: auto;
-    right: 5%;
-    bottom: 20%;
-    width: 36vw;
-  }
-  .tw-card-b {
-    right: auto;
-    left: 5%;
-    bottom: 8%;
-    width: 36vw;
-  }
-  .tw-card-c {
-    display: none;
-  }
-
   .ev-card {
     width: 82vw;
+  }
+  .mr-board {
+    gap: 10px;
+  }
+  .mr-tile {
+    border-width: 3px;
+    box-shadow: 0 0 0 3px var(--sindoor), 6px 6px 0 3px var(--rani);
+  }
+  .mr-reel {
+    font-size: 22vw;
+  }
+  .mr-d2,
+  .mr-d4 {
+    display: none;
+  }
+  .sw-garland {
+    width: 70px;
   }
 
   /* give each narrator card a full screen so the words finish lighting up before it scrolls away */
@@ -2764,13 +3729,7 @@ body {
   .jr-paper {
     top: calc(7vh + 250px);
   }
-  .ft-pandit {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    margin: 30px auto 0;
-  }
-
+  
   .cd-plates {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2784,13 +3743,16 @@ body {
   .ft-credits ul {
     columns: 1;
   }
+  .ft-puppet:nth-child(n + 6) {
+    display: none;
+  }
   .sw-cards,
   .mp-body {
     grid-template-columns: 1fr;
   }
   /* stacked cards: leave room for the paag and mukut that perch above each emblem */
   .sw-cards {
-    row-gap: 130px;
+    row-gap: 330px;
     margin-top: 56px;
   }
   .sw-card-art {
@@ -2802,6 +3764,9 @@ body {
     width: 58px;
     margin-left: -29px;
   }
+  .vn-places {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .vn-card {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2810,7 +3775,7 @@ body {
     row-gap: 40px;
   }
   .nr-prop.nr-fly {
-    width: 110px;
+    width: min(var(--w, 240px), 27vw);
     opacity: 0.9;
   }
   .mp-map-wrap {
@@ -2819,5 +3784,13 @@ body {
   }
   .mp-map {
     height: 55vh;
+  }
+}
+
+/* place cards: three across only when there's room for the maps */
+@media (max-width: 1000px) {
+  .vn-places {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 560px;
   }
 }

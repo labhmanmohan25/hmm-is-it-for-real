@@ -23,6 +23,9 @@ const venueIcon = L.divIcon({
   iconAnchor: [22, 22],
 });
 
+// Stops we have exact-enough coordinates for
+const pinned = (d: Day) => d.stops.filter((s): s is typeof s & { lat: number; lng: number } => s.lat != null && s.lng != null);
+
 function FitTo({ points }: { points: [number, number][] }) {
   const map = useMap();
   useEffect(() => {
@@ -34,7 +37,7 @@ function FitTo({ points }: { points: [number, number][] }) {
 export default function MapView({ days }: { days: Day[] }) {
   const v = wedding.venue;
   const points = useMemo<[number, number][]>(
-    () => [[v.lat, v.lng], ...days.flatMap((d) => d.stops.map((s) => [s.lat, s.lng] as [number, number]))],
+    () => [[v.lat, v.lng], ...days.flatMap((d) => pinned(d).map((s) => [s.lat, s.lng] as [number, number]))],
     [days, v.lat, v.lng],
   );
 
@@ -52,24 +55,26 @@ export default function MapView({ days }: { days: Day[] }) {
         maxZoom={19}
         crossOrigin="anonymous"
       />
-      {days.map((d) => (
+      {days.filter((d) => !d.noRoute).map((d) => (
         <Polyline
           key={d.title}
-          positions={d.stops.map((s) => [s.lat, s.lng])}
+          positions={pinned(d).map((s) => [s.lat, s.lng])}
           pathOptions={{ color: d.color, weight: 4, dashArray: "8 8", opacity: 0.85 }}
         />
       ))}
       {days.map((d, di) =>
-        d.stops.map((s, si) => (
-          <Marker key={`${di}-${s.name}`} position={[s.lat, s.lng]} icon={pin(`${di + 1}.${si + 1}`, d.color, s.kind)}>
+        d.stops.map((s, si) =>
+          s.lat == null || s.lng == null ? null : (
+          <Marker key={`${di}-${s.name}`} position={[s.lat, s.lng]} icon={pin(d.noRoute ? `${si + 1}` : `${di + 1}.${si + 1}`, d.color, s.kind)}>
             <Tooltip direction="top" offset={[0, -14]}>
               <b>{s.name}</b>
               <br />
-              {s.kind === "eat" ? "🍛 " : "📍 "}
+              {s.kind === "eat" ? "🍛 " : s.kind === "us" ? "★ " : "📍 "}
               {s.tip}
             </Tooltip>
           </Marker>
-        )),
+          ),
+        ),
       )}
       <Marker position={[v.lat, v.lng]} icon={venueIcon}>
         <Tooltip direction="top" offset={[0, -20]} permanent>

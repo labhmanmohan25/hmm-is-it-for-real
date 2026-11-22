@@ -93,7 +93,7 @@ export default function Events() {
               <span className="hi">कार्यक्रम</span> · <span className="bn">অনুষ্ঠানসূচি</span>
             </p>
           </div>
-          <p className="ev-intro-note truck">{wedding.events.length} events · 2 states · 0 chill →</p>
+          <p className="ev-intro-note truck">{wedding.events.length} events · 2 days · 0 chill →</p>
         </div>
 
         {wedding.events.map((e, i) => (

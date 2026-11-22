@@ -8,12 +8,14 @@ import { art } from "../art";
 import { wedding } from "../wedding";
 import Lottie from "./Lottie";
 import HeartBurst, { type HeartBurstHandle } from "./HeartBurst";
+import SectionIntro from "./SectionIntro";
 
 export default function Rsvp() {
   const root = useRef<HTMLElement>(null);
   const fireworks = useRef<AnimationItem[]>([]);
   const hearts = useRef<HeartBurstHandle>(null);
-  const [side, setSide] = useState<"bihar" | "bengal">("bihar");
+  const [side, setSide] = useState<"groom" | "bride">("groom");
+  const [food, setFood] = useState<Record<string, "Veg" | "Non-veg">>({ day1: "Veg", day2: "Veg" });
 
   useGSAP(
     () => {
@@ -23,7 +25,7 @@ export default function Rsvp() {
         scale: 0.8,
         duration: 1.4,
         ease: "expo.out",
-        scrollTrigger: { trigger: root.current, start: "top 70%" },
+        scrollTrigger: { trigger: ".rs-truck", start: "top 90%" },
       });
       gsap.from(".rs-title .ch", {
         yPercent: 120,
@@ -31,7 +33,7 @@ export default function Rsvp() {
         stagger: 0.04,
         duration: 1,
         ease: "back.out(2)",
-        scrollTrigger: { trigger: root.current, start: "top 55%" },
+        scrollTrigger: { trigger: ".rs-truck", start: "top 70%" },
       });
       gsap.to(".rs-alpona", {
         rotate: 360,
@@ -64,8 +66,9 @@ export default function Rsvp() {
       `RSVP OK PLEASE 🎉 ${wedding.hashtag}`,
       `Name: ${f.get("name")}`,
       `Guests: ${f.get("guests")}`,
-      `Side: ${side === "bihar" ? "Groom's side (Mithila)" : "Bride's side (Bengal)"}`,
+      `Side: ${side === "groom" ? "Groom's side" : "Bride's side"}`,
       `Coming for: ${events}`,
+      ...wedding.meals.map((m) => `Food, ${m.label}: ${food[m.key]}`),
       f.get("note") ? `Note: ${f.get("note")}` : "",
     ]
       .filter(Boolean)
@@ -93,6 +96,10 @@ export default function Rsvp() {
         <HeartBurst ref={hearts} count={22} />
       </div>
 
+      <SectionIntro className="rs-intro" aside="Ab bas aapka intezaar hai — now we are only waiting for you.">
+        Everything is ready. The band, the biryani, the dancing uncles.
+      </SectionIntro>
+
       <div className="rs-truck">
         <div className="rs-crown" aria-hidden />
         <h2 className="rs-title truck-inline" aria-label="RSVP OK Please">
@@ -119,11 +126,11 @@ export default function Rsvp() {
 
           <fieldset className="rs-side">
             <legend>You are from</legend>
-            <button type="button" className={side === "bihar" ? "on" : ""} onClick={() => setSide("bihar")}>
-              <span className="hi">वरपक्ष</span> Groom&apos;s side (Mithila)
+            <button type="button" className={side === "groom" ? "on" : ""} onClick={() => setSide("groom")}>
+              <span className="hi">वरपक्ष</span> Groom&apos;s side
             </button>
-            <button type="button" className={side === "bengal" ? "on" : ""} onClick={() => setSide("bengal")}>
-              <span className="bn">কনেপক্ষ</span> Bride&apos;s side (Bengal)
+            <button type="button" className={side === "bride" ? "on" : ""} onClick={() => setSide("bride")}>
+              <span className="bn">কনেপক্ষ</span> Bride&apos;s side
             </button>
           </fieldset>
 
@@ -137,8 +144,26 @@ export default function Rsvp() {
             ))}
           </fieldset>
 
+          {wedding.meals.map((m) => (
+            <fieldset className="rs-side rs-food" key={m.key}>
+              <legend>Food · {m.label}</legend>
+              {(["Veg", "Non-veg"] as const).map((v) => (
+                <button
+                  type="button"
+                  key={v}
+                  aria-pressed={food[m.key] === v}
+                  className={food[m.key] === v ? "on" : ""}
+                  onClick={() => setFood((f) => ({ ...f, [m.key]: v }))}
+                >
+                  <i className={`rs-dot rs-dot-${v === "Veg" ? "veg" : "nonveg"}`} aria-hidden />
+                  {v}
+                </button>
+              ))}
+            </fieldset>
+          ))}
+
           <label className="rs-note">
-            <span>Anything else? (dietary, dance requests…)</span>
+            <span>Anything else? (allergies, Jain food, dance requests…)</span>
             <textarea name="note" rows={2} placeholder="Please play Lollipop Lagelu AND Ami Je Tomar" />
           </label>
 

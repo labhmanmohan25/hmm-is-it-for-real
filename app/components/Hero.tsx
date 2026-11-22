@@ -129,8 +129,7 @@ export default function Hero() {
           <div data-depth="1">
             <figure className="sticker sticker-green" data-jelly>
               <Image {...art("madhubani-peacock")} alt="Madhubani peacock painting from Mithila, Bihar" priority sizes="22vw" />
-              <figcaption className="truck">Mithila</figcaption>
-            </figure>
+                          </figure>
           </div>
         </div>
       </div>
@@ -139,8 +138,7 @@ export default function Hero() {
           <div data-depth="-1">
             <figure className="sticker sticker-red" data-jelly>
               <Image {...art("kalighat-lady-fish")} alt="Kalighat painting of a woman holding a fish, Bengal" priority sizes="22vw" />
-              <figcaption className="truck">Bengal</figcaption>
-            </figure>
+                          </figure>
           </div>
         </div>
       </div>
@@ -172,9 +170,9 @@ export default function Hero() {
           </span>
         </h1>
         <p className="hero-reveal hero-native">
-          <Gloss text={wedding.bride.native} en={`${wedding.bride.name} in Bengali`} />
+          <Gloss text={wedding.bride.native} en={wedding.bride.name} />
           <i>✦</i>
-          <Gloss text={wedding.groom.native} en={`${wedding.groom.name} in Maithili`} />
+          <Gloss text={wedding.groom.native} en={wedding.groom.name} />
         </p>
         <p className="hero-reveal hero-date truck">
           {wedding.dateLabel} <span>·</span> Vashi, Navi Mumbai

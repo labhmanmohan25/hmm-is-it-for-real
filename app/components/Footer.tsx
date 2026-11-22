@@ -1,36 +1,74 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, SplitText, useGSAP } from "./gsap";
+import { gsap, useGSAP } from "./gsap";
 import Image from "next/image";
-import { art } from "../art";
-import { wedding } from "../wedding";
+import { art, type ArtName } from "../art";
 import credits from "../credits.json";
+
+// Kathputli baraat: real Rajasthani puppet photos (Wikimedia Commons, cut out), repeated into a long
+// row of dancers along the bottom of the page. The row stays put; each puppet dances on its own.
+const troupe: ArtName[] = ["puppet-camel", "puppet-dancer", "puppet-pair-a", "puppet-couple", "puppet-pair-b"];
+const baraat = Array.from({ length: 10 }, (_, i) => ({
+  art: troupe[i % troupe.length],
+  flip: i % 4 === 1,
+  size: [1, 0.82, 0.92, 0.76, 0.88][i % 5],
+}));
 
 export default function Footer() {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
-      const split = SplitText.create(".ft-nazar", { type: "words", wordsClass: "w" });
-      gsap.from(split.words, {
-        yPercent: 130,
-        rotate: () => gsap.utils.random(-25, 25),
-        scale: 1.6,
-        autoAlpha: 0,
-        stagger: 0.08,
-        duration: 1.2,
-        ease: "expo.out",
-        scrollTrigger: { trigger: root.current, start: "top 70%" },
+      // Kathputli dance: every puppet hangs from its strings (pivot at the top) and, on each beat of an
+      // imaginary dhol, picks its next move: swing, twirl, hop, shimmy or a bow. Nobody moves in sync.
+      const BEAT = 0.42;
+      const moves: ((el: HTMLElement) => gsap.core.Timeline)[] = [
+        // swing like a pendulum on the strings
+        (el) => {
+          const a = gsap.utils.random(14, 26) * (Math.random() < 0.5 ? -1 : 1);
+          return gsap
+            .timeline()
+            .to(el, { rotate: a, duration: BEAT, ease: "sine.out" })
+            .to(el, { rotate: -a * 0.7, duration: BEAT, ease: "sine.inOut" })
+            .to(el, { rotate: 0, duration: BEAT * 0.8, ease: "sine.in" });
+        },
+        // full twirl
+        (el) =>
+          gsap
+            .timeline()
+            .to(el, { y: -18, duration: BEAT * 0.4, ease: "power2.out" })
+            .to(el, { rotationY: "+=360", duration: BEAT * 1.6, ease: "power2.inOut" }, 0)
+            .to(el, { y: 0, duration: BEAT * 0.5, ease: "bounce.out" }),
+        // two springy hops with a squash on landing
+        (el) => {
+          const tl = gsap.timeline();
+          for (let k = 0; k < 2; k++) {
+            tl.to(el, { y: -gsap.utils.random(22, 44), scaleY: 1.06, rotate: gsap.utils.random(-8, 8), duration: BEAT * 0.45, ease: "power2.out" })
+              .to(el, { y: 0, scaleY: 0.9, duration: BEAT * 0.4, ease: "power2.in" })
+              .to(el, { scaleY: 1, rotate: 0, duration: BEAT * 0.15 });
+          }
+          return tl;
+        },
+        // shimmy: quick side-to-side jiggle with a skew
+        (el) =>
+          gsap
+            .timeline()
+            .to(el, { x: 9, skewX: -8, duration: BEAT / 4, repeat: 5, yoyo: true, ease: "sine.inOut" })
+            .to(el, { x: 0, skewX: 0, duration: BEAT / 4 }),
+        // bow to the audience, then pop back up
+        (el) =>
+          gsap
+            .timeline()
+            .to(el, { rotate: Math.random() < 0.5 ? 22 : -22, scaleY: 0.9, duration: BEAT * 0.7, ease: "power2.out" })
+            .to(el, { rotate: 0, scaleY: 1.05, y: -14, duration: BEAT * 0.5, ease: "back.out(3)" })
+            .to(el, { y: 0, scaleY: 1, duration: BEAT * 0.4, ease: "bounce.out" }),
+      ];
+      gsap.utils.toArray<HTMLElement>(".ft-puppet").forEach((el) => {
+        gsap.set(el, { transformOrigin: "50% 0%", transformPerspective: 600 });
+        const dance = () => moves[Math.floor(Math.random() * moves.length)](el).eventCallback("onComplete", dance);
+        gsap.delayedCall(Math.random() * BEAT * 3, dance);
       });
-      gsap.from(".ft-pandit", {
-        x: "40vw",
-        rotate: 25,
-        duration: 1.2,
-        ease: "back.out(1.4)",
-        scrollTrigger: { trigger: root.current, start: "top 60%" },
-      });
-      gsap.to(".ft-nimbu", { rotate: 12, duration: 1.6, repeat: -1, yoyo: true, ease: "sine.inOut", transformOrigin: "50% 0%" });
     },
     { scope: root },
   );
@@ -39,22 +77,15 @@ export default function Footer() {
     <footer className="ft" ref={root} data-wipe>
       <div className="ft-toran" aria-hidden />
 
-      <div className="ft-nimbu" aria-hidden>
-        <Image {...art("nimbu-mirchi")} alt="" sizes="120px" />
+      <div className="ft-baraat" aria-label="A baraat of dancing Rajasthani kathputli puppets">
+        <div className="ft-baraat-track" aria-hidden>
+          {baraat.map((p, i) => (
+            <span className="ft-puppet" key={i} style={{ "--s": p.size, "--flip": p.flip ? -1 : 1 } as React.CSSProperties}>
+              <Image {...art(p.art)} alt="" sizes="160px" />
+            </span>
+          ))}
+        </div>
       </div>
-
-      <div className="ft-pandit" data-jelly>
-        <Image {...art("chhota-pandit-bb")} alt="Chhota Pandit from Bhool Bhulaiyaa" sizes="220px" />
-      </div>
-
-      <p className="ft-nazar hi">बुरी नज़र वाले तेरा मुँह काला</p>
-      <p className="ft-nazar-en truck">“Evil eye, stay away!” — the nimbu-mirchi has this covered.</p>
-
-      <p className="ft-sign">
-        With love from the families of <b>{wedding.bride.name}</b> ({wedding.bride.roots}) &amp;{" "}
-        <b>{wedding.groom.name}</b> ({wedding.groom.roots})
-      </p>
-      <p className="ft-hash truck">{wedding.hashtag}</p>
 
       <details className="ft-credits">
         <summary>Art credits &amp; licences</summary>

@@ -189,13 +189,6 @@
   "page": "https://commons.wikimedia.org/wiki/File:Decorated_truck,_India,_2013-03_(11551081253).jpg"
  },
  {
-  "name": "nimbu-mirchi",
-  "title": "Nimbu-Mirchi Totka à Jaipur (2).jpg",
-  "artist": "Ji-Elle",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Nimbu-Mirchi_Totka_%C3%A0_Jaipur_(2).jpg"
- },
- {
   "name": "kaali-peeli",
   "title": "Premier Padmini driver doing maintenance on his Kaali-Peeli taxi Mumbai India 21Aug2006.jpg",
   "artist": "Everhard van Eimeren",
@@ -285,5 +278,131 @@
   "artist": "anonymous",
   "license": "CC0",
   "page": "https://commons.wikimedia.org/wiki/File:India,_Calcutta,_Kalighat_painting,_19th_century_-_%22Rai_Raja%22_-_2003.123_-_Cleveland_Museum_of_Art.jpg"
+ },
+ {
+  "name": "puppet-camel",
+  "title": "Kathputli King.jpg",
+  "artist": "Sharvarism",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kathputli_King.jpg"
+ },
+ {
+  "name": "puppet-dancer",
+  "title": "PXL 20260305 054110861.MP Rajasthani Puppet at Amber Fort Jaipur Rajasthan India 04.jpg",
+  "artist": "Sourabh.biswas003",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:PXL_20260305_054110861.MP_Rajasthani_Puppet_at_Amber_Fort_Jaipur_Rajasthan_India_04.jpg"
+ },
+ {
+  "name": "puppet-pair-a",
+  "title": "Kathputli 2024.jpg",
+  "artist": "Aditi Singh 7",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kathputli_2024.jpg"
+ },
+ {
+  "name": "puppet-couple",
+  "title": "Puppet 2.jpg",
+  "artist": "Mtaware",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Puppet_2.jpg"
+ },
+ {
+  "name": "puchka",
+  "title": "Kolkata puchka.jpg",
+  "artist": "Debo654",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kolkata_puchka.jpg"
+ },
+ {
+  "name": "yellow-taxi",
+  "title": "Hindustan Ambassador taxi (Ambassador Taxis in Kolkata).JPG",
+  "artist": "Ryan Hartman",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hindustan_Ambassador_taxi_(Ambassador_Taxis_in_Kolkata).JPG"
+ },
+ {
+  "name": "mishti-doi",
+  "title": "Mishti Doi.jpg",
+  "artist": "Kirti Poddar",
+  "license": "CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Mishti_Doi.jpg"
+ },
+ {
+  "name": "thekua",
+  "title": "Thekua Prasadam of Chhath Puja.jpg",
+  "artist": "Nitish12345kumar",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Thekua_Prasadam_of_Chhath_Puja.jpg"
+ },
+ {
+  "name": "jhalmuri",
+  "title": "Bangladeshi Jhalmuri 20220331.jpg",
+  "artist": "MdsShakil",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Bangladeshi_Jhalmuri_20220331.jpg"
+ },
+ {
+  "name": "ism-heritage",
+  "title": "Heritage Building at IIT Dhanbad 1.jpg",
+  "artist": "Ujjwalagrawal17",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Heritage_Building_at_IIT_Dhanbad_1.jpg"
+ },
+ {
+  "name": "ism-oval",
+  "title": "Oval Ground at IIT ISM Dhanbad.jpg",
+  "artist": "Ujjwalagrawal17",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Oval_Ground_at_IIT_ISM_Dhanbad.jpg"
+ },
+ {
+  "name": "book-cover",
+  "title": "Oeuvres complètes de P.-J. de Béranger - Upper cover (c152i11).jpg",
+  "artist": "Cape, Charles Francois of Paris",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Oeuvres_compl%C3%A8tes_de_P.-J._de_B%C3%A9ranger_-_Upper_cover_(c152i11).jpg"
+ },
+ {
+  "name": "book-page",
+  "title": "Theological miscellany in French - DPLA - e4089d1e1f0ef4592fb7e7ef189e88dc (page 361).jpg",
+  "artist": "Lamoignon, Chrétien-François de, 1735-1789; Ashburnham, Bertram Ashburnham, Earl of, 1797-1878; Barrois, Joseph, approximately 1785-1855; Cockerell, Sydney Carlyle, Sir, 1867-1962; Sotheby's (Firm)",
+  "license": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Theological_miscellany_in_French_-_DPLA_-_e4089d1e1f0ef4592fb7e7ef189e88dc_(page_361).jpg"
+ },
+ {
+  "name": "diya",
+  "title": "Diwali Lamp.jpg",
+  "artist": "Phadke09",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Diwali_Lamp.jpg"
+ },
+ {
+  "name": "diyas",
+  "title": "Diwali diyas.jpg",
+  "artist": "PilotChicago",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Diwali_diyas.jpg"
+ },
+ {
+  "name": "khandeshwar-board",
+  "title": "Khandeshwar Station - Stationboard.jpg",
+  "artist": "Superfast1111",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Khandeshwar_Station_-_Stationboard.jpg"
+ },
+ {
+  "name": "local-side",
+  "title": "MumbaiOpenDoors.JPG",
+  "artist": "Arne Hückelheim",
+  "license": "CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:MumbaiOpenDoors.JPG"
+ },
+ {
+  "name": "rangoli",
+  "title": "Rangoli on Diwali 2020 at Moga, Punjab, India.jpg",
+  "artist": "Nitesh Gill",
+  "license": "CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Rangoli_on_Diwali_2020_at_Moga,_Punjab,_India.jpg"
  }
 ]

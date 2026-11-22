@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bungee, Galada, Outfit, Yatra_One } from "next/font/google";
+import { Bungee, Galada, Kalam, Outfit, Yatra_One } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { wedding } from "./wedding";
@@ -11,10 +11,18 @@ const lotus = localFont({ src: "./fonts/bharat-lotus.woff2", variable: "--font-l
 const yatra = Yatra_One({ variable: "--font-hindi", weight: "400", subsets: ["devanagari", "latin"] });
 const galada = Galada({ variable: "--font-bangla", weight: "400", subsets: ["bengali", "latin"] });
 const outfit = Outfit({ variable: "--font-body", subsets: ["latin"] });
+// Handwriting for the ISM story book
+const kalam = Kalam({ variable: "--font-hand", weight: ["400", "700"], subsets: ["latin", "devanagari"] });
+
+// What WhatsApp / iMessage show when the link is shared
+const shareTitle = `${wedding.bride.name} weds ${wedding.groom.name}`;
+const shareText = `${shareTitle} · 17 & 18 January 2027 · ${wedding.hashtag}`;
 
 export const metadata: Metadata = {
-  title: `${wedding.bride.name} weds ${wedding.groom.name} · शुभ विवाह · শুভ বিবাহ`,
-  description: `A Bihari groom and a Bengali bride. Join us on ${wedding.dateLabel}. ${wedding.hashtag}`,
+  title: shareTitle,
+  description: shareText,
+  openGraph: { title: shareTitle, description: shareText, siteName: shareTitle, type: "website" },
+  twitter: { card: "summary", title: shareTitle, description: shareText },
 };
 
 export const viewport: Viewport = {
@@ -26,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${bungee.variable} ${lotus.variable} ${yatra.variable} ${galada.variable} ${outfit.variable}`}
+      className={`${bungee.variable} ${lotus.variable} ${yatra.variable} ${galada.variable} ${outfit.variable} ${kalam.variable}`}
     >
       <body>
         {/* Lets CSS pre-hide hero pieces until their entrance animation runs (no flash) */}

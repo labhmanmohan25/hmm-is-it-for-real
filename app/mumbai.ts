@@ -5,9 +5,10 @@
 export type Stop = {
   name: string;
   q: string; // Google Maps search text
-  kind: "see" | "eat";
-  lat: number;
-  lng: number;
+  kind: "see" | "eat" | "us";
+  // Leave lat/lng out when unsure of the exact spot: it still lists (and links to Google Maps), just no pin.
+  lat?: number;
+  lng?: number;
   tip: string;
 };
 
@@ -15,6 +16,8 @@ export type Day = {
   title: string;
   native: string;
   color: string;
+  // A collection of places rather than a day's route: no connecting line, no "route" button
+  noRoute?: boolean;
   stops: Stop[];
 };
 
@@ -27,7 +30,7 @@ export const days: Day[] = [
       { name: "Leopold Cafe", q: "Leopold Cafe Colaba", kind: "eat", lat: 18.9226, lng: 72.8318, tip: "Breakfast where half of Bombay's stories start." },
       { name: "Gateway of India", q: "Gateway of India", kind: "see", lat: 18.922, lng: 72.8347, tip: "Go early, before the selfie crowd." },
       { name: "Taj Mahal Palace", q: "The Taj Mahal Palace Mumbai", kind: "see", lat: 18.9217, lng: 72.8331, tip: "Walk the lobby, admire the dome." },
-      { name: "Colaba Causeway", q: "Colaba Causeway", kind: "see", lat: 18.9161, lng: 72.8259, tip: "Street shopping. Bargain like a Bihari." },
+      { name: "Colaba Causeway", q: "Colaba Causeway", kind: "see", lat: 18.9161, lng: 72.8259, tip: "Street shopping. Bargain hard." },
       { name: "Kala Ghoda", q: "Kala Ghoda Mumbai", kind: "see", lat: 18.9285, lng: 72.8322, tip: "Galleries, cafés, heritage lanes." },
       { name: "Britannia & Co.", q: "Britannia & Co Ballard Estate", kind: "eat", lat: 18.9345, lng: 72.8397, tip: "Berry pulao. Lunch only, closed Sundays." },
       { name: "CSMT", q: "Chhatrapati Shivaji Maharaj Terminus", kind: "see", lat: 18.9398, lng: 72.8355, tip: "Gothic UNESCO station — lit up at night." },
@@ -77,3 +80,31 @@ export const days: Day[] = [
     ],
   },
 ];
+
+// Apurva & Manmohan's own Mumbai: schools, vada pav rankings, hangouts. Shown as its own tab in the planner.
+export const ours: Day = {
+  title: "Apurva & Manmohan's Mumbai",
+  native: "हमर मुंबई",
+  color: "#ff2e88",
+  noRoute: true,
+  stops: [
+    { name: "Khandeshwar station", q: "Khandeshwar railway station", kind: "us", lat: 19.0072, lng: 73.0395, tip: "Where Manmohan asked Apurva out. She thought she'd only come to collect Photoshop." },
+    { name: "KV Panvel", q: "Kendriya Vidyalaya Panvel", kind: "us", tip: "Apurva's school." },
+    { name: "Apeejay School, Nerul", q: "Apeejay School Nerul", kind: "us", lat: 19.0382, lng: 73.0133, tip: "Manmohan's school." },
+    { name: "Nityanand Vada Pav", q: "Nityanand Vada Pav", kind: "eat", tip: "Best vada pav we've ever had. #1, not up for debate." },
+    { name: "Aaram Vada Pav", q: "Aaram Vada Pav CSMT", kind: "eat", lat: 18.9405, lng: 72.8347, tip: "Vada pav #2. Opposite CSMT." },
+    { name: "Jimi's Burger, Vashi", q: "Jimis Burger Vashi", kind: "eat", lat: 19.0743, lng: 73.0014, tip: "Our burger place. Go hungry." },
+    { name: "Basque by Breve", q: "Basque by Breve Bandra", kind: "eat", lat: 19.0646, lng: 72.8296, tip: "Burnt Basque cheesecake. Get your own slice." },
+    { name: "Focaccia Raja", q: "Focaccia Raja Mumbai", kind: "eat", tip: "Focaccia, the royal way." },
+    { name: "Persian Darbar", q: "Persian Darbar Byculla", kind: "eat", lat: 18.9756, lng: 72.8327, tip: "Biryani and kebabs, darbar-sized portions." },
+    { name: "Noor Mohammadi", q: "Noor Mohammadi Hotel Bhendi Bazaar", kind: "eat", lat: 18.9575, lng: 72.8318, tip: "Old-school Bhendi Bazaar kitchen." },
+    { name: "Bademiya, Colaba", q: "Bademiya Colaba", kind: "eat", lat: 18.9231, lng: 72.8325, tip: "Late-night seekh kebabs off the street." },
+    { name: "Bandra Bandstand", q: "Bandstand Promenade Bandra", kind: "see", lat: 19.0459, lng: 72.8196, tip: "Sea breeze, rocks, and SRK's gate." },
+    { name: "Sea Link Promenade", q: "Bandra Reclamation Promenade Sea Link", kind: "see", lat: 19.0417, lng: 72.8189, tip: "Watch the Sea Link light up at sunset." },
+    { name: "Colaba Causeway", q: "Colaba Causeway", kind: "see", lat: 18.9161, lng: 72.8259, tip: "Street shopping. Bargain hard." },
+    { name: "Kala Ghoda", q: "Kala Ghoda Mumbai", kind: "see", lat: 18.9285, lng: 72.8322, tip: "Galleries, cafés, heritage lanes." },
+    { name: "Gateway of India", q: "Gateway of India", kind: "see", lat: 18.922, lng: 72.8347, tip: "Classic. Go early, before the selfie crowd." },
+    { name: "Marine Drive", q: "Marine Drive Mumbai", kind: "see", lat: 18.9432, lng: 72.8236, tip: "Sunset on the Queen's Necklace." },
+    { name: "Phoenix Palladium", q: "Palladium Mall Lower Parel", kind: "see", lat: 18.9946, lng: 72.8258, tip: "When it's too hot for Marine Drive." },
+  ],
+};

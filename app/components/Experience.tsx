@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
 import Lenis from "lenis";
 import { lenisRef } from "./lenis";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap";
-import { art } from "../art";
 import Hero from "./Hero";
 import Marquee from "./Marquee";
-import TwoWorlds from "./TwoWorlds";
 import Events from "./Events";
 import Journey from "./Journey";
 import Countdown from "./Countdown";
@@ -18,7 +15,7 @@ import Swagatam from "./Swagatam";
 import Venue from "./Venue";
 import MumbaiPlanner from "./MumbaiPlanner";
 import Narration from "./Narration";
-import Courier from "./Courier";
+import Marathon from "./Marathon";
 import ClickSpark from "./ClickSpark";
 
 export default function Experience() {
@@ -92,63 +89,40 @@ export default function Experience() {
           tone="sindoor"
           aside="Ahem. Lights, camera, shaadi."
           props={[
-            { art: "litti-chokha", mode: "fly", side: "left" },
-            { art: "makhana", mode: "fly", side: "right" },
+            { art: "litti-chokha", mode: "fly", side: "left", top: 20, w: 250 },
+            { art: "makhana", mode: "fly", side: "right", top: 18, w: 210 },
+            { art: "thekua", mode: "fly", side: "left", top: 74, w: 200 },
+            { art: "madhubani-roundel", mode: "fly", side: "right", top: 74, w: 190, round: true },
+            { art: "mithila-paag", mode: "fly", side: "left", top: 47, w: 140, off: 1.5 },
+            { art: "makhana", mode: "rain", count: 5 },
           ]}
+          show
         >
           From the land of litti chokha, Madhubani and makhana… came a boy who could argue about politics for six hours
           straight.
         </Narration>
-        <Narration tone="ivory" aside="She won. Obviously." props={[{ art: "rosogolla", mode: "rain", count: 7 }]}>
+        <Narration tone="ivory" aside="She won. Obviously." props={[
+            { art: "puchka", mode: "fly", side: "left", top: 20, w: 250 },
+            { art: "mishti-doi", mode: "fly", side: "right", top: 20, w: 200 },
+            { art: "yellow-taxi", mode: "fly", side: "right", top: 76, w: 320 },
+            { art: "jhalmuri", mode: "fly", side: "left", top: 74, w: 170 },
+            { art: "kalighat-cat-fish", mode: "fly", side: "left", top: 47, w: 110, off: 2 },
+            { art: "rosogolla", mode: "rain", count: 7 },
+          ]}
+          show>
           From the city of rosogolla, Puchka and yellow taxis… came a girl who could out-argue him in six minutes.
         </Narration>
         <Swagatam />
-        <TwoWorlds />
-        <Narration tone="haldi" aside="(Not really. Everyone saw it coming.)">
-          What happened next shocked both families.
-        </Narration>
         <Journey />
-        <Narration aside="Sleep is cancelled. Dancing is mandatory.">
-          And so begins a seven-event, two-culture, zero-sleep marathon.
-        </Narration>
+        <Marathon />
         <Events />
         <Countdown />
         <Venue />
-        <Narration tone="ivory" aside="Kya bolti public?">
-          Coming from outside Mumbai? Don&apos;t worry, we have planned your holiday too.
-        </Narration>
         <MumbaiPlanner />
-        <Narration tone="haldi" aside="Ab bas aapka intezaar hai — now we are only waiting for you.">
-          Everything is ready. The band, the biryani, the dancing uncles.
-        </Narration>
         <Rsvp />
       </main>
       <Footer />
 
-      {/* Objects that travel across section boundaries, stitching the story together */}
-      <Courier
-        from=".sw-card-mithila .sw-card-art > img"
-        to=".tw-roundel img"
-        trigger=".sw"
-        start="bottom 75%"
-        endTrigger=".tw"
-        end="top top"
-        spin={360}
-      >
-        <Image {...art("madhubani-roundel")} alt="" sizes="40vw" className="courier-roundel-img" />
-      </Courier>
-      <Courier
-        from=".sw-alpona"
-        to=".tw-alpona"
-        trigger=".sw"
-        start="bottom 75%"
-        endTrigger=".tw"
-        end="top top"
-        spin={-360}
-        arc={0.3}
-      >
-        <div className="courier-alpona" />
-      </Courier>
     </>
   );
 }

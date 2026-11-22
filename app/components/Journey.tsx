@@ -7,21 +7,21 @@ import { art, type ArtName } from "../art";
 import AngularHeart from "./AngularHeart";
 import HeartBurst, { type HeartBurstHandle } from "./HeartBurst";
 
-// Act 1: the entire mohalla piles onto one kaali-peeli (newspaper cut-outs) and drives east to Bengal.
-// Act 2: Kolkata — the heart meter fills. Act 3: the same overloaded taxi drives back west to Mithila
-// with the bride's doli strapped on top of the roof crowd. Act 4: plot twist, everyone lives in Mumbai.
+// Act 1: the entire mohalla piles onto one kaali-peeli (newspaper cut-outs) and sets off for the bride.
+// Act 2: the heart meter fills. Act 3: the same overloaded taxi drives back with the bride's doli
+// strapped on top of the roof crowd. Act 4: all roads lead to Mumbai.
 const acts = [
-  { cls: "jr-head-1", text: "बरियाती चलल बंगाल!", en: "The baraat sets off for Bengal", script: "hi" },
-  { cls: "jr-head-2", text: "কলকাতা", en: "Kolkata — target located", script: "bn" },
-  { cls: "jr-head-3", text: "मिथिला घुरल", en: "…back to Mithila, with the bride", script: "hi" },
-  { cls: "jr-head-4", text: "आणि मुंबई!", en: "…and then Mumbai, obviously", script: "hi" },
+  { cls: "jr-head-1", text: "बरियाती चलल!", en: "The baraat sets off", script: "hi" },
+  { cls: "jr-head-2", text: "दिल चोरी", en: "Target located", script: "hi" },
+  { cls: "jr-head-3", text: "दुल्हिन संग", en: "…heading back, with the bride", script: "hi" },
+  { cls: "jr-head-4", text: "आणि मुंबई!", en: "…all roads lead to Mumbai", script: "hi" },
 ];
 
 const notes = [
-  { at: 0.04, tag: "Darbhanga", text: "Capacity: 5 passengers. Passengers: 23. Plus one dhol." },
-  { at: 0.32, tag: "Kolkata", text: "A Maithil boy meets a Bengali girl. Heart status: dangerously unguarded." },
+  { at: 0.04, tag: "Departure", text: "Capacity: 5 passengers.\nPassengers: 23. Plus one dhol." },
+  { at: 0.32, tag: "Pickup", text: "Boy meets girl. Heart status: dangerously unguarded." },
   { at: 0.56, tag: "Return trip", text: "Heart stolen. Bride on board. Doli on the roof. Rosogolla in the dicky." },
-  { at: 0.84, tag: "Plot twist", text: "Both families actually live in Mumbai. See you there" },
+  { at: 0.84, tag: "Destination", text: "Vashi, 18 January. See you there." },
 ];
 
 const riders: { art: ArtName; cls: string }[] = [
@@ -117,7 +117,7 @@ export default function Journey() {
     <section className="jr" ref={root}>
       <div className="jr-bg jr-bg-news" aria-hidden />
       <div className="jr-bg jr-bg-kolkata">
-        <Image {...art("howrah-night-white")} alt="" sizes="100vw" />
+        <Image {...art("marigold-garlands")} alt="" sizes="100vw" />
       </div>
       <div className="jr-bg jr-bg-mithila">
         <Image {...art("golghar-watercolor")} alt="" sizes="100vw" />
@@ -129,9 +129,9 @@ export default function Journey() {
 
       {/* Act 1 newspaper front page */}
       <div className="jr-paper" aria-hidden>
-        <p className="jr-masthead">The Mithila Times · Darbhanga Edition · Price: 1 rosogolla</p>
+        <p className="jr-masthead">The Mohalla Times · Shaadi Special · Price: 1 rosogolla</p>
         <h3 className="jr-paper-head">
-          <span>Entire mohalla</span> <span>boards</span> <span>one taxi</span> <span>to Bengal!</span>
+          <span>Entire mohalla</span> <span>boards</span> <span>one taxi</span> <span>for the baraat!</span>
         </h3>
         <p className="jr-paper-sub">Driver confirms: “Roof was empty in the morning. Ab nahi hai.”</p>
       </div>
@@ -172,12 +172,12 @@ export default function Journey() {
       <div className="jr-taxi jr-taxi-a" aria-hidden>
         <div className="jr-taxi-body">
           <Crew />
-          <span className="jr-bubble jr-bubble-a">Kolkata kitna door?</span>
+          <span className="jr-bubble jr-bubble-a">Dulhan kitni door?</span>
           <span className="jr-bubble jr-bubble-b">Bas aa gaye!</span>
         </div>
       </div>
 
-      {/* Act 3 taxi: same taxi + same baraat, mirrored to face west, doli strapped on top of the roof crowd */}
+      {/* Act 3 taxi: same taxi + same baraat, mirrored to drive back, doli strapped on top of the roof crowd */}
       <div className="jr-taxi jr-taxi-b">
         <div className="jr-taxi-body">
           <div className="jr-doli-roof">
@@ -212,8 +212,8 @@ export default function Journey() {
 
       <div className="jr-line" aria-hidden>
         <span className="jr-line-fill" />
-        <i className="truck">Mithila</i>
-        <i className="truck">Kolkata</i>
+        <i className="truck">Ghar</i>
+        <i className="truck">Dulhan</i>
       </div>
     </section>
   );
