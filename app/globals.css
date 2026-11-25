@@ -3762,6 +3762,9 @@ body {
   }
 }
 
+.rs-status { grid-column: 1 / -1; text-align: center; margin: 0; }
+.rs-status:empty { display: none; }
+.rs-submit:disabled { opacity: .65; cursor: default; }
 
 /* ---------- ISM book on portrait screens: one page fills the screen, a camera pans between them ---------- */
 @media (max-aspect-ratio: 1/1) {

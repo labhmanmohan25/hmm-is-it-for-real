@@ -16,15 +16,17 @@ const MapView = dynamic(() => import("./MapView"), {
 
 // Day picker = Mumbai local train tickets
 const tickets = [
-  { n: 1, word: "Ek din", line: "Bas ghoomna hai", route: "CSMT ⇄ Colaba", cls: "tk-pink" },
-  { n: 2, word: "Do din", line: "Thoda relax", route: "Bandra ⇄ Juhu", cls: "tk-green" },
-  { n: 3, word: "Teen din", line: "Full Mumbaikar", route: "Dadar ⇄ Girgaon", cls: "tk-yellow" },
-  { n: 4, word: "Chaar din", line: "Ghar le lo yahin", route: "Vashi ⇄ Nerul", cls: "tk-blue" },
+  { n: 1, word: "Ek din", line: "Bas ghoomna hai", route: "Colaba ⇄ Elephanta", cls: "tk-pink" },
+  { n: 2, word: "Do din", line: "Thoda relax", route: "CSMT ⇄ Chowpatty", cls: "tk-green" },
+  { n: 3, word: "Teen din", line: "Full Mumbaikar", route: "Haji Ali ⇄ Bandra", cls: "tk-yellow" },
+  { n: 4, word: "Chaar din", line: "Ghar le lo yahin", route: "Borivali ⇄ Juhu", cls: "tk-blue" },
 ];
 
 function directionsUrl(day: Day) {
   const q = (s: string) => encodeURIComponent(`${s}, Mumbai`);
-  const [first, ...rest] = day.stops;
+  // Google Maps takes ~9 waypoints, so the route covers the sights only (food is listed, you'll find it)
+  const sights = day.stops.filter((s) => s.kind !== "eat");
+  const [first, ...rest] = (sights.length ? sights : day.stops).slice(0, 10);
   const last = rest.pop() ?? first;
   const waypoints = rest.map((s) => q(s.q)).join("%7C");
   return `https://www.google.com/maps/dir/?api=1&origin=${q(first.q)}&destination=${q(last.q)}${waypoints ? `&waypoints=${waypoints}` : ""}&travelmode=driving`;

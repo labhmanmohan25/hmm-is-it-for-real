@@ -17,6 +17,11 @@ export default function Rsvp() {
   const [side, setSide] = useState<"groom" | "bride">("groom");
   const [food, setFood] = useState<Record<string, "Veg" | "Non-veg">>({ day1: "Veg", day2: "Veg" });
 
+  const [status, setStatus] = useState<"idle" | "sending" | "saved" | "error">("idle");
+  const [message, setMessage] = useState("");
+  const submissionId = useRef<string | null>(null);
+  const sending = useRef(false);
+
   useGSAP(
     () => {
       gsap.from(".rs-truck", {
@@ -58,29 +63,42 @@ export default function Rsvp() {
     { scope: root },
   );
 
-  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (sending.current || status === "saved") return;
     const f = new FormData(e.currentTarget);
-    const events = f.getAll("events").join(", ") || "All of them!";
-    const text = [
-      `RSVP OK PLEASE 🎉 ${wedding.hashtag}`,
-      `Name: ${f.get("name")}`,
-      `Guests: ${f.get("guests")}`,
-      `Side: ${side === "groom" ? "Groom's side" : "Bride's side"}`,
-      `Coming for: ${events}`,
-      ...wedding.meals.map((m) => `Food, ${m.label}: ${food[m.key]}`),
-      f.get("note") ? `Note: ${f.get("note")}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    const fx = root.current!.querySelector(".rs-fx")!;
-    fx.classList.add("on");
-    fireworks.current.forEach((a) => a.goToAndPlay(0, true));
-    hearts.current?.play();
-    setTimeout(() => fx.classList.remove("on"), 4000);
-    gsap.fromTo(".rs-truck", { rotate: -2 }, { rotate: 0, duration: 0.8, ease: "elastic.out(1.4, 0.3)" });
-    window.open(`https://wa.me/${wedding.rsvpWhatsApp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    const events = f.getAll("events");
+    if (!String(f.get("name")).trim() || !events.length) {
+      setStatus("error");
+      setMessage("Please enter your name and select at least one event.");
+      return;
+    }
+    submissionId.current ??= crypto.randomUUID();
+    sending.current = true;
+    setStatus("sending");
+    setMessage("Saving your RSVP…");
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: f.get("name"), guests: Number(f.get("guests")), side,
+          events, food, note: f.get("note"), submissionId: submissionId.current }),
+      });
+      const result = await response.json();
+      if (!response.ok || result.ok !== true) throw new Error(result.error || "Please try again.");
+      setStatus("saved");
+      setMessage("Your RSVP is saved! We can’t wait to celebrate with you.");
+      const fx = root.current?.querySelector(".rs-fx");
+      fx?.classList.add("on");
+      fireworks.current.forEach((a) => a.goToAndPlay(0, true));
+      hearts.current?.play();
+      setTimeout(() => fx?.classList.remove("on"), 4000);
+    } catch (error) {
+      setStatus("error");
+      setMessage(error instanceof Error ? error.message : "Couldn’t save your RSVP. Please retry.");
+    } finally {
+      sending.current = false;
+    }
   };
 
   return (
@@ -117,7 +135,7 @@ export default function Rsvp() {
         <form className="rs-form" onSubmit={submit}>
           <label>
             <span>Your good name</span>
-            <input name="name" required placeholder="Pappu / Bablu / Tuktuki" autoComplete="name" />
+            <input name="name" maxLength={120} required placeholder="Pappu / Bablu / Tuktuki" autoComplete="name" />
           </label>
           <label>
             <span>How many of you</span>
@@ -164,11 +182,12 @@ export default function Rsvp() {
 
           <label className="rs-note">
             <span>Anything else? (allergies, Jain food, dance requests…)</span>
-            <textarea name="note" rows={2} placeholder="Please play Lollipop Lagelu AND Ami Je Tomar" />
+            <textarea name="note" maxLength={2000} rows={2} placeholder="Please play Lollipop Lagelu AND Ami Je Tomar" />
           </label>
 
-          <button className="rs-submit truck" type="submit">
-            Send on WhatsApp ↗
+          <p className="rs-status" role="status" aria-live="polite">{message}</p>
+          <button className="rs-submit truck" type="submit" disabled={status === "sending" || status === "saved"}>
+            {status === "sending" ? "Saving…" : status === "saved" ? "RSVP saved ✓" : "Send RSVP ♥"}
           </button>
         </form>
 
