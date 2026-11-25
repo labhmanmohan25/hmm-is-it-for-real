@@ -350,8 +350,8 @@ body {
 
 .marquee {
   position: relative;
-  --bw: 200vw;
-  --ang: 30deg;
+  /* width of one page; the open spread is two of these and each page is 700×1084 */
+  --pw: min(48vw, 59vh);
   display: grid;
   place-items: center;
   height: 100svh;
@@ -377,45 +377,16 @@ body {
   visibility: hidden;
   pointer-events: none;
 }
-/* two tapes in a V under the book (angle and length set from the viewport in Marquee.tsx) */
-.bands {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.band {
-  position: absolute;
-  top: 75%;
-  width: var(--bw);
-  translate: 0 -50%;
-  padding: clamp(6px, 0.8vw, 12px) 0;
-  overflow: hidden;
-  white-space: nowrap;
-  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3);
-}
-.band-a {
-  z-index: 2;
-  left: calc(25% - var(--bw) / 2);
-  rotate: var(--ang);
-  color: var(--ink);
-  background: var(--lime);
-}
-.band-b {
-  left: calc(75% - var(--bw) / 2);
-  rotate: calc(-1 * var(--ang));
-  color: var(--marigold);
-  background: var(--ink);
-  border-block: 2px solid var(--marigold);
-}
 
 /* ---------- the ISM pop-up book: real photos of a tooled-leather cover and an old blank page ---------- */
 .bk {
   position: relative;
   z-index: 1;
-  /* each page is 700×1084, so the open spread is 1.29 : 1; nearly full screen */
-  width: min(96vw, 122vh);
+  width: calc(var(--pw) * 2);
   perspective: 2200px;
+}
+.bk-cam {
+  transform-style: preserve-3d;
 }
 /* an open book lying on a table, seen from a little above: top edge recedes */
 .bk-tilt {
@@ -436,10 +407,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.6em;
-  padding: 9% 8% 8% 11%;
+  padding: 8% 7% 7% 10%;
   color: #2d1c0e;
   font-family: var(--font-hand), cursive;
-  font-size: clamp(11px, min(1.65vw, 2.2vh), 24px);
+  font-size: calc(var(--pw) * 0.041);
   line-height: 1.35;
   background: url("/art/book-page.webp") center / 100% 100%;
   perspective: 700px;
@@ -532,7 +503,7 @@ body {
 }
 .bk-back {
   width: auto;
-  padding: 9% 11% 8% 8%;
+  padding: 8% 10% 7% 7%;
   transform: rotateY(180deg);
   background: none;
   isolation: isolate;
@@ -620,8 +591,35 @@ body {
   text-align: center;
 }
 .bk-ism {
-  margin-top: 12%;
+  width: 86%;
+  align-self: center;
+  margin-block: auto;
   rotate: -3deg;
+}
+/* light on a turning leaf: darkens as it tips away, brightens as it lands */
+.bk-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(20, 10, 2, 0.15), rgba(20, 10, 2, 0.75));
+}
+.bk-back .bk-shade {
+  background: linear-gradient(270deg, rgba(20, 10, 2, 0.15), rgba(20, 10, 2, 0.75));
+}
+/* the shadow a turning leaf throws across the spread */
+.bk-sweep {
+  position: absolute;
+  z-index: 50;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  background: linear-gradient(90deg, transparent, rgba(30, 15, 5, 0.35) 70%, transparent);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
 }
 .bk-stamp {
   position: absolute;
@@ -634,13 +632,13 @@ body {
   visibility: hidden;
 }
 .bk-stamp-1 {
-  right: 10%;
-  bottom: 14%;
+  right: 9%;
+  bottom: 8%;
   color: #c1121f;
 }
 .bk-stamp-4 {
-  right: 10%;
-  bottom: 12%;
+  right: 9%;
+  bottom: 7%;
   color: #1f7a3a;
 }
 .bk-gang {
@@ -648,8 +646,8 @@ body {
   justify-content: center;
   align-items: flex-end;
   gap: 2%;
-  height: 34%;
-  margin-top: 6%;
+  height: 30%;
+  margin-top: 3%;
 }
 .bk-gang .pop {
   display: block;
@@ -681,9 +679,9 @@ body {
   transform: scale(0);
 }
 .bk-diya {
-  width: 62%;
+  width: 46%;
   align-self: center;
-  margin-top: 4%;
+  margin-block: auto;
 }
 .bk-diya img,
 .bk-board img,
@@ -693,21 +691,16 @@ body {
   height: auto;
   filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.4));
 }
-.bk-s3 .bk-polaroid {
-  position: absolute;
-  right: 10%;
-  bottom: 9%;
-  width: 40%;
-  rotate: 6deg;
-}
 .bk-meter {
   position: relative;
   display: grid;
   justify-items: center;
-  margin-top: 8%;
+  width: 52%;
+  align-self: center;
+  margin-block: auto;
 }
 .bk-meter-heart {
-  width: 70%;
+  width: 100%;
   height: auto;
 }
 .bk-meter-num {
@@ -731,48 +724,28 @@ body {
   height: 100%;
 }
 .bk-board {
-  width: 82%;
+  width: 64%;
   align-self: center;
-  margin-top: 6%;
+  margin-top: 2%;
 }
-.bk-s4.bk-back {
+.bk-p4 {
   overflow: hidden;
 }
 .bk-train {
   position: absolute;
   left: 0;
-  bottom: 6%;
+  top: 22%;
   width: 90%;
   overflow: visible;
   pointer-events: none;
 }
-.bk-s4 .bk-big {
-  margin-top: 10%;
-  font-size: 2.1em;
+.bk-p4 .bk-big {
+  margin-top: 4%;
+  font-size: 2em;
 }
 .bk-ever {
   margin-top: 0.4em !important;
   font-size: 1.15em;
-}
-.band-track,
-.band-set {
-  display: flex;
-  width: max-content;
-}
-.band-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  padding-right: 0.5em;
-  font-size: clamp(28px, 5vw, 72px);
-  line-height: 1.2;
-}
-.band-star {
-  font-style: normal;
-  color: var(--sindoor);
-}
-.band-b .band-star {
-  color: var(--rani);
 }
 
 /* ---------- marathon: zero-sleep scoreboard ---------- */
@@ -1772,12 +1745,6 @@ body {
 }
 .hero-native .gloss-en {
   font-size: 10px;
-}
-.band-en {
-  font-family: var(--font-body);
-  font-size: 0.38em;
-  font-weight: 600;
-  letter-spacing: 0.05em;
 }
 
 /* ---------- narrator ---------- */
@@ -3793,4 +3760,168 @@ body {
     grid-template-columns: minmax(0, 1fr);
     max-width: 560px;
   }
+}
+
+
+/* ---------- ISM book on portrait screens: one page fills the screen, a camera pans between them ---------- */
+@media (max-aspect-ratio: 1/1) {
+  .marquee {
+    --pw: min(88vw, 52svh);
+  }
+  .bk {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+  }
+  .bk-tilt {
+    transform: rotateX(8deg);
+  }
+  .bk-page {
+    font-size: calc(var(--pw) * 0.046);
+  }
+}
+
+/* ---------- live news tickers on the seams between sections ---------- */
+.nt {
+  --bug: var(--sindoor);
+  --rail: var(--haldi);
+  --rail-ink: var(--ink);
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: stretch;
+  height: clamp(46px, 6vw, 72px);
+  overflow: hidden;
+  color: var(--rail-ink);
+  background: var(--rail);
+  border-block: 3px solid var(--ink);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+}
+.nt-rani {
+  --bug: var(--rani);
+  --rail: var(--cream);
+}
+.nt-lime {
+  --bug: var(--rani);
+  --rail: var(--lime);
+}
+.nt-bug {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0 1.6em 0 0.9em;
+  color: var(--cream);
+  background: var(--bug);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 0.9em) 100%, 0 100%);
+  font-size: clamp(12px, 1.5vw, 20px);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nt-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.15em 0.45em;
+  font-family: var(--font-body);
+  font-size: 0.7em;
+  font-weight: 800;
+  color: var(--bug);
+  background: var(--cream);
+  border-radius: 3px;
+}
+.nt-live i {
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: var(--sindoor);
+  animation: nt-blink 1s steps(2, start) infinite;
+}
+@keyframes nt-blink {
+  to {
+    visibility: hidden;
+  }
+}
+.nt-rail {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.nt-track,
+.nt-set {
+  display: flex;
+  width: max-content;
+}
+.nt-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-right: 0.6em;
+  font-size: clamp(18px, 2.6vw, 36px);
+  line-height: 1;
+}
+.nt-en {
+  font-family: var(--font-body);
+  font-size: 0.45em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.nt-star {
+  font-style: normal;
+  color: var(--bug);
+}
+.nt-lime .nt-star {
+  color: var(--sindoor);
+}
+.nt-chan {
+  flex: none;
+  display: grid;
+  place-content: center;
+  padding: 0 0.9em;
+  font-size: clamp(9px, 1vw, 13px);
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--haldi);
+  background: var(--ink);
+}
+@media (max-width: 768px) {
+  .nt-bug b {
+    display: none;
+  }
+  .ft-news .nt-bug b {
+    display: inline;
+  }
+  .nt-chan {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nt-live i {
+    animation: none;
+  }
+}
+
+/* the two live strips run along the top of the footer, crossing like tapes */
+.ft-news {
+  display: grid;
+  gap: 10px;
+  margin: 0 -6vw clamp(20px, 4vw, 48px);
+}
+.ft-news .nt-chan {
+  display: none;
+}
+.ft-news .nt:first-child {
+  rotate: -1.2deg;
+  margin-inline: -1%;
+}
+.ft-news .nt:last-child {
+  rotate: 1deg;
+  margin-inline: -1%;
 }

@@ -5,6 +5,7 @@ import { gsap, useGSAP } from "./gsap";
 import Image from "next/image";
 import { art, type ArtName } from "../art";
 import credits from "../credits.json";
+import NewsTicker from "./NewsTicker";
 
 // Kathputli baraat: real Rajasthani puppet photos (Wikimedia Commons, cut out), repeated into a long
 // row of dancers along the bottom of the page. The row stays put; each puppet dances on its own.
@@ -76,6 +77,19 @@ export default function Footer() {
   return (
     <footer className="ft" ref={root} data-wipe>
       <div className="ft-toran" aria-hidden />
+
+      <div className="ft-news">
+        <NewsTicker
+          label="Breaking"
+          items={["शुभ विवाह (Shubh Vivah)", "শুভ বিবাহ (Shubho Bibaho)", "Apurva weds Manmohan", "17 & 18 January", "Shaadi in Aamchi Mumbai"]}
+        />
+        <NewsTicker
+          label="From Mumbai"
+          tone="lime"
+          speed={-0.01}
+          items={["Haldi", "Mehendi", "Baraat", "Vada Pav", "Cutting Chai", "Horn OK Please", "Ganpati Bappa Morya"]}
+        />
+      </div>
 
       <div className="ft-baraat" aria-label="A baraat of dancing Rajasthani kathputli puppets">
         <div className="ft-baraat-track" aria-hidden>
