@@ -82,7 +82,7 @@ export default function Rsvp() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: f.get("name"), guests: Number(f.get("guests")), side,
-          events, food, note: f.get("note"), submissionId: submissionId.current }),
+          events, food, stay: f.get("stay"), note: f.get("note"), submissionId: submissionId.current }),
       });
       const result = await response.json();
       if (!response.ok || result.ok !== true) throw new Error(result.error || "Please try again.");
@@ -179,6 +179,19 @@ export default function Rsvp() {
               ))}
             </fieldset>
           ))}
+
+          <fieldset className="rs-stay">
+            <legend>Where will you be staying?</legend>
+            <p>Our Friends Only bungalow is booked for the nights of 17 &amp; 18 January 2027 — check-in 17 January, checkout 19 January.</p>
+            <label>
+              <input type="radio" name="stay" value="own" required />
+              <span>I’ll book my own stay</span>
+            </label>
+            <label>
+              <input type="radio" name="stay" value="friends-bungalow" required />
+              <span>I’ll join the Friends Only bungalow</span>
+            </label>
+          </fieldset>
 
           <label className="rs-note">
             <span>Anything else? (allergies, Jain food, dance requests…)</span>

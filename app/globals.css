@@ -350,13 +350,11 @@ body {
 
 .marquee {
   position: relative;
-  /* width of one page; the open spread is two of these and each page is 700×1084 */
-  --pw: min(48vw, 59vh);
   display: grid;
   place-items: center;
   height: 100svh;
   overflow: hidden;
-  /* dark study-room teal with a warm reading-lamp pool where the book lands */
+  /* dark cinema hall; the projector's warm pool lands on the screen */
   background:
     radial-gradient(ellipse 55% 60% at 50% 66%, rgba(255, 196, 110, 0.32), transparent 70%),
     radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.5), transparent 60%),
@@ -378,374 +376,406 @@ body {
   pointer-events: none;
 }
 
-/* ---------- the ISM pop-up book: real photos of a tooled-leather cover and an old blank page ---------- */
-.bk {
-  position: relative;
-  z-index: 1;
-  width: calc(var(--pw) * 2);
-  perspective: 2200px;
+/* ---------- Chapter 1 as a Bollywood film: full-screen scenes sliding in one after another ---------- */
+.cr {
+  /* --fh sizes the content; scenes stay in a 1.42:1 box centred in the full-screen frame */
+  --fh: min(100svh, 70vw);
+  --px: max(6vw, calc((100vw - var(--fh) * 1.42) / 2));
+  color: var(--cream);
 }
-.bk-cam {
-  transform-style: preserve-3d;
-}
-/* an open book lying on a table, seen from a little above: top edge recedes */
-.bk-tilt {
-  transform: rotateX(24deg);
-  transform-origin: 50% 60%;
-  transform-style: preserve-3d;
-}
-.bk-spread {
-  position: relative;
-  aspect-ratio: 1400 / 1084;
-  transform-style: preserve-3d;
-}
-.bk-page {
+.cr-screen {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+.cr-strip {
+  position: absolute;
+  inset: 0 auto 0 0;
+  /* as wide as all the slides together, so xPercent steps one slide at a time */
+  width: max-content;
+  display: flex;
+  will-change: transform;
+}
+.cr-frame {
+  position: relative;
+  flex: none;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
-  padding: 8% 7% 7% 10%;
-  color: #2d1c0e;
-  font-family: var(--font-hand), cursive;
-  font-size: calc(var(--pw) * 0.041);
-  line-height: 1.35;
-  background: url("/art/book-page.webp") center / 100% 100%;
-  perspective: 700px;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--fh) * 0.03);
+  padding: calc(var(--fh) * 0.1) var(--px) calc(var(--fh) * 0.22);
+  font-size: calc(var(--fh) * 0.034);
+  background: radial-gradient(ellipse at 50% 40%, #3a1a14, #120807);
+  box-shadow: inset 0 0 calc(var(--fh) * 0.15) rgba(0, 0, 0, 0.8);
 }
-.bk-page p,
-.bk-page h3 {
+.cr-frame p {
   margin: 0;
 }
-.bk-r {
-  right: 0;
-  box-shadow: 0 22px 40px rgba(0, 0, 0, 0.5);
+/* leader countdown */
+.cr-leader {
+  padding: 0;
+  background: #cfc6b0;
+  color: #1b1214;
 }
-.bk-front-page {
-  width: auto;
+.cr-sweep {
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg, rgba(0, 0, 0, 0.45) var(--a), transparent var(--a));
 }
-/* gutter shadows */
-.bk-r::after,
-.bk-front-page::after,
-.bk-back::after {
+.cr-cross {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(#1b1214, #1b1214) 50% 0 / 2px 100% no-repeat,
+    linear-gradient(#1b1214, #1b1214) 0 50% / 100% 2px no-repeat,
+    radial-gradient(circle, transparent calc(var(--fh) * 0.3), #1b1214 calc(var(--fh) * 0.3 + 1px), #1b1214 calc(var(--fh) * 0.3 + 4px), transparent calc(var(--fh) * 0.3 + 5px)),
+    radial-gradient(circle, transparent calc(var(--fh) * 0.4), #1b1214 calc(var(--fh) * 0.4 + 1px), #1b1214 calc(var(--fh) * 0.4 + 3px), transparent calc(var(--fh) * 0.4 + 4px));
+}
+.cr-num {
+  position: relative;
+  font-size: calc(var(--fh) * 0.45);
+  line-height: 1;
+}
+/* title card: hand-painted poster lettering */
+.cr-title,
+.cr-end {
+  padding-bottom: calc(var(--fh) * 0.07);
+  text-align: center;
+}
+.cr-title {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 214, 10, 0.22), transparent 60%),
+    repeating-conic-gradient(from 0deg at 50% 50%, #063a4f 0 10deg, #0a7ea4 10deg 20deg);
+}
+/* end card: an old picture-hall "Interval" slide, dark screen in a gold frame ringed with marquee bulbs */
+.cr-end {
+  background: radial-gradient(ellipse at 50% 45%, #2a1a10, #0d0a0b 70%);
+}
+.cr-end > * {
+  position: relative;
+}
+.cr-end::before,
+.cr-end::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 14%;
   pointer-events: none;
 }
-.bk-r::after,
-.bk-front-page::after {
-  left: 0;
-  background: linear-gradient(90deg, rgba(60, 35, 10, 0.35), transparent);
+.cr-end::before {
+  inset: calc(var(--fh) * 0.12) max(9vw, calc(var(--px) + 2vw));
+  border: 0.3em double var(--haldi);
+  border-radius: 0.6em;
+  box-shadow: 0 0 1.4em rgba(255, 214, 10, 0.35), inset 0 0 1.4em rgba(255, 214, 10, 0.2);
 }
-.bk-back::after {
-  right: 0;
-  background: linear-gradient(270deg, rgba(60, 35, 10, 0.35), transparent);
+.cr-end::after {
+  inset: calc(var(--fh) * 0.06) max(6vw, var(--px));
+  padding: 1.6em;
+  border-radius: 1em;
+  background: radial-gradient(circle, #fff3c4 0 22%, rgba(255, 214, 10, 0.55) 34%, transparent 52%) 0 0 / 2.4em 2.4em;
+  /* keep only a ring of bulbs around the edge */
+  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: cr-bulbs 1.2s steps(2) infinite;
 }
-.bk-leaf {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 50%;
-  transform-origin: 0 50%;
-  transform-style: preserve-3d;
+@keyframes cr-bulbs {
+  to {
+    background-position: 1.2em 1.2em;
+  }
 }
-.bk-l0 {
-  z-index: 40;
-}
-.bk-l1 {
-  z-index: 30;
-}
-.bk-l2 {
-  z-index: 20;
-}
-.bk-l3 {
-  z-index: 10;
-}
-.bk-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-.bk-front {
-  background: url("/art/book-cover.webp") center / 100% 100%;
-  border-radius: 2px 6px 6px 2px;
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.55), inset 0 0 18px rgba(0, 0, 0, 0.35);
-}
-/* gold-foil title sitting in the cover's blank cartouche */
-.bk-foil {
-  position: absolute;
-  left: 30%;
-  right: 30%;
-  top: 43.5%;
-  height: 14%;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(7px, min(1.1vw, 1.5vh), 15px);
-  line-height: 1.15;
-  text-align: center;
-  letter-spacing: 0.06em;
+.cr-pre {
+  font-size: 0.8em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #e6c46a;
-  text-shadow: 0 1px 0 rgba(60, 30, 5, 0.9), 0 -1px 0 rgba(255, 236, 170, 0.35);
+  color: var(--haldi);
 }
-.bk-foil b {
-  font-size: 1.7em;
-  letter-spacing: 0.04em;
+.cr-title b,
+.cr-end b {
+  font-family: var(--font-hindi), serif;
+  font-weight: 400;
+  font-size: 3.4em;
+  line-height: 0.95;
+  color: var(--haldi);
+  -webkit-text-stroke: 0.04em var(--ink);
+  text-shadow: 0.06em 0.06em 0 var(--ink), 0.12em 0.12em 0 var(--rani);
 }
-.bk-back {
-  width: auto;
-  padding: 8% 10% 7% 7%;
-  transform: rotateY(180deg);
-  background: none;
-  isolation: isolate;
+.cr-end b {
+  font-size: 2.8em;
 }
-/* the left pages are the same page photo, mirrored so the gutter faces the spine */
-.bk-back::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: url("/art/book-page.webp") center / 100% 100%;
-  transform: scaleX(-1);
-}
-.bk-h {
-  font-size: 1em;
+.cr-cast {
+  font-size: 1.05em;
   font-weight: 700;
+  color: var(--cream);
+  text-shadow: 0 2px 0 var(--ink);
+}
+.cr-small {
+  font-size: 0.75em;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+/* scenes */
+.cr-slate {
+  position: absolute;
+  top: calc(var(--fh) * 0.06);
+  left: var(--px);
+  padding: 0.25em 0.6em;
+  font-size: 0.65em;
+  color: var(--ink);
+  background: var(--cream);
+  box-shadow: 0.25em 0.25em 0 var(--sindoor);
+}
+.cr-s1 {
+  background: radial-gradient(ellipse at 50% 40%, #6a1745, #1c0613);
+}
+/* Diwali night on the left fading into the winter platform on the right */
+.cr-s2 {
+  background:
+    radial-gradient(ellipse at 25% 45%, rgba(255, 183, 3, 0.18), transparent 45%),
+    linear-gradient(90deg, #2a1260, #0c2a52);
+}
+/* yellow film subtitles along the bottom */
+.cr-subs {
+  position: absolute;
+  left: var(--px);
+  right: var(--px);
+  bottom: calc(var(--fh) * 0.06);
+  display: grid;
+  gap: 0.3em;
+}
+.cr-sub {
+  font-family: var(--font-hand), cursive;
+  font-weight: 700;
+  font-size: 1.2em;
   line-height: 1.2;
-  color: #7a1a12;
-  border-bottom: 1px solid rgba(122, 26, 18, 0.35);
-  padding-bottom: 0.3em;
+  text-align: center;
+  color: #ffe55c;
+  text-shadow: 0 0 4px #000, 0 2px 0 #000;
 }
-.bk-big {
-  font-size: 1.7em;
-  font-weight: 700;
-  line-height: 1.15;
-  color: #5a1208;
+.cr-sub-pink {
+  color: #ff8fc2;
 }
-.bk-date {
-  font-size: 1.5em;
-  font-weight: 700;
-}
-.bk-hl {
-  --hl: 0;
-  position: relative;
-  z-index: 0;
-  font-weight: 700;
-}
-/* highlighter-pen swipe */
-.bk-hl::before {
-  content: "";
-  position: absolute;
-  left: -0.15em;
-  right: -0.15em;
-  top: 0.45em;
-  bottom: 0;
-  z-index: -1;
-  background: rgba(255, 214, 10, 0.6);
-  border-radius: 0.2em 0.4em 0.3em 0.5em;
-  transform: scaleX(var(--hl)) skewX(-10deg);
-  transform-origin: 0 50%;
-  mix-blend-mode: multiply;
-}
-.bk-hl-pink::before {
-  background: rgba(255, 46, 136, 0.35);
-}
-.bk-heart {
+.cr-heart {
   display: inline-block;
   width: 1.1em;
   height: auto;
   vertical-align: -0.15em;
 }
-/* pop-ups stand up off the paper from their bottom edge */
-.pop {
+.cr .pop {
   transform-origin: 50% 100%;
 }
-.bk-polaroid {
-  margin: 0;
-  padding: 0.35em 0.35em 1.5em;
-  background: #f7f1e3;
-  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+/* merged scenes: two beats side by side */
+.cr-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 5%;
+  width: 100%;
+}
+.cr-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+.cr-station {
   position: relative;
 }
-.bk-polaroid img {
+.cr-polaroid {
+  width: 100%;
+  margin: 0;
+  padding: 0.4em 0.4em 1.4em;
+  background: #f7f1e3;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  rotate: -3deg;
+}
+.cr-polaroid img {
   display: block;
   width: 100%;
   height: auto;
-  filter: sepia(0.2) contrast(1.05);
+  filter: sepia(0.25) contrast(1.05);
 }
-.bk-polaroid figcaption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.15em;
-  font-size: 0.85em;
-  text-align: center;
-}
-.bk-ism {
-  width: 86%;
-  align-self: center;
-  margin-block: auto;
-  rotate: -3deg;
-}
-/* light on a turning leaf: darkens as it tips away, brightens as it lands */
-.bk-shade {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(90deg, rgba(20, 10, 2, 0.15), rgba(20, 10, 2, 0.75));
-}
-.bk-back .bk-shade {
-  background: linear-gradient(270deg, rgba(20, 10, 2, 0.15), rgba(20, 10, 2, 0.75));
-}
-/* the shadow a turning leaf throws across the spread */
-.bk-sweep {
-  position: absolute;
-  z-index: 50;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 50%;
-  background: linear-gradient(90deg, transparent, rgba(30, 15, 5, 0.35) 70%, transparent);
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-}
-.bk-stamp {
-  position: absolute;
-  padding: 0.15em 0.5em;
-  font-size: 1.3em;
-  white-space: nowrap;
-  border: 0.14em solid currentColor;
-  border-radius: 0.2em;
-  mix-blend-mode: multiply;
-  visibility: hidden;
-}
-.bk-stamp-1 {
-  right: 9%;
-  bottom: 8%;
-  color: #c1121f;
-}
-.bk-stamp-4 {
-  right: 9%;
-  bottom: 7%;
-  color: #1f7a3a;
-}
-.bk-gang {
+.cr-gang {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 2%;
-  height: 30%;
-  margin-top: 3%;
+  width: 100%;
+  height: calc(var(--fh) * 0.24);
 }
-.bk-gang .pop {
+.cr-gang .pop {
   display: block;
   height: 100%;
 }
-.bk-gang .pop:nth-child(even) {
+.cr-gang .pop:nth-child(even) {
   height: 86%;
 }
-.bk-gang img {
+.cr-gang img {
   width: auto;
   height: 100%;
-  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.5));
 }
-.bk-count b {
+.cr-count {
+  font-weight: 700;
+}
+.cr-count b {
   display: inline-block;
   min-width: 1.4em;
-  font-size: 1.6em;
-  color: #c1121f;
+  font-size: 1.5em;
+  color: var(--haldi);
 }
-.bk-nm {
-  align-self: center;
-  margin-top: auto !important;
+.cr-nm {
   padding: 0.4em 0.7em;
-  font-size: 0.85em;
+  font-size: 0.8em;
   text-align: center;
   color: var(--ink);
-  background: #ffd60a;
+  background: var(--haldi);
   border: 3px solid var(--ink);
+  box-shadow: 0.25em 0.25em 0 var(--rani);
   transform: scale(0);
 }
-.bk-diya {
-  width: 46%;
-  align-self: center;
-  margin-block: auto;
+.cr-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6%;
+  width: 100%;
 }
-.bk-diya img,
-.bk-board img,
-.bk-train img {
+.cr-diya {
+  width: 42%;
+}
+.cr-diya img,
+.cr-board img,
+.cr-train img {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5));
 }
-.bk-meter {
+.cr-meter {
   position: relative;
   display: grid;
   justify-items: center;
-  width: 52%;
-  align-self: center;
-  margin-block: auto;
+  width: 46%;
 }
-.bk-meter-heart {
+.cr-meter-heart {
   width: 100%;
   height: auto;
 }
-.bk-meter-num {
+.cr-meter-num {
   position: absolute;
-  top: 28%;
-  font-size: 2.2em;
+  top: 26%;
+  font-size: 1.9em;
   color: #fff;
   text-shadow: 0 2px 0 #000;
 }
-.bk-meter small {
-  margin-top: 0.4em;
-  font-size: 0.75em;
+.cr-meter small {
+  margin-top: 0.3em;
+  font-size: 0.7em;
 }
-.bk-hearts {
+.cr-hearts {
   position: absolute;
-  inset: -20%;
+  inset: -40%;
   pointer-events: none;
 }
-.bk-hearts > div {
+.cr-hearts > div {
   width: 100%;
   height: 100%;
 }
-.bk-board {
-  width: 64%;
-  align-self: center;
-  margin-top: 2%;
+.cr-board {
+  width: 100%;
 }
-.bk-p4 {
-  overflow: hidden;
-}
-.bk-train {
+.cr-train {
   position: absolute;
   left: 0;
-  top: 22%;
+  bottom: -18%;
   width: 90%;
-  overflow: visible;
   pointer-events: none;
 }
-.bk-p4 .bk-big {
-  margin-top: 4%;
-  font-size: 2em;
+.cr-endline {
+  display: block;
 }
-.bk-ever {
-  margin-top: 0.4em !important;
-  font-size: 1.15em;
+/* projector artefacts over the whole screen */
+.cr-blur,
+.cr-grain,
+.cr-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cr-blur {
+  z-index: 3;
+  backdrop-filter: blur(6px) brightness(1.2);
+  visibility: hidden;
+}
+.cr-grain {
+  z-index: 4;
+  inset: -50%;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: cr-grain 0.5s steps(4) infinite;
+}
+@keyframes cr-grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-6%, 4%); }
+  50% { transform: translate(5%, -3%); }
+  75% { transform: translate(-3%, -6%); }
+  100% { transform: translate(4%, 5%); }
+}
+.cr-vignette {
+  z-index: 6;
+  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.65));
+}
+@media (prefers-reduced-motion: reduce) {
+  .cr-grain,
+  .cr-end::after {
+    animation: none;
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .cr {
+    --fh: min(100svh, 140vw);
+    --px: 6vw;
+  }
+  .cr-frame {
+    font-size: calc(100vw * 0.042);
+  }
+  .cr-cols {
+    grid-template-columns: 1fr;
+    gap: 1.2em;
+  }
+  .cr-polaroid {
+    width: 78%;
+    justify-self: center;
+  }
+  .cr-gang {
+    height: 13svh;
+  }
+  .cr-row {
+    gap: 8%;
+  }
+  .cr-diya {
+    width: 36%;
+  }
+  .cr-meter {
+    width: 34%;
+  }
+  .cr-board {
+    width: 72%;
+  }
+  .cr-subs {
+    bottom: 4svh;
+  }
+  .cr-title b {
+    font-size: 3em;
+  }
+  /* keep the end-card text inside its ring of bulbs */
+  .cr-end {
+    padding-inline: 16vw;
+  }
 }
 
 /* ---------- marathon: zero-sleep scoreboard ---------- */
@@ -3766,25 +3796,6 @@ body {
 .rs-status:empty { display: none; }
 .rs-submit:disabled { opacity: .65; cursor: default; }
 
-/* ---------- ISM book on portrait screens: one page fills the screen, a camera pans between them ---------- */
-@media (max-aspect-ratio: 1/1) {
-  .marquee {
-    --pw: min(88vw, 52svh);
-  }
-  .bk {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-  }
-  .bk-tilt {
-    transform: rotateX(8deg);
-  }
-  .bk-page {
-    font-size: calc(var(--pw) * 0.046);
-  }
-}
-
 /* ---------- live news tickers on the seams between sections ---------- */
 .nt {
   --bug: var(--sindoor);
@@ -3928,3 +3939,11 @@ body {
   rotate: 1deg;
   margin-inline: -1%;
 }
+
+/* Stay preferences use native radios so a choice is required and keyboard accessible. */
+.rs-stay p { margin: 0 0 16px; line-height: 1.6; }
+.rs-stay label { display: flex; align-items: center; gap: 12px; padding: 14px; border: 3px solid var(--ink); cursor: pointer; }
+.rs-stay label + label { margin-top: 10px; }
+.rs-stay label:has(input:checked) { background: var(--haldi, #f7cb46); }
+.rs-form .rs-stay input { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--sindoor); }
+.rs-form .rs-stay label > span { margin: 0; font: inherit; letter-spacing: normal; text-transform: none; }
