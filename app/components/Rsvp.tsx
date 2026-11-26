@@ -63,7 +63,7 @@ export default function Rsvp() {
   const [sciSpot, setSciSpot] = useState<Spot | null>(null);
   const [food, setFood] = useState<Record<string, "Veg" | "Non-veg">>({});
   // everything is mandatory: native fields are checked on every change, button picks via state
-  const [fieldGaps, setFieldGaps] = useState<string[]>(["name", "stay", "note"]);
+  const [fieldGaps, setFieldGaps] = useState<string[]>(["name", "stay"]);
 
   const [status, setStatus] = useState<"idle" | "sending" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -120,7 +120,6 @@ export default function Rsvp() {
         !guests?.validity.valid && "how many",
         !f.getAll("events").length && "events",
         !f.get("stay") && "stay",
-        !String(f.get("note") ?? "").trim() && "note",
       ].filter(Boolean) as string[],
     );
   };
@@ -132,7 +131,6 @@ export default function Rsvp() {
     wedding.meals.some((m) => !food[m.key]) && "food choice",
     fieldGaps.includes("stay") && "stay",
     !dance && "dance question",
-    fieldGaps.includes("note") && "anything else",
   ].filter(Boolean) as string[];
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -413,10 +411,11 @@ export default function Rsvp() {
           </fieldset>
 
           <label className="rs-note">
-            <span>Anything else? (allergies, Jain food, dance requests…)</span>
-            <textarea name="note" maxLength={2000} rows={2} required placeholder="Please play Lollipop Lagelu AND Ami Je Tomar (or just write “nothing”)" />
+            <span>Anything else? (optional · allergies, Jain food, dance requests…)</span>
+            <textarea name="note" maxLength={2000} rows={2} placeholder="Please play Lollipop Lagelu AND Ami Je Tomar" />
           </label>
 
+          {missing.length > 0 && <p className="rs-lock">🔒 Fill these to unlock Send: {missing.join(", ")}</p>}
           <p className="rs-status" role="status" aria-live="polite">{message}</p>
           <button className="rs-submit truck" type="submit" disabled={missing.length > 0 || status === "sending" || status === "saved"}>
             {status === "sending" ? (
@@ -429,7 +428,6 @@ export default function Rsvp() {
               </>
             )}
           </button>
-          {missing.length > 0 && <p className="rs-lock">🔒 Fill everything to unlock · still missing: {missing.join(", ")}</p>}
         </form>
 
         <div className="rs-hazard" aria-hidden />

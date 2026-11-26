@@ -122,13 +122,12 @@ export default function Crawl() {
               Khanan 2018.
             </p>
             <p>
-              He is in Mechanical. She is in Electronics. But school left them each a secret weapon: he did electronics in
-              11th &amp; 12th, she did coding. A treaty is signed: <b>he will teach her a bit of electronics</b>, and{" "}
-              <b>she will teach him a bit of code</b>.
+              He studies Mechanical. She studies Electronics. The plot twist? Back in 11th &amp; 12th, he took electronics
+              and she took computer science.
             </p>
             <p>
-              Somewhere between a syntax error and a short
-              circuit, a heart gets compiled.
+              So a secret treaty is signed: <b>he tutors her in circuits</b>, <b>she tutors him in code</b>. Somewhere
+              between a syntax error and a short circuit, a heart gets compiled.
             </p>
             <p>
               Back home that winter, on the Khandeshwar platform, he finally asks her out. The connection has stayed live

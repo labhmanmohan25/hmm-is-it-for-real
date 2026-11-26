@@ -3919,7 +3919,7 @@ body {
 }
 .rs-lock {
   grid-column: 1 / -1;
-  margin: -6px 0 0;
+  margin: 4px 0 0;
   font-size: 13px;
   font-weight: 700;
   text-align: center;

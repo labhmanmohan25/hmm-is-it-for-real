@@ -35,11 +35,24 @@ export default function NewsTicker({ label, items, tone = "sindoor", speed = 0.0
       let dir = 1;
       let visible = false;
 
+      // Visibility comes from an IntersectionObserver, not ScrollTrigger start/end: this strip sits
+      // at the very bottom of a page whose height keeps changing (pinned sections, the RSVP form),
+      // and stale trigger positions left it thinking it was off-screen, so it never crawled.
+      let slammed = false;
+      const io = new IntersectionObserver(([e]) => {
+        visible = e.isIntersecting;
+        // the strip slams in from the side the first time it reaches the screen
+        if (visible && !slammed) {
+          slammed = true;
+          gsap.fromTo(root.current, { xPercent: -100 }, { xPercent: 0, duration: 0.8, ease: "power3.out" });
+        }
+      });
+      io.observe(root.current!);
+
+      // scroll speed and direction still steer it
       const st = ScrollTrigger.create({
-        trigger: root.current,
-        start: "top bottom",
-        end: "bottom top",
-        onToggle: (self) => (visible = self.isActive),
+        start: 0,
+        end: "max",
         onUpdate: (self) => {
           dir = self.direction;
           boost = Math.min(Math.abs(self.getVelocity()) / 300, 10);
@@ -53,16 +66,10 @@ export default function NewsTicker({ label, items, tone = "sindoor", speed = 0.0
       };
       gsap.ticker.add(tick);
 
-      // the strip slams in from the side as it reaches the screen
-      gsap.from(root.current, {
-        xPercent: -100,
-        ease: "power3.out",
-        scrollTrigger: { trigger: root.current, start: "top bottom", end: "top 70%", scrub: 0.4 },
-      });
-
       return () => {
         gsap.ticker.remove(tick);
         st.kill();
+        io.disconnect();
       };
     },
     { scope: root },

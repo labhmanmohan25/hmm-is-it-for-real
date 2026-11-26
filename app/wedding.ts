@@ -35,7 +35,7 @@ export const wedding = {
   hashtag: "#ApurvaWedsManmohan",
   venue: {
     name: "CIDCO Auditorium & Convention Centre",
-    floor: "1st floor, opposite Joyalukkas",
+    floor: "1st floor, opposite Joyalukkas Vashi",
     address: "Swami Pranabananda Marg, Sector 30A, Vashi, Navi Mumbai, Maharashtra 400703",
     mapUrl: "https://share.google/U18YJqoVdXvkJQ2LC",
     embedUrl:
@@ -95,9 +95,9 @@ export const wedding = {
       name: "CIDCO Auditorium & Convention Centre",
       area: "Vashi",
       when: "18 Jan · 6 PM onwards",
-      address: "1st floor, opposite Joyalukkas, Swami Pranabananda Marg, Sector 30A, Vashi, Navi Mumbai 400703",
+      address: "1st floor, opposite Joyalukkas Vashi, Swami Pranabananda Marg, Sector 30A, Vashi, Navi Mumbai 400703",
       note: "Come early: the baraat leaves at 6 PM sharp and you're dancing in it.",
-      tip: "Navi Mumbai has more CIDCOs than vada pav stalls. Type the full name, “CIDCO Auditorium And Convention Centre”, or you'll end up at somebody's property-tax hearing. Spot Joyalukkas: we're right opposite, 1st floor.",
+      tip: "Navi Mumbai has more CIDCOs than vada pav stalls. Type the full name, “CIDCO Auditorium And Convention Centre”, or you'll end up at somebody's property-tax hearing. Spot Joyalukkas Vashi: we're right opposite, 1st floor.",
       q: "CIDCO Auditorium And Convention Centre, Vashi",
       mapUrl: "https://share.google/U18YJqoVdXvkJQ2LC",
       cal: { title: "Apurva weds Manmohan · Baraat, Jaimala & Vivah", allDay: false, start: "2027-01-18T18:00:00+05:30", end: "2027-01-19T05:00:00+05:30" },
