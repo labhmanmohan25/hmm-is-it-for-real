@@ -8,19 +8,16 @@ import Lottie from "./Lottie";
 
 // "And so begins a two-day, five-event, zero-sleep marathon."
 // Pinned scene, scrubbed by scroll:
-//   1. a slot-machine scoreboard rolls to 2 DAYS · 5 EVENTS · 0 SLEEP
+//   1. a scoreboard flies in: 2 DAYS · 5 EVENTS · 0 SLEEP (fixed numbers, nothing spins, so the eye reads them)
 //   2. a giant SLEEP gets a CANCELLED rubber stamp slammed on it (screen shake)
 //   3. the lights go disco, DANCING gets stamped MANDATORY and the kathputli troupe storms the stage
 const reels = [
   // Read as one sentence: "a 2-day, 5-event, 0-sleep marathon" — each tile says what its number counts,
-  // so the reels never look like a countdown timer.
+  // so the tiles never look like a countdown timer.
   { n: 2, label: "Days of shaadi", hi: "17 & 18 January" },
   { n: 5, label: "Events", hi: "Haldi → Vivah" },
   { n: 0, label: "Hours of sleep", hi: "Zero. Zilch. Shunya." },
 ];
-const STRIP = Array.from({ length: 30 }, (_, i) => i % 10);
-// land on the target digit in the third run of 0–9 so every reel spins a couple of times
-const landAt = (n: number) => 20 + n;
 
 const dancers: { art: ArtName; cls: string }[] = [
   { art: "puppet-dancer", cls: "mr-d1" },
@@ -43,20 +40,6 @@ export default function Marathon() {
       // 1. scoreboard
       tl.from(".mr-kicker > *", { yPercent: 120, autoAlpha: 0, stagger: 0.05, duration: 0.25, ease: "back.out(2)" }, 0)
         .from(".mr-tile", { y: "60vh", rotate: (i) => (i - 1) * 25, stagger: 0.08, duration: 0.4, ease: "back.out(1.4)" }, 0.05);
-      gsap.utils.toArray<HTMLElement>(".mr-strip").forEach((strip, i) => {
-        tl.fromTo(
-          strip,
-          { yPercent: 0 },
-          {
-            yPercent: (-100 * landAt(reels[i].n)) / STRIP.length,
-            duration: 0.9 + i * 0.25,
-            ease: "power3.out",
-            // tick digit by digit so a reel never rests between two numbers
-            snap: { yPercent: 100 / STRIP.length },
-          },
-          0.25,
-        );
-      });
       tl.fromTo(".mr-tile-2", { "--glow": 0 }, { "--glow": 1, duration: 0.2, repeat: 3, yoyo: true }, 1.4)
 
         // 2. SLEEP → CANCELLED
@@ -119,9 +102,7 @@ export default function Marathon() {
             <div className={`mr-tile mr-tile-${i}`} key={r.label}>
               <div className="mr-reel">
                 <div className="mr-strip">
-                  {STRIP.map((d, k) => (
-                    <span key={k}>{d}</span>
-                  ))}
+                  <span>{r.n}</span>
                 </div>
               </div>
               <b className="truck">{r.label}</b>

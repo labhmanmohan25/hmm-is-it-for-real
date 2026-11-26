@@ -17,6 +17,7 @@ import MumbaiPlanner from "./MumbaiPlanner";
 import Narration from "./Narration";
 import Marathon from "./Marathon";
 import ClickSpark from "./ClickSpark";
+import Soundtrack from "./Soundtrack";
 
 export default function Experience() {
   useEffect(() => {
@@ -86,6 +87,7 @@ export default function Experience() {
         🧿
       </span>
       <ClickSpark />
+      <Soundtrack />
       <main>
         <Hero />
         <Crawl />

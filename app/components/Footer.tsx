@@ -102,7 +102,7 @@ export default function Footer() {
       </div>
 
       <details className="ft-credits">
-        <summary>Art credits &amp; licences</summary>
+        <summary>Art, music &amp; licences</summary>
         <p>
           Paintings and photographs from Wikimedia Commons, used under their licences (some cropped / cut out).
           Animations from LottieFiles (Lottie Simple License).

@@ -300,7 +300,9 @@ body {
   font-family: var(--font-bangla), serif;
   font-size: clamp(30px, 4.5vw, 72px);
   line-height: 1;
-  color: var(--rani);
+  /* cream with a dark + pink drop so it reads on the maroon alpona */
+  color: var(--cream);
+  text-shadow: 0.05em 0.05em 0 var(--ink), 0.1em 0.1em 0 var(--rani);
   transform: rotate(-6deg);
 }
 .hero-native {
@@ -1009,7 +1011,9 @@ body {
   left: 6vw;
   top: 36vh;
   z-index: 5;
-  width: min(84vw, 380px);
+  /* fit the gap left of the newspaper (which is min(86vw, 900px) wide, centred) so its headline
+     stays readable; never narrower than 190px */
+  width: clamp(190px, calc((100vw - min(86vw, 900px)) / 2 - 6vw - 14px), 380px);
 }
 .jr-note span {
   white-space: pre-line;
@@ -3923,4 +3927,151 @@ body {
   font-size: 13px;
   font-weight: 700;
   text-align: center;
+}
+
+/* ---------- soundtrack: speaker button, top right ---------- */
+.snd {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.snd > * {
+  pointer-events: auto;
+}
+.snd-btn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  color: var(--ink);
+  background: var(--haldi);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s;
+}
+.snd-btn:hover {
+  transform: scale(1.08) rotate(-6deg);
+}
+.snd.on .snd-btn {
+  background: var(--lime);
+}
+.snd.hint .snd-btn {
+  animation: snd-pulse 1.4s ease-in-out infinite;
+}
+@keyframes snd-pulse {
+  50% {
+    box-shadow: 3px 3px 0 var(--ink), 0 0 0 10px rgba(255, 46, 136, 0.35);
+  }
+}
+.snd-now {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--cream);
+  background: var(--ink);
+  border: 2px solid var(--haldi);
+  white-space: nowrap;
+  max-width: min(60vw, 320px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* big "Recommended with music on ➜" callout pointing at the speaker */
+.snd-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px 10px 16px;
+  font: inherit;
+  color: var(--ink);
+  text-align: right;
+  background: var(--haldi);
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--rani);
+  transform: rotate(-3deg);
+  cursor: pointer;
+  animation: snd-wiggle 2.4s ease-in-out infinite;
+}
+.snd-hint-text {
+  font-size: clamp(18px, 2.1vw, 30px);
+  line-height: 0.95;
+}
+.snd-arrow {
+  display: inline-block;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+  color: var(--sindoor);
+  animation: snd-arrow 0.7s ease-in-out infinite;
+}
+@keyframes snd-arrow {
+  50% {
+    transform: translateX(8px);
+  }
+}
+@keyframes snd-wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(-1deg) scale(1.03); }
+}
+.snd-now {
+  font-family: var(--font-body);
+  font-size: 11px;
+  opacity: 0.85;
+}
+/* little equaliser bars while music plays */
+.snd-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+}
+.snd-eq i {
+  width: 4px;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: bottom;
+  animation: snd-eq 0.9s ease-in-out infinite;
+}
+.snd-eq i:nth-child(2) { animation-delay: -0.3s; }
+.snd-eq i:nth-child(3) { animation-delay: -0.6s; }
+.snd-eq i:nth-child(4) { animation-delay: -0.15s; }
+@keyframes snd-eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+@media (max-width: 640px) {
+  .snd {
+    top: 10px;
+    right: 10px;
+  }
+  .snd-btn {
+    width: 42px;
+    height: 42px;
+  }
+  .snd-now {
+    display: none;
+  }
+  .snd-hint {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+  .snd-hint-text {
+    font-size: 15px;
+  }
+  .snd-arrow {
+    font-size: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snd-eq i,
+  .snd.hint .snd-btn,
+  .snd-hint,
+  .snd-arrow {
+    animation: none;
+  }
 }

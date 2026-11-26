@@ -481,5 +481,26 @@
   "artist": "AI-generated (Canva) for this site",
   "license": "Made for this site",
   "page": "https://www.canva.com/"
+ },
+ {
+  "name": "audio-sneaky-snitch",
+  "title": "Sneaky Snitch (music)",
+  "artist": "Kevin MacLeod (incompetech.com)",
+  "license": "CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sneaky_Snitch_(ISRC_USUAN1100772).mp3"
+ },
+ {
+  "name": "audio-london-thumakda",
+  "title": "London Thumakda (Queen, 2014) — opening 18 seconds",
+  "artist": "Labh Janjua, Sonu Kakkar, Neha Kakkar · music Amit Trivedi",
+  "license": "© its rights holders",
+  "page": "https://en.wikipedia.org/wiki/Queen_(soundtrack)"
+ },
+ {
+  "name": "audio-star-wars",
+  "title": "Star Wars main theme — excerpt",
+  "artist": "John Williams",
+  "license": "© Lucasfilm / its rights holders",
+  "page": "https://en.wikipedia.org/wiki/Star_Wars_(theme)"
  }
 ]

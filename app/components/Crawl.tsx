@@ -122,7 +122,7 @@ export default function Crawl() {
               Khanan 2018.
             </p>
             <p>
-              He studies Mechanical. She studies Electronics. The plot twist? Back in 11th &amp; 12th, he took electronics
+              He studies Mechanical. She studies Electronics. The plot twist? Back in high school, he took electronics
               and she took computer science.
             </p>
             <p>
