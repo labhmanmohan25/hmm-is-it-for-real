@@ -14,12 +14,13 @@ export type Track = {
   cue?: string;
   seamless?: boolean; // short loop: decoded and looped gap-free (keep these files small)
   loopFrom?: number; // seamless only: seconds where repeats restart (first play always starts at 0)
+  once?: boolean; // play through to the end a single time (never clipped), then fall back to DEFAULT
 };
 
 // Default for every section: the first 18 seconds of "London Thumakda" (Labh Janjua, Sonu Kakkar,
 // Neha Kakkar). The file is 0:00–0:18 plus a 2-second blend back into the opening; the first play
 // starts at 0:00 and repeats loop from 2 s, so the wrap flows on instead of jumping.
-const THUMAKDA = {
+export const DEFAULT_TRACK = {
   src: "/audio/london-thumakda-loop-18s.m4a",
   title: "London Thumakda · Labh Janjua, Sonu Kakkar, Neha Kakkar",
   volume: 0.6,
@@ -28,16 +29,18 @@ const THUMAKDA = {
 };
 
 export const soundtrack: Track[] = [
-  { section: ".hero", ...THUMAKDA },
+  { section: ".hero", ...DEFAULT_TRACK },
   { section: ".oc", src: "/audio/star-wars-theme.m4a", title: "Star Wars main theme · John Williams", volume: 0.7 },
-  { section: ".nr", ...THUMAKDA },
-  { section: ".sw", ...THUMAKDA },
+  { section: ".nr", ...DEFAULT_TRACK },
+  { section: ".sw", ...DEFAULT_TRACK },
   { section: ".jr", src: "/audio/sneaky-snitch.m4a", title: "Sneaky Snitch · Kevin MacLeod" },
-  { section: ".mr", ...THUMAKDA },
-  { section: ".ev", ...THUMAKDA },
-  { section: ".cd", ...THUMAKDA },
-  { section: ".vn", ...THUMAKDA },
-  { section: ".mp", ...THUMAKDA },
-  { section: ".rs", ...THUMAKDA },
-  { section: ".ft", ...THUMAKDA },
+  { section: ".mr", ...DEFAULT_TRACK },
+  { section: ".ev", ...DEFAULT_TRACK },
+  { section: ".cd", ...DEFAULT_TRACK },
+  { section: ".vn", ...DEFAULT_TRACK },
+  { section: ".mp", ...DEFAULT_TRACK },
+  // the John Cena prank call plays in full on the RSVP; scroll away and it fades (and picks up
+  // where it left off if you come back); once it has finished, the default loop takes over
+  { section: ".rs", src: "/audio/john-cena-prank-call.mp3", title: "John Cena prank call", volume: 0.9, once: true },
+  { section: ".ft", ...DEFAULT_TRACK },
 ];

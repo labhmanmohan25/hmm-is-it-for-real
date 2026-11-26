@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { soundtrack } from "../music";
+import { DEFAULT_TRACK, soundtrack, type Track } from "../music";
 
 type Voice = { gain: GainNode; start: () => void; stop: () => void };
 const FADE = 1.2; // seconds of crossfade between sections
@@ -20,10 +20,12 @@ export default function Soundtrack() {
   const playing = useRef<string | null>(null);
   const live = useRef(false);
   const cued = useRef(new Set<string>());
+  const finished = useRef(new Set<string>()); // `once` tracks that have played to the end
+  const replay = useRef<(i: number) => void>(() => {});
 
   // Streamed <audio> for long tracks. Short loops (`seamless`) are decoded into memory and looped
   // by Web Audio itself, which is sample-accurate: <audio loop> leaves a small gap at the wrap.
-  const voice = (src: string, seamless?: boolean, loopFrom = 0) => {
+  const voice = (src: string, seamless?: boolean, loopFrom = 0, once = false) => {
     let v = voices.current.get(src);
     const ac = ctx.current;
     if (v || !ac) return v;
@@ -32,8 +34,14 @@ export default function Soundtrack() {
     gain.connect(ac.destination);
     if (!seamless) {
       const el = new Audio(src);
-      el.loop = true;
+      el.loop = !once;
       el.preload = "auto";
+      if (once)
+        el.addEventListener("ended", () => {
+          finished.current.add(src);
+          // still on this section: hand over to the default loop
+          if (playing.current === src && live.current) replay.current(current.current);
+        });
       ac.createMediaElementSource(el).connect(gain);
       v = { gain, start: () => void el.play().catch(() => {}), stop: () => el.pause() };
     } else {
@@ -97,7 +105,7 @@ export default function Soundtrack() {
   const play = useCallback((i: number) => {
     current.current = i;
     if (!live.current) return;
-    const tr = soundtrack[i];
+    const tr: Track = soundtrack[i].once && finished.current.has(soundtrack[i].src) ? { ...soundtrack[i], ...DEFAULT_TRACK, once: false } : soundtrack[i];
     setNow(tr.title);
     if (tr.cue && !cued.current.has(tr.section)) {
       cued.current.add(tr.section);
@@ -111,12 +119,16 @@ export default function Soundtrack() {
         setTimeout(() => playing.current !== prev && old.stop(), FADE * 1000 + 100);
       }
     }
-    const v = voice(tr.src, tr.seamless, tr.loopFrom);
+    const v = voice(tr.src, tr.seamless, tr.loopFrom, tr.once);
     if (!v) return;
     playing.current = tr.src;
     v.start();
     ramp(v.gain, tr.volume ?? 0.6);
   }, []);
+
+  useEffect(() => {
+    replay.current = play;
+  }, [play]);
 
   // which section is crossing the middle of the screen
   useEffect(() => {
