@@ -54,7 +54,7 @@ export default function Journey() {
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
-        scrollTrigger: { trigger: root.current, start: "top top", end: "+=440%", pin: true, scrub: 1.2 },
+        scrollTrigger: { trigger: root.current, start: "top top", end: "+=480%", pin: true, scrub: 1.2 },
       });
 
       // Act 1 — newspaper baraat drives east (left → right)
@@ -96,7 +96,9 @@ export default function Journey() {
         .to(".jr-bg-mithila", { autoAlpha: 0, duration: 0.05 }, 0.82)
         .fromTo(".jr-bg-mumbai", { autoAlpha: 0, scale: 1.25 }, { autoAlpha: 1, scale: 1, duration: 0.18 }, 0.82)
         .fromTo(".jr-road-track", { xPercent: -50 }, { xPercent: 0, duration: 1 }, 0)
-        .to(".jr-line-fill", { scaleX: 1, duration: 1 }, 0);
+        .to(".jr-line-fill", { scaleX: 1, duration: 1 }, 0)
+        // let the Mumbai finale sit a moment before the pin releases
+        .to({}, { duration: 0.1 }, 1);
 
       // Headline swaps
       acts.forEach((a, i) => {

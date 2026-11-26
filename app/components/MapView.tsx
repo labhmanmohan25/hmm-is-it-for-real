@@ -46,6 +46,9 @@ export default function MapView({ days }: { days: Day[] }) {
       center={[19.0, 72.88]}
       zoom={11}
       scrollWheelZoom={false}
+      // On phones a one-finger drag scrolls the page instead of panning, so the map can't trap the
+      // scroll; pinch still zooms and pans.
+      dragging={typeof window === "undefined" || !matchMedia("(pointer: coarse)").matches}
       className="mp-map"
       attributionControl
     >

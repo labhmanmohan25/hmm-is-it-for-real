@@ -5,16 +5,18 @@ import Image from "next/image";
 import { gsap, SplitText, useGSAP } from "./gsap";
 import { art, type ArtName } from "../art";
 
-// fly: spins in from its side and lands at `top`% down the card, `off`vw in from the edge, max `w`px wide.
-// rain: `count` copies drop from the top and bounce.
+// Props sit in a fixed six-slot frame around the text so every card is balanced:
+//   tl ·········· tr
+//     ml      mr          (desktop: mid-height, out in the gutters;
+//   bl ·········· br       phones: tucked inward above / below the text)
+// fly: spins in from its side and lands in its slot, max `w`px wide. rain: `count` copies drop and bounce.
+type Slot = "tl" | "tr" | "ml" | "mr" | "bl" | "br";
 type Prop = {
   art: ArtName;
   mode: "fly" | "rain";
+  slot?: Slot;
   count?: number;
-  side?: "left" | "right";
-  top?: number;
   w?: number;
-  off?: number;
   round?: boolean;
 };
 
@@ -126,17 +128,11 @@ export default function Narration({
       {props.map((p, pi) =>
         p.mode === "fly" ? (
           <div
-            className={`nr-prop nr-fly nr-${p.side ?? "left"} ${p.round ? "nr-round" : ""}`}
-            data-side={p.side}
+            className={`nr-prop nr-fly nr-slot-${p.slot ?? "tl"} ${p.round ? "nr-round" : ""}`}
+            data-side={p.slot?.endsWith("r") ? "right" : "left"}
             data-jelly
             key={pi}
-            style={
-              {
-                "--top": `${p.top ?? 50}%`,
-                "--w": `${p.w ?? 240}px`,
-                "--off": `${p.off ?? 3}vw`,
-              } as React.CSSProperties
-            }
+            style={{ "--w": `${p.w ?? 220}px` } as React.CSSProperties}
             aria-hidden
           >
             <Image {...art(p.art)} alt="" sizes="260px" />

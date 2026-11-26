@@ -8,7 +8,8 @@ import AngularHeart, { HeartGlyph } from "./AngularHeart";
 import HeartBurst, { type HeartBurstHandle } from "./HeartBurst";
 import Lottie from "./Lottie";
 
-const gang: ArtName[] = ["news-didi", "news-uncle", "news-aunty", "news-chachi", "news-dadi"];
+// the common friends: figures cut out of 19th-century Kalighat paintings (see credits.json)
+const gang: ArtName[] = ["pal-hookah", "pal-babu", "pal-shy", "pal-dada", "pal-sakhi"];
 const friendCount = ["1", "2", "3", "5", "8", "13", "21", "∞"];
 
 export default function Marquee() {
@@ -23,8 +24,8 @@ export default function Marquee() {
   useGSAP(
     () => {
       // Chapter 1 as a Bollywood film: a leader counts down, then each slide fills the screen and the
-      // next one slides in from the side. Every slide gets the same long stretch of scroll so its
-      // beats play out slowly.
+      // next one slides in from the side. Each slide gets enough scroll for its beats to be read, then
+      // a short rest before the next reel.
       const frames = gsap.utils.toArray<HTMLElement>(".cr-frame");
       const strip = track.current!;
       // Slide i sits at xPercent -i·(100/n) of the strip. Rolls are fixed fromTo pairs, not .to() with
@@ -52,7 +53,9 @@ export default function Marquee() {
         } else if (fill.v < 95) popped = false;
       };
 
-      const SLIDE = 2; // timeline length of every slide, roll-in included
+      // when each slide rolls in: every slide gets its beats plus ~half a screen of rest before the next
+      // roll, instead of one fixed length (which left the title and end cards idling and Scene 2 rushed)
+      const ROLL_AT = [0, 0.6, 2.2, 4.75, 7.2];
       const ROLL = 0.5;
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -60,8 +63,8 @@ export default function Marquee() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          // a little over two screens of scroll per slide, plus the hold on the end card
-          end: () => `+=${(frames.length * 2.2 + 0.8) * window.innerHeight}`,
+          // ~1 screen of scroll per timeline second (timeline is ~8.85 long, end-card hold included)
+          end: () => `+=${9 * window.innerHeight}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
@@ -71,7 +74,7 @@ export default function Marquee() {
 
       // a reel change: the next slide races in with a motion-blur smear, then settles
       const roll = (i: number) => {
-        const at = (i - 1) * SLIDE + 0.6;
+        const at = ROLL_AT[i];
         tl.fromTo(strip, { xPercent: -(i - 1) * step }, { xPercent: -i * step, duration: ROLL, ease: "power3.inOut", immediateRender: false }, at)
           .fromTo(".cr-blur", { autoAlpha: 0 }, { autoAlpha: 1, duration: ROLL / 2, ease: "power1.in", yoyo: true, repeat: 1 }, at)
           .fromTo(frames[i], { scale: 0.9, filter: "brightness(0.55)" }, { scale: 1, filter: "brightness(1)", duration: ROLL, ease: "power2.out" }, at);
@@ -122,7 +125,7 @@ export default function Marquee() {
         t + 0.3,
       );
       // hold on the end card before the page moves on
-      tl.to({}, { duration: 1 }, (4 - 1) * SLIDE + 0.6 + SLIDE);
+      tl.to({}, { duration: 0.6 }, ROLL_AT[4] + ROLL + 0.55);
 
       gsap.to(".cr-diya img", { scale: 1.06, duration: 0.18, repeat: -1, yoyo: true, ease: "sine.inOut", stagger: 0.07 });
       gsap.to(".cr-gang .pop img", { y: -6, rotate: () => gsap.utils.random(-6, 6), duration: 0.3, repeat: -1, yoyo: true, ease: "sine.inOut", stagger: 0.06 });

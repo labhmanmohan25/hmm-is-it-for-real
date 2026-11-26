@@ -315,11 +315,11 @@
   "page": "https://commons.wikimedia.org/wiki/File:Kolkata_puchka.jpg"
  },
  {
-  "name": "yellow-taxi",
-  "title": "Hindustan Ambassador taxi (Ambassador Taxis in Kolkata).JPG",
-  "artist": "Ryan Hartman",
-  "license": "CC BY-SA 3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Hindustan_Ambassador_taxi_(Ambassador_Taxis_in_Kolkata).JPG"
+  "name": "macher-jhol",
+  "title": "Bengali Fish Curry.JPG",
+  "artist": "Miansari66",
+  "license": "CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Bengali_Fish_Curry.JPG"
  },
  {
   "name": "mishti-doi",
@@ -404,5 +404,47 @@
   "artist": "Nitesh Gill",
   "license": "CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Rangoli_on_Diwali_2020_at_Moga,_Punjab,_India.jpg"
+ },
+ {
+  "name": "pal-hookah",
+  "title": "Kalighat pictures sep sheets 10.jpg",
+  "artist": "Unknown Kalighat painter (Wellcome Collection)",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalighat_pictures_sep_sheets_10.jpg"
+ },
+ {
+  "name": "pal-sakhi",
+  "title": "Kalighat pictures sep sheets 10.jpg",
+  "artist": "Unknown Kalighat painter (Wellcome Collection)",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalighat_pictures_sep_sheets_10.jpg"
+ },
+ {
+  "name": "pal-babu",
+  "title": "Kalighat pictures sep sheets 14.jpg",
+  "artist": "Unknown Kalighat painter (Wellcome Collection)",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalighat_pictures_sep_sheets_14.jpg"
+ },
+ {
+  "name": "pal-dada",
+  "title": "Kalighat pictures sep sheets 32.jpg",
+  "artist": "Unknown Kalighat painter (Wellcome Collection)",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalighat_pictures_sep_sheets_32.jpg"
+ },
+ {
+  "name": "pal-shy",
+  "title": "Kalighat pictures sep sheets 50.jpg",
+  "artist": "Unknown Kalighat painter (Wellcome Collection)",
+  "license": "CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kalighat_pictures_sep_sheets_50.jpg"
+ },
+ {
+  "name": "dhol-icon",
+  "title": "Dhol dholak, one of numerous types of drums, Indian musical instrument.jpg",
+  "artist": "jasleen_kaur from USA",
+  "license": "CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Dhol_dholak,_one_of_numerous_types_of_drums,_Indian_musical_instrument.jpg"
  }
 ]

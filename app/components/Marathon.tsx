@@ -12,9 +12,11 @@ import Lottie from "./Lottie";
 //   2. a giant SLEEP gets a CANCELLED rubber stamp slammed on it (screen shake)
 //   3. the lights go disco, DANCING gets stamped MANDATORY and the kathputli troupe storms the stage
 const reels = [
-  { n: 2, label: "Days", hi: "दिन" },
-  { n: 5, label: "Events", hi: "कार्यक्रम" },
-  { n: 0, label: "Sleep", hi: "नींद" },
+  // Read as one sentence: "a 2-day, 5-event, 0-sleep marathon" — each tile says what its number counts,
+  // so the reels never look like a countdown timer.
+  { n: 2, label: "Days of shaadi", hi: "17 & 18 January" },
+  { n: 5, label: "Events", hi: "Haldi → Vivah" },
+  { n: 0, label: "Hours of sleep", hi: "Zero. Zilch. Shunya." },
 ];
 const STRIP = Array.from({ length: 30 }, (_, i) => i % 10);
 // land on the target digit in the third run of 0–9 so every reel spins a couple of times
@@ -35,7 +37,7 @@ export default function Marathon() {
     () => {
       const tl = gsap.timeline({
         defaults: { ease: "none" },
-        scrollTrigger: { trigger: root.current, start: "top top", end: "+=320%", pin: true, scrub: 1 },
+        scrollTrigger: { trigger: root.current, start: "top top", end: "+=600%", pin: true, scrub: 1 },
       });
 
       // 1. scoreboard
@@ -58,22 +60,22 @@ export default function Marathon() {
       tl.fromTo(".mr-tile-2", { "--glow": 0 }, { "--glow": 1, duration: 0.2, repeat: 3, yoyo: true }, 1.4)
 
         // 2. SLEEP → CANCELLED
-        .to(".mr-intro", { scale: 0.45, yPercent: -80, autoAlpha: 0, duration: 0.4, ease: "power2.in" }, 1.9)
-        .fromTo(".mr-sleep", { scale: 0.2, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(1.6)" }, 2.1)
-        .fromTo(".mr-stamp-x", { scale: 3.5, rotate: -40, autoAlpha: 0 }, { scale: 1, rotate: -14, autoAlpha: 1, duration: 0.18, ease: "power4.in" }, 2.6)
-        .to(".mr-stage", { keyframes: { x: [0, -22, 18, -12, 8, -4, 0], y: [0, 10, -8, 6, -3, 0] }, duration: 0.25 }, 2.78)
-        .to(".mr-sleep-word", { color: "#5a5a5a", skewX: -8, duration: 0.2 }, 2.78)
+        .to(".mr-intro", { scale: 0.45, yPercent: -80, autoAlpha: 0, duration: 0.4, ease: "power2.in" }, 2.2)
+        .fromTo(".mr-sleep", { scale: 0.2, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(1.6)" }, 2.4)
+        .fromTo(".mr-stamp-x", { scale: 3.5, rotate: -40, autoAlpha: 0 }, { scale: 1, rotate: -14, autoAlpha: 1, duration: 0.18, ease: "power4.in" }, 3.2)
+        .to(".mr-stage", { keyframes: { x: [0, -22, 18, -12, 8, -4, 0], y: [0, 10, -8, 6, -3, 0] }, duration: 0.25 }, 3.38)
+        .to(".mr-sleep-word", { color: "#5a5a5a", skewX: -8, duration: 0.2 }, 3.38)
 
         // 3. disco: DANCING → MANDATORY
-        .to(".mr-sleep", { yPercent: 160, rotate: 25, autoAlpha: 0, duration: 0.35, ease: "power2.in" }, 3.3)
-        .fromTo(".mr-disco", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 3.45)
-        .fromTo(".mr-dance", { scale: 0.2, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(1.8)" }, 3.55)
-        .fromTo(".mr-dance-word .ch", { yPercent: 140, rotate: () => gsap.utils.random(-40, 40) }, { yPercent: 0, rotate: 0, stagger: 0.03, duration: 0.3, ease: "back.out(3)" }, 3.6)
-        .fromTo(".mr-stamp-ok", { scale: 3.5, rotate: 40, autoAlpha: 0 }, { scale: 1, rotate: 10, autoAlpha: 1, duration: 0.18, ease: "power4.in" }, 4.05)
-        .to(".mr-stage", { keyframes: { x: [0, 20, -18, 10, -6, 0], y: [0, -10, 8, -4, 0] }, duration: 0.25 }, 4.23)
-        .fromTo(".mr-dancer", { yPercent: 120 }, { yPercent: 0, stagger: 0.06, duration: 0.4, ease: "back.out(1.6)" }, 4.1)
-        .from(".mr-tagline", { autoAlpha: 0, y: 30, duration: 0.3 }, 4.5)
-        .to({}, { duration: 0.4 });
+        .to(".mr-sleep", { yPercent: 160, rotate: 25, autoAlpha: 0, duration: 0.35, ease: "power2.in" }, 4.2)
+        .fromTo(".mr-disco", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25 }, 4.35)
+        .fromTo(".mr-dance", { scale: 0.2, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.4, ease: "back.out(1.8)" }, 4.45)
+        .fromTo(".mr-dance-word .ch", { yPercent: 140, rotate: () => gsap.utils.random(-40, 40) }, { yPercent: 0, rotate: 0, stagger: 0.03, duration: 0.3, ease: "back.out(3)" }, 4.5)
+        .fromTo(".mr-stamp-ok", { scale: 3.5, rotate: 40, autoAlpha: 0 }, { scale: 1, rotate: 10, autoAlpha: 1, duration: 0.18, ease: "power4.in" }, 5.1)
+        .to(".mr-stage", { keyframes: { x: [0, 20, -18, 10, -6, 0], y: [0, -10, 8, -4, 0] }, duration: 0.25 }, 5.28)
+        .fromTo(".mr-dancer", { yPercent: 120 }, { yPercent: 0, stagger: 0.06, duration: 0.4, ease: "back.out(1.6)" }, 5.15)
+        .from(".mr-tagline", { autoAlpha: 0, y: 30, duration: 0.3 }, 5.6)
+        .to({}, { duration: 0.7 });
 
       // Disco floor keeps moving on its own once it's lit
       gsap.to(".mr-rays", { rotate: 360, duration: 18, repeat: -1, ease: "none" });
@@ -123,11 +125,11 @@ export default function Marathon() {
                 </div>
               </div>
               <b className="truck">{r.label}</b>
-              <small className="hi">{r.hi}</small>
+              <small>{r.hi}</small>
             </div>
           ))}
         </div>
-        <p className="mr-board-sub truck">…marathon</p>
+        <p className="mr-board-sub truck">…non-stop shaadi marathon!</p>
         </div>
 
         <div className="mr-sleep">

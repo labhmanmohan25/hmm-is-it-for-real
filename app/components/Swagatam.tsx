@@ -12,10 +12,10 @@ import AngularHeart from "./AngularHeart";
 import HeartBurst, { type HeartBurstHandle } from "./HeartBurst";
 
 const greetings = [
-  { text: "स्वागत अछि", en: "Welcome — in Maithili, the groom's mother tongue" },
+  { text: "Welcome", en: "Welcome — in English, so everyone's in on it" },
+  { text: "स्वागत है", en: "Welcome — in Hindi" },
   { text: "স্বাগতম", en: "Welcome — in Bengali, the bride's mother tongue" },
-  { text: "स्वागत आहे", en: "Welcome — in Marathi, because Mumbai is home" },
-  { text: "स्वागतम्", en: "Welcome — in Sanskrit, because why not all of them" },
+  { text: "स्वागत अछि", en: "Welcome — in Maithili, the groom's mother tongue" },
 ];
 
 export default function Swagatam() {
@@ -91,7 +91,7 @@ export default function Swagatam() {
           defaults: { ease: "none" },
           scrollTrigger: desk
             ? { trigger: cards, start: "center 55%", end: "+=170%", pin: true, scrub: 1, invalidateOnRefresh: true }
-            : { trigger: cards, start: "top 35%", end: "bottom 45%", scrub: 1, invalidateOnRefresh: true },
+            : { trigger: cards, start: "top 70%", end: "center 55%", scrub: 1, invalidateOnRefresh: true },
         });
         if (desk) {
           tl.to(".sw-card-mithila", { xPercent: -SPREAD, duration: 0.8, ease: "power2.inOut" }, 0).to(

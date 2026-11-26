@@ -89,12 +89,12 @@ export default function Experience() {
           tone="sindoor"
           aside="Ahem. Lights, camera, shaadi."
           props={[
-            { art: "litti-chokha", mode: "fly", side: "left", top: 20, w: 250 },
-            { art: "makhana", mode: "fly", side: "right", top: 18, w: 210 },
-            { art: "thekua", mode: "fly", side: "left", top: 74, w: 200 },
-            { art: "madhubani-roundel", mode: "fly", side: "right", top: 74, w: 190, round: true },
-            { art: "mithila-paag", mode: "fly", side: "left", top: 47, w: 140, off: 1.5 },
-            { art: "makhana", mode: "rain", count: 5 },
+            { art: "litti-chokha", mode: "fly", slot: "tl", w: 230 },
+            { art: "makhana", mode: "fly", slot: "tr", w: 190 },
+            { art: "mithila-paag", mode: "fly", slot: "ml", w: 150 },
+            { art: "madhubani-roundel", mode: "fly", slot: "mr", w: 150, round: true },
+            { art: "thekua", mode: "fly", slot: "bl", w: 190 },
+            { art: "madhubani-peacock", mode: "fly", slot: "br", w: 82 },
           ]}
           show
         >
@@ -102,15 +102,15 @@ export default function Experience() {
           straight.
         </Narration>
         <Narration tone="ivory" aside="She won. Obviously." props={[
-            { art: "puchka", mode: "fly", side: "left", top: 20, w: 250 },
-            { art: "mishti-doi", mode: "fly", side: "right", top: 20, w: 200 },
-            { art: "yellow-taxi", mode: "fly", side: "right", top: 76, w: 320 },
-            { art: "jhalmuri", mode: "fly", side: "left", top: 74, w: 170 },
-            { art: "kalighat-cat-fish", mode: "fly", side: "left", top: 47, w: 110, off: 2 },
-            { art: "rosogolla", mode: "rain", count: 7 },
+            { art: "puchka", mode: "fly", slot: "tl", w: 220 },
+            { art: "mishti-doi", mode: "fly", slot: "tr", w: 180 },
+            { art: "kalighat-cat-fish", mode: "fly", slot: "ml", w: 110 },
+            { art: "rosogolla", mode: "fly", slot: "mr", w: 160 },
+            { art: "jhalmuri", mode: "fly", slot: "bl", w: 150 },
+            { art: "macher-jhol", mode: "fly", slot: "br", w: 230 },
           ]}
           show>
-          From the city of rosogolla, Puchka and yellow taxis… came a girl who could out-argue him in six minutes.
+          From the city of rosogolla, puchka and macher jhol… came a girl who could out-argue him in six minutes.
         </Narration>
         <Swagatam />
         <Journey />

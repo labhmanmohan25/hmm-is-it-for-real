@@ -56,7 +56,7 @@ const sizes = {
   "rangoli": [800, 595],
   "book-page": [700, 1084],
   "ism-oval": [960, 679],
-  "yellow-taxi": [700, 299],
+  "macher-jhol": [700, 478],
   "mishti-doi": [700, 625],
   thekua: [700, 612],
   jhalmuri: [582, 700],
@@ -64,6 +64,11 @@ const sizes = {
   "puppet-pair-a": [455, 700],
   "puppet-pair-b": [504, 700],
   "puppet-couple": [438, 630],
+  "pal-hookah": [144, 420],
+  "pal-babu": [225, 420],
+  "pal-shy": [157, 420],
+  "pal-dada": [145, 420],
+  "pal-sakhi": [176, 420],
 } as const;
 
 export type ArtName = keyof typeof sizes;

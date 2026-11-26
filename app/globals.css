@@ -898,10 +898,15 @@ body {
   text-align: center;
 }
 .mr-tile b {
-  font-size: clamp(16px, 2.2vw, 30px);
+  max-width: 6.5em;
+  font-size: clamp(13px, 2vw, 28px);
+  line-height: 1.05;
+  text-align: center;
 }
 .mr-tile small {
-  font-size: clamp(16px, 1.8vw, 24px);
+  font-size: clamp(11px, 1.4vw, 19px);
+  text-align: center;
+  opacity: 0.85;
 }
 .mr-board-sub {
   margin: 0;
@@ -2744,15 +2749,19 @@ body {
   filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45));
 }
 .nr-fly {
-  top: var(--top, 50%);
-  width: min(var(--w, 240px), 19vw);
+  width: min(var(--w, 220px), 15vw);
   translate: 0 -50%;
 }
-.nr-fly.nr-left {
-  left: var(--off, 3vw);
-}
-.nr-fly.nr-right {
-  right: var(--off, 3vw);
+/* six-slot frame: corners near the edges, the middle pair out in the side gutters */
+.nr-slot-tl { top: 17%; left: 5vw; }
+.nr-slot-tr { top: 17%; right: 5vw; }
+.nr-slot-ml { top: 50%; left: 3vw; width: min(var(--w), 11vw); }
+.nr-slot-mr { top: 50%; right: 3vw; width: min(var(--w), 11vw); }
+.nr-slot-bl { top: 83%; left: 5vw; }
+.nr-slot-br { top: 83%; right: 5vw; }
+/* keep the line inside the gutters so nothing lands on the words */
+.nr:has(.nr-prop) .nr-line {
+  max-width: min(1000px, 66vw);
 }
 .nr-round img {
   border-radius: 50%;
@@ -3688,8 +3697,15 @@ body {
     border-width: 3px;
     box-shadow: 0 0 0 3px var(--sindoor), 6px 6px 0 3px var(--rani);
   }
+  /* three tiles + their offset shadows have to fit a 360px screen with a gutter */
   .mr-reel {
-    font-size: 22vw;
+    font-size: min(18vw, 12svh);
+  }
+  .mr-intro {
+    padding-inline: 5vw;
+  }
+  .mr-board-sub {
+    text-align: center;
   }
   .mr-d2,
   .mr-d4 {
@@ -3697,6 +3713,10 @@ body {
   }
   .sw-garland {
     width: 70px;
+  }
+  /* the longest greeting ("Welcome") has to fit between the two kalash on a 360px screen */
+  .sw-greet-item {
+    font-size: clamp(40px, 12.5vw, 64px);
   }
 
   /* give each narrator card a full screen so the words finish lighting up before it scrolls away */
@@ -3771,16 +3791,71 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 40px;
   }
+  /* phones: the text owns the middle band; three props above it and three below, each band a
+     shallow triangle (corners out wide, one prop centred toward the text) */
   .nr-prop.nr-fly {
-    width: min(var(--w, 240px), 27vw);
-    opacity: 0.9;
+    width: min(var(--w, 220px), 27vw);
   }
+  .nr:has(.nr-prop) .nr-line {
+    max-width: none;
+  }
+  .nr-slot-tl { top: 12%; left: 4vw; }
+  .nr-slot-tr { top: 12%; right: 4vw; }
+  .nr-prop.nr-slot-ml { top: 25%; left: 39vw; width: min(var(--w), 22vw); }
+  .nr-prop.nr-slot-mr { top: 77%; right: 39vw; width: min(var(--w), 22vw); }
+  .nr-slot-bl { top: 89%; left: 4vw; }
+  .nr-slot-br { top: 89%; right: 4vw; }
   .mp-map-wrap {
     position: relative;
     top: 0;
   }
+  /* the map eats one-finger drags; keep it short enough that the page can still be scrolled past it */
   .mp-map {
-    height: 55vh;
+    height: 46svh;
+  }
+
+  /* "100%" is wider than the shrunken heart; keep it on screen */
+  .jr-meter-num {
+    font-size: 26px;
+  }
+  /* smaller headline so less of it hides behind the taxi as it pulls in */
+  .jr-paper-head {
+    font-size: 26px;
+  }
+  /* "LINE-UP" must not break at the hyphen on a 360px screen */
+  .ev-intro h2 {
+    font-size: clamp(48px, 16vw, 64px);
+  }
+
+  /* phone legibility + tap targets */
+  .mp-route,
+  .mp-stop small {
+    font-size: 13px;
+  }
+  .mp-route,
+  .mp-stop a {
+    display: inline-block;
+    padding-block: 9px;
+    margin-block: -9px;
+  }
+  .mp-n {
+    width: 28px;
+    height: 28px;
+  }
+  .tk-head {
+    font-size: 10px;
+  }
+  .tk-route {
+    font-size: 11.5px;
+  }
+  .ft-credits {
+    font-size: 13.5px;
+  }
+  .ft-credits summary {
+    padding-block: 12px;
+  }
+  .ft-credits li {
+    margin-bottom: 12px;
   }
 }
 
