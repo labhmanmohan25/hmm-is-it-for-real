@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, useGSAP } from "./gsap";
 import { art, type ArtName } from "../art";
@@ -11,6 +11,23 @@ const isBangla = (t: string) => /[ঀ-৿]/.test(t);
 
 export default function Events() {
   const root = useRef<HTMLElement>(null);
+  // The cards sit off to the side in a sliding track, so the browser's own lazy-loading fetches
+  // them only as each slides in (too late on a slow phone). Fetch all five once the section is
+  // about two screens away instead.
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200% 0px" },
+    );
+    if (root.current) io.observe(root.current);
+    return () => io.disconnect();
+  }, []);
 
   useGSAP(
     () => {
@@ -105,7 +122,7 @@ export default function Events() {
                   <Lottie src={`/lottie/${e.art.slice(7)}.json`} className="ev-art-lottie" />
                 ) : (
                   <div className={`ev-art-inner ${(e.art as string) === "kalash" ? "ev-art-contain" : ""}`}>
-                    <Image {...art(e.art as ArtName)} alt="" sizes="(max-width: 768px) 85vw, 34vw" />
+                    <Image {...art(e.art as ArtName)} alt="" sizes="(max-width: 768px) 85vw, 34vw" loading={near ? "eager" : "lazy"} />
                   </div>
                 )}
                 <span className="ev-tag truck">{e.tag}</span>

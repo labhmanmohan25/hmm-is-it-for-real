@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_TRACK, soundtrack, type Track } from "../music";
 
-type Voice = { gain: GainNode; start: () => void; stop: () => void };
+type Voice = { gain: GainNode; start: () => void; stop: () => void; prime?: () => void };
 const FADE = 1.2; // seconds of crossfade between sections
 
 // Scroll-driven soundtrack: each section has a track (app/music.ts) and the music crossfades as
@@ -43,7 +43,18 @@ export default function Soundtrack() {
           if (playing.current === src && live.current) replay.current(current.current);
         });
       ac.createMediaElementSource(el).connect(gain);
-      v = { gain, start: () => void el.play().catch(() => {}), stop: () => el.pause() };
+      v = {
+        gain,
+        start: () => void el.play().catch(() => {}),
+        stop: () => el.pause(),
+        // iPhones only let an <audio> element play if play() first ran inside a tap; a silent
+        // play+pause during the unmute tap unlocks it for when its section scrolls in later
+        prime: () =>
+          void el
+            .play()
+            .then(() => playing.current !== src && el.pause())
+            .catch(() => {}),
+      };
     } else {
       let buffer: AudioBuffer | null = null;
       let node: AudioBufferSourceNode | null = null;
@@ -164,6 +175,8 @@ export default function Soundtrack() {
       live.current = true;
       setOn(true);
       play(current.current);
+      // unlock every streamed track now, while we're inside the tap (gain is 0, so it's silent)
+      for (const t of soundtrack) if (!t.seamless && t.src !== playing.current) voice(t.src, false, 0, t.once)?.prime?.();
     } else {
       live.current = false;
       setOn(false);

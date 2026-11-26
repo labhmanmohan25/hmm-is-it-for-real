@@ -80,5 +80,6 @@ export type ArtName = keyof typeof sizes;
 
 export function art(name: ArtName) {
   const [width, height] = sizes[name];
-  return { src: `/art/${name}.webp`, width, height };
+  // quality 55 keeps the optimised files small on phones; painted art doesn't need more
+  return { src: `/art/${name}.webp`, width, height, quality: 55 };
 }

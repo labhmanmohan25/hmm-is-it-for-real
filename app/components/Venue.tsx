@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { art } from "../art";
 import { gsap, useGSAP } from "./gsap";
@@ -48,6 +48,22 @@ function downloadIcs(p: Place) {
 export default function Venue() {
   const root = useRef<HTMLElement>(null);
   const v = wedding.venue;
+  // Google Maps embeds are heavy (lots of script + tiles each); only mount them when the venue
+  // section is about a screen away, so they never slow down the first load on a phone
+  const [mapsOn, setMapsOn] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setMapsOn(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "100% 0px" },
+    );
+    if (root.current) io.observe(root.current);
+    return () => io.disconnect();
+  }, []);
 
   useGSAP(
     () => {
@@ -123,13 +139,15 @@ export default function Venue() {
               {p.photo ? (
                 <Image src={p.photo} alt={p.name} fill sizes="(max-width: 768px) 90vw, 33vw" className="vn-place-photo" />
               ) : null}
-              <iframe
-                src={p.key === "shaadi" ? v.embedUrl : `https://maps.google.com/maps?q=${encodeURIComponent(p.q)}&z=15&output=embed`}
-                title={`Map of ${p.name}`}
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-                tabIndex={-1}
-              />
+              {mapsOn && (
+                <iframe
+                  src={p.key === "shaadi" ? v.embedUrl : `https://maps.google.com/maps?q=${encodeURIComponent(p.q)}&z=15&output=embed`}
+                  title={`Map of ${p.name}`}
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  tabIndex={-1}
+                />
+              )}
               {/* the whole map is one big "open in Google Maps" tap target — no second button */}
               <a className="vn-place-maplink" href={p.mapUrl} target="_blank" rel="noreferrer" aria-label={`Open ${p.name} in Google Maps`} />
               <span className="vn-place-label truck">{p.label}</span>
