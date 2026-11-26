@@ -69,6 +69,11 @@ const sizes = {
   "pal-shy": [157, 420],
   "pal-dada": [145, 420],
   "pal-sakhi": [176, 420],
+  "ev-haldi-ceremony": [1400, 875],
+  "ev-mehndi-ceremony": [1400, 875],
+  "ev-baraat": [1050, 656],
+  "ev-jaimala": [940, 588],
+  "ev-vivah": [556, 348],
 } as const;
 
 export type ArtName = keyof typeof sizes;

@@ -9,7 +9,7 @@ function load(path, resolve) {
 }
 const wedding = load('app/wedding.ts', () => { throw new Error('Unexpected import'); }).wedding;
 const {POST} = load('app/api/rsvp/route.ts',()=>({wedding}));
-const data = {name:'Integration test',guests:2,side:'bride',stay:'friends-bungalow',events:[wedding.events[0].name],food:{day1:'Veg',day2:'Non-veg'},note:'Test only',submissionId:'12345678-1234-1234-1234-123456789012'};
+const data = {name:'Integration test',guests:2,side:'bride',stay:'friends-bungalow',dance:'no',events:[wedding.events[0].name],food:{day1:'Veg',day2:'Non-veg'},note:'Test only',submissionId:'12345678-1234-1234-1234-123456789012'};
 function request(body, origin='http://localhost:3000') { return new Request('http://localhost:3000/api/rsvp',{method:'POST',headers:{origin},body:JSON.stringify(body)}); }
 (async()=>{
  assert.equal((await POST(request(data,'https://example.com'))).status,403);
@@ -19,6 +19,8 @@ function request(body, origin='http://localhost:3000') { return new Request('htt
  assert.equal((await POST(request({...data,name:'  '}))).status,400);
  assert.equal((await POST(request({...data,stay:undefined}))).status,400);
  assert.equal((await POST(request({...data,stay:'invalid'}))).status,400);
+ assert.equal((await POST(request({...data,dance:undefined}))).status,400);
+ assert.equal((await POST(request({...data,side:'science'}))).status !== 400, true);
  delete process.env.RSVP_SCRIPT_URL; delete process.env.RSVP_SCRIPT_SECRET;
  assert.equal((await POST(request(data))).status,503);
  process.env.RSVP_SCRIPT_URL='https://script.google.com/example'; process.env.RSVP_SCRIPT_SECRET='test-secret';

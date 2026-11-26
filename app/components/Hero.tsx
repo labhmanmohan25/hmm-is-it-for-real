@@ -76,7 +76,7 @@ export default function Hero() {
           return;
         }
         lenis.scrollTo(to, {
-          duration: 1.3,
+          duration: 0.9,
           easing: (t) => 1 - Math.pow(1 - t, 3),
           lock: true,
           force: true,

@@ -38,39 +38,11 @@ function placeUrl(q: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${q}, Mumbai`)}`;
 }
 
-function esc(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-function downloadKml(days: Day[], file: string) {
-  const v = wedding.venue;
-  const folders = days
-    .map(
-      (d, i) => `<Folder><name>${d.noRoute ? esc(d.title) : `Day ${i + 1}: ${esc(d.title)}`}</name>${d.stops
-        .filter((s) => s.lat != null && s.lng != null)
-        .map(
-          (s, j) =>
-            `<Placemark><name>${d.noRoute ? "" : `${i + 1}.${j + 1} `}${esc(s.name)}</name><description>${esc(s.tip)}</description><Point><coordinates>${s.lng},${s.lat},0</coordinates></Point></Placemark>`,
-        )
-        .join("")}</Folder>`,
-    )
-    .join("");
-  const kml = `<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Apurva weds Manmohan — Mumbai trip</name><Placemark><name>💍 The wedding — ${esc(v.name)}</name><description>${esc(`${v.floor}, ${v.address}`)}</description><Point><coordinates>${v.lng},${v.lat},0</coordinates></Point></Placemark>${folders}</Document></kml>`;
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([kml], { type: "application/vnd.google-earth.kml+xml" }));
-  a.download = `${file}.kml`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
 export default function MumbaiPlanner() {
   const root = useRef<HTMLElement>(null);
-  const poster = useRef<HTMLDivElement>(null);
   // 1–4 = that many itinerary days; 0 = our own favourite spots
   const [count, setCount] = useState(2);
-  const [saving, setSaving] = useState(false);
   const days = useMemo(() => (count === 0 ? [ours] : allDays.slice(0, count)), [count]);
-  const file = count === 0 ? "apurva-manmohan-mumbai" : `mumbai-${count}-day-plan`;
   const [nearMap, setNearMap] = useState(false);
 
   // Leaflet + tiles are only fetched once the planner is about to scroll into view
@@ -116,30 +88,13 @@ export default function MumbaiPlanner() {
       // each day's rail draws down, then its stations pop on one by one
       gsap.fromTo(".mp-line", { "--rail": 0 }, { "--rail": 1, duration: 1.1, ease: "power2.inOut", stagger: 0.12 });
       gsap.from(".mp-stop", { x: -24, autoAlpha: 0, duration: 0.35, stagger: 0.04, ease: "back.out(2)", delay: 0.15 });
-      // only the chosen ticket is punched and stamped; clear the rest first
+      // only the chosen ticket is stamped; clear the rest first
       gsap.set(".tk:not(.on) .tk-stamp", { autoAlpha: 0 });
-      gsap.set(".tk:not(.on) .tk-punch", { scale: 0 });
       gsap.fromTo(".tk.on", { rotate: -6, scale: 1.12 }, { rotate: 0, scale: 1, duration: 0.7, ease: "elastic.out(1.2, 0.35)" });
       gsap.fromTo(".tk.on .tk-stamp", { scale: 3, autoAlpha: 0, rotate: -30 }, { scale: 1, autoAlpha: 1, rotate: -14, duration: 0.25, ease: "power4.in" });
-      gsap.fromTo(".tk.on .tk-punch", { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(3)", delay: 0.1 });
     },
     { scope: root, dependencies: [count] },
   );
-
-  const savePng = async () => {
-    if (!poster.current) return;
-    setSaving(true);
-    try {
-      const { toPng } = await import("html-to-image");
-      const url = await toPng(poster.current, { pixelRatio: 2, cacheBust: true, backgroundColor: "#fff3dc" });
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${file}.png`;
-      a.click();
-    } finally {
-      setSaving(false);
-    }
-  };
 
   return (
     <section className="mp" ref={root} id="mumbai" data-wipe>
@@ -171,7 +126,6 @@ export default function MumbaiPlanner() {
             <span className="tk-word">{t.word}</span>
             <small className="tk-line">“{t.line}”</small>
             <span className="tk-route">{t.route}</span>
-            <span className="tk-punch" aria-hidden />
             <span className="tk-stamp truck" aria-hidden>
               Booked
             </span>
@@ -183,14 +137,13 @@ export default function MumbaiPlanner() {
           <span className="tk-word">Our spots</span>
           <small className="tk-line">“Humare adde”</small>
           <span className="tk-route">Khandeshwar ⇄ Bandstand</span>
-          <span className="tk-punch" aria-hidden />
           <span className="tk-stamp truck" aria-hidden>
             Booked
           </span>
         </button>
       </div>
 
-      <div className="mp-poster" ref={poster}>
+      <div className="mp-poster">
         <div className="mp-poster-head">
           <div className="mp-board">
             <span className="hi">मुंबई</span>
@@ -235,22 +188,6 @@ export default function MumbaiPlanner() {
         </div>
       </div>
 
-      <div className="mp-actions">
-        <button className="btn-truck" onClick={savePng} disabled={saving}>
-          {saving ? "Saving…" : "Download as image 🖼"}
-        </button>
-        <button className="btn-truck btn-pink" onClick={() => downloadKml(days, file)}>
-          Download for Google My Maps 🗺
-        </button>
-      </div>
-      <p className="mp-help">
-        To get every pin on your phone: open{" "}
-        <a href="https://www.google.com/maps/d/" target="_blank" rel="noreferrer">
-          Google My Maps
-        </a>{" "}
-        → Create new map → Import → choose the downloaded file. It then shows up under Saved → Maps in the Google Maps
-        app.
-      </p>
     </section>
   );
 }

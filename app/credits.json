@@ -446,5 +446,40 @@
   "artist": "jasleen_kaur from USA",
   "license": "CC BY-SA 2.0",
   "page": "https://commons.wikimedia.org/wiki/File:Dhol_dholak,_one_of_numerous_types_of_drums,_Indian_musical_instrument.jpg"
+ },
+ {
+  "name": "ev-baraat",
+  "title": "Indian - A Wedding Procession - Walters W883.jpg",
+  "artist": "Walters Art Museum",
+  "license": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Indian_-_A_Wedding_Procession_-_Walters_W883.jpg"
+ },
+ {
+  "name": "ev-jaimala",
+  "title": "Parvati Placing a Wedding Garland on Shiva (Kalighat painting, 19th c.)",
+  "artist": "Unknown artist · Cleveland Museum of Art",
+  "license": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Unknown_artist_-_Parvati_Placing_a_Wedding_Garland_on_Shiva_(recto),_Yasoda_Churning_Butter_(verso)_-_2003.108_-_Cleveland_Museum_of_Art.jpg"
+ },
+ {
+  "name": "ev-vivah",
+  "title": "The Wedding of Krishna and Rukmini, Bhagavata Purana folio",
+  "artist": "Anonymous · Harvard Art Museums",
+  "license": "Public domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Anonymous_-_The_Wedding_of_Krishna_and_Rukmini,_folio_from_a_Bhagavata_Purana_Series_-_2001.336_-_Harvard_Art_Museums.jpg"
+ },
+ {
+  "name": "ev-haldi-ceremony",
+  "title": "Haldi, in the style of a Rajput miniature",
+  "artist": "AI-generated (Canva) for this site",
+  "license": "Made for this site",
+  "page": "https://www.canva.com/"
+ },
+ {
+  "name": "ev-mehndi-ceremony",
+  "title": "Mehndi, in the style of a Rajput miniature",
+  "artist": "AI-generated (Canva) for this site",
+  "license": "Made for this site",
+  "page": "https://www.canva.com/"
  }
 ]

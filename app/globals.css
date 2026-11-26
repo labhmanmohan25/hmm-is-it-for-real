@@ -87,6 +87,17 @@ body {
   );
 }
 
+/* tiny nazar battu at the very start of the progress bar: there, but barely noticeable */
+.nazar {
+  position: fixed;
+  left: 1px;
+  top: 0;
+  z-index: 81;
+  font-size: 5px;
+  line-height: 1;
+  opacity: 0.85;
+  pointer-events: none;
+}
 .spark {
   position: fixed;
   z-index: 300;
@@ -346,435 +357,166 @@ body {
   pointer-events: none;
 }
 
-/* ---------- marquee ---------- */
-
-.marquee {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 100svh;
-  overflow: hidden;
-  /* dark cinema hall; the projector's warm pool lands on the screen */
-  background:
-    radial-gradient(ellipse 55% 60% at 50% 66%, rgba(255, 196, 110, 0.32), transparent 70%),
-    radial-gradient(ellipse at 50% 120%, rgba(0, 0, 0, 0.5), transparent 60%),
-    var(--room);
-}
-@property --room {
+/* ---------- ISM opening crawl ---------- */
+@property --sky {
   syntax: "<color>";
   inherits: true;
-  initial-value: #0e2f33;
+  initial-value: #d90429;
 }
-.ch-fx {
+.oc {
+  --yellow: #ffe81f;
+  --blue: #4bd5ee;
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 120%, rgba(60, 20, 90, 0.35), transparent 60%), var(--sky);
+  isolation: isolate;
+}
+.oc-stars {
+  position: absolute;
+  inset: -10% 0;
+  z-index: 0;
+}
+.oc-star {
+  position: absolute;
+  width: var(--s);
+  height: var(--s);
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+.oc-pre {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  place-content: center;
+  margin: 0;
+  padding: 0 8vw;
+  font: 500 clamp(24px, 3.6vw, 52px) / 1.35 var(--font-body), sans-serif;
+  color: var(--blue);
+  text-align: left;
+  letter-spacing: 0.01em;
 }
-
-/* ---------- Chapter 1 as a Bollywood film: full-screen scenes sliding in one after another ---------- */
-.cr {
-  /* --fh sizes the content; scenes stay in a 1.42:1 box centred in the full-screen frame */
-  --fh: min(100svh, 70vw);
-  --px: max(6vw, calc((100vw - var(--fh) * 1.42) / 2));
-  color: var(--cream);
+.oc-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  font-size: clamp(54px, 13vw, 190px);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: clamp(2px, 0.3vw, 5px) var(--yellow);
+  translate: -50% -50%;
+  white-space: nowrap;
 }
-.cr-screen {
+.oc-logo small {
+  font-size: 0.32em;
+  letter-spacing: 0.5em;
+  color: var(--yellow);
+  -webkit-text-stroke: 0;
+}
+/* the crawl: text rising up a plane tilted away into the stars */
+.oc-stage {
   position: absolute;
   inset: 0;
   z-index: 1;
+  perspective: 360px;
+  perspective-origin: 50% 30%;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 4%, #000 38%);
+  mask-image: linear-gradient(to bottom, transparent 4%, #000 38%);
 }
-.cr-strip {
-  position: absolute;
-  inset: 0 auto 0 0;
-  /* as wide as all the slides together, so xPercent steps one slide at a time */
-  width: max-content;
-  display: flex;
-  will-change: transform;
-}
-.cr-frame {
-  position: relative;
-  flex: none;
-  width: 100vw;
-  height: 100svh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(var(--fh) * 0.03);
-  padding: calc(var(--fh) * 0.1) var(--px) calc(var(--fh) * 0.22);
-  font-size: calc(var(--fh) * 0.034);
-  background: radial-gradient(ellipse at 50% 40%, #3a1a14, #120807);
-  box-shadow: inset 0 0 calc(var(--fh) * 0.15) rgba(0, 0, 0, 0.8);
-}
-.cr-frame p {
-  margin: 0;
-}
-/* leader countdown */
-.cr-leader {
-  padding: 0;
-  background: #cfc6b0;
-  color: #1b1214;
-}
-.cr-sweep {
-  position: absolute;
-  inset: 0;
-  background: conic-gradient(from 0deg, rgba(0, 0, 0, 0.45) var(--a), transparent var(--a));
-}
-.cr-cross {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(#1b1214, #1b1214) 50% 0 / 2px 100% no-repeat,
-    linear-gradient(#1b1214, #1b1214) 0 50% / 100% 2px no-repeat,
-    radial-gradient(circle, transparent calc(var(--fh) * 0.3), #1b1214 calc(var(--fh) * 0.3 + 1px), #1b1214 calc(var(--fh) * 0.3 + 4px), transparent calc(var(--fh) * 0.3 + 5px)),
-    radial-gradient(circle, transparent calc(var(--fh) * 0.4), #1b1214 calc(var(--fh) * 0.4 + 1px), #1b1214 calc(var(--fh) * 0.4 + 3px), transparent calc(var(--fh) * 0.4 + 4px));
-}
-.cr-num {
-  position: relative;
-  font-size: calc(var(--fh) * 0.45);
-  line-height: 1;
-}
-/* title card: hand-painted poster lettering */
-.cr-title,
-.cr-end {
-  padding-bottom: calc(var(--fh) * 0.07);
-  text-align: center;
-}
-.cr-title {
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255, 214, 10, 0.22), transparent 60%),
-    repeating-conic-gradient(from 0deg at 50% 50%, #063a4f 0 10deg, #0a7ea4 10deg 20deg);
-}
-/* end card: an old picture-hall "Interval" slide, dark screen in a gold frame ringed with marquee bulbs */
-.cr-end {
-  background: radial-gradient(ellipse at 50% 45%, #2a1a10, #0d0a0b 70%);
-}
-.cr-end > * {
-  position: relative;
-}
-.cr-end::before,
-.cr-end::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-}
-.cr-end::before {
-  inset: calc(var(--fh) * 0.12) max(9vw, calc(var(--px) + 2vw));
-  border: 0.3em double var(--haldi);
-  border-radius: 0.6em;
-  box-shadow: 0 0 1.4em rgba(255, 214, 10, 0.35), inset 0 0 1.4em rgba(255, 214, 10, 0.2);
-}
-.cr-end::after {
-  inset: calc(var(--fh) * 0.06) max(6vw, var(--px));
-  padding: 1.6em;
-  border-radius: 1em;
-  background: radial-gradient(circle, #fff3c4 0 22%, rgba(255, 214, 10, 0.55) 34%, transparent 52%) 0 0 / 2.4em 2.4em;
-  /* keep only a ring of bulbs around the edge */
-  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  animation: cr-bulbs 1.2s steps(2) infinite;
-}
-@keyframes cr-bulbs {
-  to {
-    background-position: 1.2em 1.2em;
-  }
-}
-.cr-pre {
-  font-size: 0.8em;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--haldi);
-}
-.cr-title b,
-.cr-end b {
-  font-family: var(--font-hindi), serif;
-  font-weight: 400;
-  font-size: 3.4em;
-  line-height: 0.95;
-  color: var(--haldi);
-  -webkit-text-stroke: 0.04em var(--ink);
-  text-shadow: 0.06em 0.06em 0 var(--ink), 0.12em 0.12em 0 var(--rani);
-}
-.cr-end b {
-  font-size: 2.8em;
-}
-.cr-cast {
-  font-size: 1.05em;
-  font-weight: 700;
-  color: var(--cream);
-  text-shadow: 0 2px 0 var(--ink);
-}
-.cr-small {
-  font-size: 0.75em;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-}
-/* scenes */
-.cr-slate {
-  position: absolute;
-  top: calc(var(--fh) * 0.06);
-  left: var(--px);
-  padding: 0.25em 0.6em;
-  font-size: 0.65em;
-  color: var(--ink);
-  background: var(--cream);
-  box-shadow: 0.25em 0.25em 0 var(--sindoor);
-}
-.cr-s1 {
-  background: radial-gradient(ellipse at 50% 40%, #6a1745, #1c0613);
-}
-/* Diwali night on the left fading into the winter platform on the right */
-.cr-s2 {
-  background:
-    radial-gradient(ellipse at 25% 45%, rgba(255, 183, 3, 0.18), transparent 45%),
-    linear-gradient(90deg, #2a1260, #0c2a52);
-}
-/* yellow film subtitles along the bottom */
-.cr-subs {
-  position: absolute;
-  left: var(--px);
-  right: var(--px);
-  bottom: calc(var(--fh) * 0.06);
-  display: grid;
-  gap: 0.3em;
-}
-.cr-sub {
-  font-family: var(--font-hand), cursive;
-  font-weight: 700;
-  font-size: 1.2em;
-  line-height: 1.2;
-  text-align: center;
-  color: #ffe55c;
-  text-shadow: 0 0 4px #000, 0 2px 0 #000;
-}
-.cr-sub-pink {
-  color: #ff8fc2;
-}
-.cr-heart {
-  display: inline-block;
-  width: 1.1em;
-  height: auto;
-  vertical-align: -0.15em;
-}
-.cr .pop {
-  transform-origin: 50% 100%;
-}
-/* merged scenes: two beats side by side */
-.cr-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 5%;
-  width: 100%;
-}
-.cr-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1em;
-}
-.cr-station {
-  position: relative;
-}
-.cr-polaroid {
-  width: 100%;
-  margin: 0;
-  padding: 0.4em 0.4em 1.4em;
-  background: #f7f1e3;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  rotate: -3deg;
-}
-.cr-polaroid img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: sepia(0.25) contrast(1.05);
-}
-.cr-gang {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 2%;
-  width: 100%;
-  height: calc(var(--fh) * 0.24);
-}
-.cr-gang .pop {
-  display: block;
-  height: 100%;
-}
-.cr-gang .pop:nth-child(even) {
-  height: 86%;
-}
-.cr-gang img {
-  width: auto;
-  height: 100%;
-  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.5));
-}
-.cr-count {
-  font-weight: 700;
-}
-.cr-count b {
-  display: inline-block;
-  min-width: 1.4em;
-  font-size: 1.5em;
-  color: var(--haldi);
-}
-.cr-nm {
-  padding: 0.4em 0.7em;
-  font-size: 0.8em;
-  text-align: center;
-  color: var(--ink);
-  background: var(--haldi);
-  border: 3px solid var(--ink);
-  box-shadow: 0.25em 0.25em 0 var(--rani);
-  transform: scale(0);
-}
-.cr-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6%;
-  width: 100%;
-}
-.cr-diya {
-  width: 42%;
-}
-.cr-diya img,
-.cr-board img,
-.cr-train img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5));
-}
-.cr-meter {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  width: 46%;
-}
-.cr-meter-heart {
-  width: 100%;
-  height: auto;
-}
-.cr-meter-num {
-  position: absolute;
-  top: 26%;
-  font-size: 1.9em;
-  color: #fff;
-  text-shadow: 0 2px 0 #000;
-}
-.cr-meter small {
-  margin-top: 0.3em;
-  font-size: 0.7em;
-}
-.cr-hearts {
-  position: absolute;
-  inset: -40%;
-  pointer-events: none;
-}
-.cr-hearts > div {
-  width: 100%;
-  height: 100%;
-}
-.cr-board {
-  width: 100%;
-}
-.cr-train {
+.oc-plane {
   position: absolute;
   left: 0;
-  bottom: -18%;
-  width: 90%;
-  pointer-events: none;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 760px);
+  height: 100%;
+  margin-inline: auto;
+  transform: rotateX(26deg);
+  transform-origin: 50% 100%;
 }
-.cr-endline {
-  display: block;
+.oc-text {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  font: 700 clamp(19px, 2.6vw, 34px) / 1.42 var(--font-body), sans-serif;
+  color: var(--yellow);
+  text-align: justify;
+  hyphens: auto;
 }
-/* projector artefacts over the whole screen */
-.cr-blur,
-.cr-grain,
-.cr-vignette {
+.oc-text p {
+  margin: 0 0 1.1em;
+}
+.oc-text b {
+  color: #fff;
+}
+.oc-text .oc-ep {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.12em;
+}
+.oc-title {
+  margin: 0.1em 0 0.9em;
+  font-size: 1.9em;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+.oc-end {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-}
-.cr-blur {
   z-index: 3;
-  backdrop-filter: blur(6px) brightness(1.2);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0 6vw;
+  text-align: center;
+  color: var(--yellow);
   visibility: hidden;
 }
-.cr-grain {
-  z-index: 4;
-  inset: -50%;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: cr-grain 0.5s steps(4) infinite;
+.oc-end span {
+  font-size: clamp(18px, 2.6vw, 34px);
+  letter-spacing: 0.08em;
 }
-@keyframes cr-grain {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-6%, 4%); }
-  50% { transform: translate(5%, -3%); }
-  75% { transform: translate(-3%, -6%); }
-  100% { transform: translate(4%, 5%); }
+.oc-end b {
+  font-size: clamp(48px, 10vw, 150px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--haldi);
+  text-shadow: 4px 4px 0 var(--sindoor), 8px 8px 0 var(--rani);
 }
-.cr-vignette {
-  z-index: 6;
-  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.65));
-}
-@media (prefers-reduced-motion: reduce) {
-  .cr-grain,
-  .cr-end::after {
-    animation: none;
-  }
+.oc-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
 }
 @media (max-aspect-ratio: 1/1) {
-  .cr {
-    --fh: min(100svh, 140vw);
-    --px: 6vw;
+  .oc-stage {
+    perspective: 300px;
   }
-  .cr-frame {
-    font-size: calc(100vw * 0.042);
+  .oc-plane {
+    width: 92vw;
+    transform: rotateX(22deg);
   }
-  .cr-cols {
-    grid-template-columns: 1fr;
-    gap: 1.2em;
-  }
-  .cr-polaroid {
-    width: 78%;
-    justify-self: center;
-  }
-  .cr-gang {
-    height: 13svh;
-  }
-  .cr-row {
-    gap: 8%;
-  }
-  .cr-diya {
-    width: 36%;
-  }
-  .cr-meter {
-    width: 34%;
-  }
-  .cr-board {
-    width: 72%;
-  }
-  .cr-subs {
-    bottom: 4svh;
-  }
-  .cr-title b {
-    font-size: 3em;
-  }
-  /* keep the end-card text inside its ring of bulbs */
-  .cr-end {
-    padding-inline: 16vw;
+  .oc-text {
+    font-size: clamp(17px, 5.2vw, 26px);
+    text-align: left;
   }
 }
 
@@ -2327,27 +2069,6 @@ body {
   background: var(--c);
   transform: scale(1.25);
 }
-.mp-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-.mp-actions .btn-truck {
-  border: 0;
-  cursor: pointer;
-  font-size: 15px;
-}
-.mp-help {
-  max-width: 640px;
-  margin: 0;
-  font-size: 13.5px;
-  text-align: center;
-  opacity: 0.8;
-}
-.mp-help a {
-  color: var(--sindoor);
-}
 .pin {
   display: grid;
   place-items: center;
@@ -2537,9 +2258,7 @@ body {
   padding: 12px 12px 14px;
   font: inherit;
   color: var(--tk-ink);
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 9px),
-    var(--tk);
+  background: var(--tk);
   border: 0;
   /* perforated ticket edges */
   -webkit-mask:
@@ -2610,27 +2329,12 @@ body {
   letter-spacing: 0.04em;
   border-top: 1.5px dashed currentColor;
 }
-.tk-punch {
-  position: absolute;
-  right: 14px;
-  top: 30px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--ink);
-  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.6);
-  transform: scale(0);
-}
-.tk-ours .tk-punch {
-  background: var(--cream);
-}
 .tk-stamp {
   position: absolute;
-  left: 50%;
-  top: 66%;
-  translate: -50% -50%;
-  padding: 2px 8px;
-  font-size: 18px;
+  right: 10px;
+  top: 34%;
+  padding: 1px 6px;
+  font-size: 13px;
   color: var(--sindoor);
   border: 3px solid currentColor;
   border-radius: 4px;
@@ -2644,14 +2348,9 @@ body {
 }
 .mp-picker .tk.on {
   color: var(--tk-ink);
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 9px),
-    var(--tk);
+  background: var(--tk);
   box-shadow: none;
   filter: drop-shadow(0 6px 0 var(--ink)) drop-shadow(6px 10px 0 var(--sindoor));
-}
-.mp-picker .tk.on .tk-punch {
-  transform: scale(1);
 }
 .mp-picker .tk.on .tk-stamp {
   opacity: 1;
@@ -3098,6 +2797,33 @@ body {
   width: 100%;
   height: 100%;
   border: 0;
+  pointer-events: none;
+}
+/* the map preview is a single tap target to the place's own Google Maps link */
+.vn-place-maplink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.vn-place-maplink:focus-visible {
+  outline: 4px solid var(--rani);
+  outline-offset: -4px;
+}
+.vn-place .vn-place-tip {
+  position: relative;
+  padding: 10px 12px 10px 40px;
+  font-size: 14px;
+  background: var(--haldi);
+  border: 3px dashed var(--ink);
+  transform: rotate(-0.6deg);
+}
+.vn-place .vn-place-tip::before {
+  content: "⚠";
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  font-size: 18px;
 }
 /* a real photo, when given, covers the top half; the map stays below it */
 .vn-place-media:has(.vn-place-photo) {
@@ -3114,7 +2840,7 @@ body {
 }
 .vn-place-label {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 16px;
   bottom: -17px;
   padding: 5px 12px;
@@ -3247,8 +2973,8 @@ body {
 }
 .vn-stones {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(16px, 3vw, 44px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(30px, 4vw, 56px) clamp(16px, 3vw, 44px);
   width: 100%;
   margin: 0;
   padding: 0;
@@ -3309,6 +3035,9 @@ body {
   font-size: clamp(36px, 4vw, 54px);
   font-weight: 400;
   line-height: 1;
+}
+.vn-stone-body .vn-stone-wink {
+  color: var(--sindoor);
 }
 .vn-stone-body strong small {
   margin-left: 4px;
@@ -4064,4 +3793,134 @@ body {
   font: inherit;
   letter-spacing: normal;
   text-transform: none;
+}
+
+/* ---------- rsvp: science side meme, stage-dance question ---------- */
+/* Science's side: GIFs scattered in the gutters beside the card (or over everything on phones) */
+.rs-sci {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+.rs-sci.overlay {
+  pointer-events: auto;
+  background: rgba(13, 10, 11, 0.82);
+}
+.rs-sci-gif {
+  position: absolute;
+  margin: 0;
+  padding: 8px 8px 24px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--rani);
+}
+/* strip of tape holding the sticker on */
+.rs-sci-gif::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 96px;
+  height: 26px;
+  margin-left: -48px;
+  background: rgba(255, 214, 10, 0.88);
+  transform: rotate(-5deg);
+}
+.rs-sci-gif img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2.038;
+  object-fit: cover;
+  background: #222;
+}
+.rs-sci-gif figcaption {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #777;
+}
+
+.rs-dance-rule {
+  margin: 0 0 12px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.rs-dance-rule b {
+  color: var(--sindoor);
+}
+.rs-dance-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+/* both start identical (like the side buttons); the picked one goes loud */
+.rs-dance-opts button {
+  position: relative;
+  z-index: 30;
+  flex: 1 1 240px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font: 600 15px var(--font-body);
+  color: var(--ink);
+  background: transparent;
+  border: 3px solid var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.rs-dance-opts .rs-dance-no {
+  background: var(--haldi);
+}
+.rs-dance-opts button.on {
+  color: var(--haldi);
+  background: var(--ink);
+  box-shadow: 6px 6px 0 var(--rani);
+}
+.rs-tick {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4em;
+  font-size: 18px;
+}
+.rs-dance-opts button.on .rs-tick {
+  width: 1.4em;
+  height: 1.4em;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--lime);
+  border-radius: 50%;
+}
+.rs-dance-taunt {
+  min-height: 1.4em;
+  margin: 8px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+}
+.rs-submit:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+  opacity: 0.55;
+}
+.rs-submit-heart {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.08em;
+}
+.rs-lock {
+  grid-column: 1 / -1;
+  margin: -6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
 }

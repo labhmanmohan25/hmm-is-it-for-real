@@ -37,19 +37,22 @@ export const wedding = {
     name: "CIDCO Auditorium & Convention Centre",
     floor: "1st floor, opposite Joyalukkas",
     address: "Swami Pranabananda Marg, Sector 30A, Vashi, Navi Mumbai, Maharashtra 400703",
-    mapUrl: "https://maps.app.goo.gl/t8S4yh4EVhuvoQ5d6",
+    mapUrl: "https://share.google/U18YJqoVdXvkJQ2LC",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1050.0613426232735!2d72.99461453895292!3d19.06697218472708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c12d61d6b4ad%3A0x55ccb163b8824685!2sCIDCO%20Auditorium%20And%20Convention%20Centre!5e1!3m2!1sen!2sin!4v1793226255573!5m2!1sen!2sin",
     lat: 19.06697,
     lng: 72.99461,
     station: "Vashi",
-    // "How far is it?" milestones — approximate road distance + typical travel time to the venue
+    // "How far is it?" milestones — approximate road distance + typical travel time to the venue.
+    // `km` can be a string (the long-drive stone shows a wink instead of a number) and `unit: ""` hides "km".
     reach: [
       { code: "NMI", native: "नवी मुंबई विमानतळ", name: "Navi Mumbai Airport", km: 20, how: "~35 min by cab", top: "haldi" },
       { code: "BOM", native: "मुंबई विमानतळ", name: "Mumbai Airport T1 / T2", km: 22, how: "45–75 min by cab", top: "marigold" },
       { code: "LTT", native: "लो. टिळक टर्मिनस", name: "Kurla LTT · Bihar & Bengal trains", km: 14, how: "~40 min by cab", top: "tota" },
+      { code: "CSMT", native: "छ. शिवाजी महाराज टर्मिनस", name: "CSMT · Harbour line to Vashi", km: 30, how: "~55 min by local · ~1 hr by cab", top: "peacock" },
       { code: "VSH", native: "वाशी स्टेशन", name: "Vashi station · Harbour line", km: 1, how: "5 min by auto", top: "rani" },
-    ],
+      { code: "CAR", native: "लंबी ड्राइव", name: "By car · the long drive", km: ";)", unit: "", how: "Road trip, playlist, chai stops. Worth every km.", top: "sindoor" },
+    ] as { code: string; native: string; name: string; km: number | string; unit?: string; how: string; top: string }[],
   },
   // The three places that matter, with timings. Shown as cards in the Venue section.
   // `photo`: drop a real photo of the place into /public/photos and put its path here (e.g. "/photos/stay.jpg")
@@ -64,9 +67,12 @@ export const wedding = {
       address: "Panvel, Navi Mumbai",
       note: "The full bungalow is booked for you. Just bring yourself (and your dancing shoes).",
       q: "Aatithi Stay, Panvel",
-      mapUrl: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Aatithi Stay, Panvel"),
+      mapUrl: "https://share.google/w1J12HBqjlG1oHEx0",
+      // calendar entry: all-day from check-in to check-out (end is inclusive)
+      cal: { title: "Check-in at Atithi Stays, Panvel", allDay: true, start: "2027-01-17", end: "2027-01-19" },
       photo: null as string | null,
       color: "peacock",
+      tip: null as string | null,
     },
     {
       key: "haldi",
@@ -76,10 +82,12 @@ export const wedding = {
       when: "17 Jan · 11 AM – 5 PM",
       address: "Panvel, Navi Mumbai",
       note: "Haldi before lunch, mehendi after. Wear yellow, leave yellower.",
-      q: "Sai Raj Farmhouse, Panvel",
-      mapUrl: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Sai Raj Farmhouse, Panvel"),
+      q: "Sairaj Farm - Panvel",
+      mapUrl: "https://share.google/Pf0VmP7yOD93F7Waj",
+      cal: { title: "Haldi & Mehendi · Sai Raj Farmhouse", allDay: false, start: "2027-01-17T11:00:00+05:30", end: "2027-01-17T17:00:00+05:30" },
       photo: null as string | null,
       color: "haldi",
+      tip: null as string | null,
     },
     {
       key: "shaadi",
@@ -89,8 +97,10 @@ export const wedding = {
       when: "18 Jan · 6 PM onwards",
       address: "1st floor, opposite Joyalukkas, Swami Pranabananda Marg, Sector 30A, Vashi, Navi Mumbai 400703",
       note: "Come early: the baraat leaves at 6 PM sharp and you're dancing in it.",
+      tip: "Navi Mumbai has more CIDCOs than vada pav stalls. Type the full name, “CIDCO Auditorium And Convention Centre”, or you'll end up at somebody's property-tax hearing. Spot Joyalukkas: we're right opposite, 1st floor.",
       q: "CIDCO Auditorium And Convention Centre, Vashi",
-      mapUrl: "https://maps.app.goo.gl/t8S4yh4EVhuvoQ5d6",
+      mapUrl: "https://share.google/U18YJqoVdXvkJQ2LC",
+      cal: { title: "Apurva weds Manmohan · Baraat, Jaimala & Vivah", allDay: false, start: "2027-01-18T18:00:00+05:30", end: "2027-01-19T05:00:00+05:30" },
       photo: null as string | null,
       color: "sindoor",
     },
@@ -111,7 +121,7 @@ export const wedding = {
       time: "11:00 AM, before lunch",
       place: "Sai Raj Farmhouse, Panvel",
       blurb: "Turmeric, conch shells and absolutely no clean clothes. Wear yellow, leave yellower.",
-      art: "marigold-painting",
+      art: "ev-haldi-ceremony",
       color: "yellow",
     },
     {
@@ -122,7 +132,7 @@ export const wedding = {
       time: "After lunch, till 5:00 PM",
       place: "Sai Raj Farmhouse, Panvel",
       blurb: "Henna up to the elbows and a hunt for the groom's name hidden somewhere in the bride's palm.",
-      art: "madhubani-peacock",
+      art: "ev-mehndi-ceremony",
       color: "green",
     },
     {
@@ -132,8 +142,8 @@ export const wedding = {
       date: "18 Jan",
       time: "6:00 PM sharp · come early!",
       place: "CIDCO Auditorium, Vashi",
-      blurb: "The groom arrives in a pink paag with a band and an entire army of dancing uncles. Be there before it leaves.",
-      art: "pata-horse-rider",
+      blurb: "The groom arrives in a pink paag with a band, the uncles, the friends and an entire army of dancing folks. Be there before it leaves.",
+      art: "ev-baraat",
       color: "orange",
     },
     {
@@ -143,8 +153,8 @@ export const wedding = {
       date: "18 Jan",
       time: "8:00 PM",
       place: "CIDCO Auditorium, Vashi",
-      blurb: "Garlands on stage, the bride in her lehenga, then come up for photos, blessings and gifts.",
-      art: "pata-women",
+      blurb: "Garlands on stage, the bride in her lehenga, then come up for photos and blessings.",
+      art: "ev-jaimala",
       color: "red",
     },
     {
@@ -155,7 +165,7 @@ export const wedding = {
       time: "3:00 AM",
       place: "CIDCO Auditorium, Vashi",
       blurb: "Seven pheras and one sindoor under the late-night stars. Two families tied into a single knot.",
-      art: "kalighat-radha-krishna",
+      art: "ev-vivah",
       color: "maroon",
     },
   ],

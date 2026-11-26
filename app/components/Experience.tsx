@@ -5,7 +5,7 @@ import Lenis from "lenis";
 import { lenisRef } from "./lenis";
 import { gsap, ScrollTrigger, useGSAP } from "./gsap";
 import Hero from "./Hero";
-import Marquee from "./Marquee";
+import Crawl from "./Crawl";
 import Events from "./Events";
 import Journey from "./Journey";
 import Countdown from "./Countdown";
@@ -81,10 +81,14 @@ export default function Experience() {
   return (
     <>
       <div className="scroll-progress" aria-hidden />
+      {/* a tiny nazar battu riding the front of the progress bar: kaala teeka for the website */}
+      <span className="nazar" aria-hidden>
+        🧿
+      </span>
       <ClickSpark />
       <main>
         <Hero />
-        <Marquee />
+        <Crawl />
         <Narration
           tone="sindoor"
           aside="Ahem. Lights, camera, shaadi."
@@ -98,10 +102,10 @@ export default function Experience() {
           ]}
           show
         >
-          From the land of litti chokha, Madhubani and makhana… came a boy who could argue about politics for six hours
-          straight.
+          From the land of litti chokha, Madhubani and makhana… came a boy who could talk about absolutely random stuff
+          for six hours straight.
         </Narration>
-        <Narration tone="ivory" aside="She won. Obviously." props={[
+        <Narration tone="ivory" aside="The only one who never hit mute. Not once." props={[
             { art: "puchka", mode: "fly", slot: "tl", w: 220 },
             { art: "mishti-doi", mode: "fly", slot: "tr", w: 180 },
             { art: "kalighat-cat-fish", mode: "fly", slot: "ml", w: 110 },
@@ -110,7 +114,8 @@ export default function Experience() {
             { art: "macher-jhol", mode: "fly", slot: "br", w: 230 },
           ]}
           show>
-          From the city of rosogolla, puchka and macher jhol… came a girl who could out-argue him in six minutes.
+          From the city of rosogolla, puchka and macher jhol… came a girl who listened to every single minute of it. Till
+          the very end.
         </Narration>
         <Swagatam />
         <Journey />
